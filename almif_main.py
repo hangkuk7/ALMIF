@@ -52,7 +52,6 @@ if __name__ == '__main__':
     if initLog() != True:
         print(f'Error. initLog() fail')
         sys.exit()
-
         
 
 
