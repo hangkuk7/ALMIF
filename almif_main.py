@@ -2,12 +2,6 @@ import os
 import sys
 from multiprocessing import Process, Queue
 
-# from .ConfigManager import ConfManager
-# from .DatabaseManager import DbManager
-
-# import ConfigManager
-# import DatabaseManager
-
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
 
