@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     print(f'***** OK...Start *****')
     print(f'********** Get Config ************')
-    # ALL_CONFIG_INFO = ConfigManager.g
+    initConfig()
 
         
 
