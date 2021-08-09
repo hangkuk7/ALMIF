@@ -9,10 +9,7 @@ class ConfManager:
     LOG_INFO = "LOG_INFO"
     SYS_CONFIG_GENERAL = "GENERAL"
 
-    # edited by hangkuk at 2021.06.15 
-    FLEXCONF_CONFIG_PATH = os.environ.get('HOME', '') + '/data/CONFIG/FCENGINE.dat'
-    #FLEXCONF_CONFIG_PATH = '/data1/e2e/data/CONFIG/FCENGINE.dat'
-    #FLEXCONF_CONFIG_PATH = 'FCENGINE.dat'
+    CONFIG_PATH = os.environ.get('HOME', '') + '/data/CONFIG/ALMIF.dat'
 
     __instance = None
     sysdictList = dict()
@@ -36,7 +33,7 @@ class ConfManager:
             self.home_str = os.environ["HOME"]
             print("HOME : " + str(self.home_str))
         except KeyError:
-            print("Please set the environment variable HOME")
+            print("Error. Please set the environment variable HOME")
             sys.exit(1)
 
         self.sysConfig = configparser.ConfigParser()
@@ -61,7 +58,7 @@ class ConfManager:
         #############################################################################
         # [2] FILE READ LOCAL CONFIG
         self.localConfig = configparser.ConfigParser()
-        self.localConfig.read('FCENGINE.dat')
+        self.localConfig.read('ALMIF.dat')
 
         for each_section in self.localConfig.sections():
             dictionary = dict()
@@ -72,17 +69,10 @@ class ConfManager:
             self.localdictList[each_section] = dictionary
 
         # [3] LOG INFO
-        # self.logFlag = self.getLocalConfigData("LOG_INFO", "LOG_FLAG")
-        # self.logLevel = int(self.getLocalConfigData("LOG_INFO", "LOG_LEVEL"))
-        # self.logFlag = self.logFlag.upper()
         self.msglogFile = str(self.getLocalConfigData("LOG_INFO", "MSG_LOG_FILE"))
         self.errlogFile = str(self.getLocalConfigData("LOG_INFO", "ERR_LOG_FILE"))
-        # self.logMaxSize = int(self.getLocalConfigData("LOG_INFO", "LOG_MAX_SIZE"))
-        # self.maxBackupCnt = int(self.getLocalConfigData("LOG_INFO", "MAX_FILE_BKUP_COUNT"))
-
 
         try:
-
             self.db_user = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_ID", 1))
             self.db_passwd = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PW", 1))
             self.db_port = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PORT", 1))
@@ -90,7 +80,7 @@ class ConfManager:
             self.db_host = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_IPADDR", 1))
 
         except Exception as errmsg:
-            print('Exception in read config : {}'.format(errmsg))
+            print('Error. Exception in read config : {}'.format(errmsg))
             # from ExceptionHandler import ExceptionManager
             # ExceptionManager.process_stop()
 
@@ -166,47 +156,19 @@ class ConfManager:
 
     def get_flexconf_config(self):
         parser = configparser.ConfigParser()
-        parser.read(ConfManager.FLEXCONF_CONFIG_PATH)
+        parser.read(ConfManager.CONFIG_PATH)
 
         ALL_CONFIG_INFO = {}
 
         CRON_CONFIG = {}
-        WORKFLOW_CONFIG = {}
-        WORKITEM_CONFIG = {}
-        ENGINE_API_CONFIG = {}
-        TOMCAT_API_CONFIG = {}
 
         CRON_KEY = ['CRON_FILE_PATH', 'CRON_LOG_PATH', 'CRON_USER']
-        WORKFLOW_KEY = ['WORKFLOW_PATH']
-        WORKITEM_KEY = ['WORKITEM_PATH']
-        ENGINE_API_KEY = ['ENGINE_VIP_URI']
-        TOMCAT_API_KEY = ['TOMCAT_VIP_URI']
 
         raw = 'CRON_CONFIG'
         for k in CRON_KEY:
             CRON_CONFIG[k] = parser.get(raw, k)
 
-        raw = 'WORKFLOW_CONFIG'
-        for k in WORKFLOW_KEY:
-            WORKFLOW_CONFIG[k] = parser.get(raw, k)
-
-        raw = 'WORKITEM_CONFIG'
-        for k in WORKITEM_KEY:
-            WORKITEM_CONFIG[k] = parser.get(raw, k)
-
-        raw = 'ENGINE_API_CONFIG'
-        for k in ENGINE_API_KEY:
-            ENGINE_API_CONFIG[k] = parser.get(raw, k)
-
-        raw = 'TOMCAT_API_CONFIG'
-        for k in TOMCAT_API_KEY:
-            TOMCAT_API_CONFIG[k] = parser.get(raw, k)
-
         ALL_CONFIG_INFO['CRON_CONFIG'] = CRON_CONFIG
-        ALL_CONFIG_INFO['WORKFLOW_CONFIG'] = WORKFLOW_CONFIG
-        ALL_CONFIG_INFO['WORKITEM_CONFIG'] = WORKITEM_CONFIG
-        ALL_CONFIG_INFO['ENGINE_API_CONFIG'] = ENGINE_API_CONFIG
-        ALL_CONFIG_INFO['TOMCAT_API_CONFIG'] = TOMCAT_API_CONFIG
 
         return ALL_CONFIG_INFO
 
