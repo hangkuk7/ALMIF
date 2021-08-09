@@ -10,7 +10,7 @@ global myProcName
 
 
 def initConfig():
-    print(f'--------------------Start Django--------------------')
+    print(f'-------------------- initConfig() --------------------')
     print(f'--------------------Get Config--------------------')
     ALL_CONFIG_INFO = ConfManager.getInstance().get_flexconf_config()
 
@@ -23,6 +23,11 @@ def initConfig():
     print('CRON_CONFIG = {}'.format(CRON_CONFIG))
     print('dbinfo = {}'.format(DB_INFO))
 
+    return True
+
+def initLog():
+    print(f'initLog Start!')
+    return True
 
 if __name__ == '__main__':
     print(f'ALMIF main() start')
@@ -39,9 +44,14 @@ if __name__ == '__main__':
         print(f'Error. Invalid ProcName. ProcName=[{sys.argv[1]}]')
         sys.exit()
 
-    print(f'***** OK...Start *****')
-    print(f'********** Get Config ************')
-    initConfig()
+    print(f'***** {myProcName} Start! *****')
+     if initConfig() != True:
+        print(f'Error. initConfig() fail')
+        sys.exit()
+
+    if initLog() != True:
+        print(f'Error. initLog() fail')
+        sys.exit()
 
         
 
