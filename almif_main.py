@@ -2,6 +2,16 @@ import os
 import sys
 from multiprocessing import Process, Queue
 
+# from .ConfigManager import ConfManager
+# from .DatabaseManager import DbManager
+
+# import ConfigManager
+# import DatabaseManager
+
+from ConfigManager import ConfManager
+from DatabaseManager import DbManager
+
+# define global variables
 global myProcName
 
 if __name__ == '__main__':
@@ -20,6 +30,9 @@ if __name__ == '__main__':
         sys.exit()
 
     print(f'***** OK...Start *****')
+    print(f'********** Get Config ************')
+    # ALL_CONFIG_INFO = ConfigManager.g
+
         
 
 
