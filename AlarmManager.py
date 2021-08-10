@@ -42,7 +42,7 @@ class AlarmMgr:
             print(f'Error. Invalid file info. file_path=[{self._file_path}]')
             return None
 
-    def __bytes_to_string(byte_or_int_value, encoding='utf-8'):
+    def __bytes_to_string(self, byte_or_int_value, encoding='utf-8'):
         if isinstance(byte_or_int_value, bytes):
             return byte_or_int_value.decode(encoding)
         if isinstance(byte_or_int_value, int):
