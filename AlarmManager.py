@@ -17,7 +17,7 @@ class AlarmMgr:
         self._access_at = access_info[9]
 
         # validate cheack
-        if len(self._conn_ip) < 1 or len(self._conn_port):
+        if len(self._conn_ip) < 1 or len(self._conn_port) < 1:
             print('Error. Invalid connection info. conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}]')
             return None
 
