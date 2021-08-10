@@ -56,9 +56,11 @@ class AlarmMgr:
             return None
 
     def __parse_5G_alarm(self, file):
+        print(f'__parse_5G_alarm() Start!')
         return True
 
     def __parse_LTE_alarm(self, file):
+        print(f'__parse_LTE_alarm() Start!')
         return True
 
     def get_remote_alarm(self):
