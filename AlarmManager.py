@@ -3,6 +3,10 @@ import paramiko
 import glob
 import getpass
 import time
+
+# For Regular expression
+import re
+
 from almif_variables import *
 
 class AlarmMgr:
@@ -79,6 +83,9 @@ class AlarmMgr:
             print(f'Error. Invalid File length. file len=[{len(file)}]')
             return False
 
+        # for sort.
+        alarm_title_list = list()
+        for idx, item in enumerate(alarm_info_list):
 
 
         return True
