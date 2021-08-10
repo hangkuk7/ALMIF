@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # select tb_e2eo_fc_alarm_access_info
     Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
     sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
-    print(f'sql_string = [{sql_string}]')
+    print(f'sql_string=[{sql_string}]')
     db_results = Dbmanager.select(sql_string)
-    print(f'db_results = [{db_results}]')
+    print(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
