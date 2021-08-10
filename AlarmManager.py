@@ -18,19 +18,19 @@ class AlarmMgr:
 
         # validate cheack
         if len(self._conn_ip) < 1 or len(self._conn_port) < 1:
-            print('Error. Invalid connection info. conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}]')
+            print(f'Error. Invalid connection info. conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}]')
             return None
 
-        if len(self._user_id) < 1 or len(self._user_pass):
-            print('Error. Invalid access info. user_id=[{self._user_id}], user_pass=[{self._user_pass}]')
+        if len(self._user_id) < 1 or len(self._user_pass) < 1:
+            print(f'Error. Invalid access info. user_id=[{self._user_id}], user_pass=[{self._user_pass}]')
             return None
 
-        if len(self._vendor_type) < 1 or len(self._rat_type):
-            print('Error. Invalid vendor info. vendor_type=[{self._vendor_type}], rat_type=[{self._rat_type}]')
+        if len(self._vendor_type) < 1 or len(self._rat_type) < 1:
+            print(f'Error. Invalid vendor info. vendor_type=[{self._vendor_type}], rat_type=[{self._rat_type}]')
             return None
 
-        if len(self._file_path):
-            print('Error. Invalid file info. file_path=[{self._file_path}]')
+        if len(self._file_path) < 1:
+            print(f'Error. Invalid file info. file_path=[{self._file_path}]')
             return None
 
     def print_access_info(self):
