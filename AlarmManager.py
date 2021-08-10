@@ -70,7 +70,7 @@ class AlarmMgr:
         self._cli.connect(self._conn_ip, port=self._conn_port,
                           username=self._user_id, password=self._user_pass)
 
-        # parsing the remote file
+        # process the remote file
         with self._cli.open_sftp() as sftp_client:
             with sftp_client.open(self._file_path, 'r') as remote_file:
                 print(f'remote file open success! filename=[{self._file_path}]')
