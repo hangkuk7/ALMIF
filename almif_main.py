@@ -45,13 +45,18 @@ if __name__ == '__main__':
         sys.exit()
 
     print(f'***** {myProcName} Start! *****')
-     if initConfig() != True:
+    if initConfig() != True:
         print(f'Error. initConfig() fail')
         sys.exit()
 
     if initLog() != True:
         print(f'Error. initLog() fail')
         sys.exit()
-        
 
+    # select tb_e2eo_fc_alarm_access_info
+    Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
+    sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
+    print(f'sql_string = [{sql_string}]')
+    db_results = Dbmanager.select(sql_string)
+    print(f'db_results = [{db_results}]')
 
