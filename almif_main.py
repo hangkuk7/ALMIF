@@ -13,10 +13,6 @@ import glob
 import getpass
 import time
 
-# define global variables
-global myProcName
-
-
 def initConfig():
     print(f'-------------------- initConfig() --------------------')
     print(f'--------------------Get Config--------------------')
@@ -41,6 +37,7 @@ def initLog():
 def proc_alarm_job(alarm_mgr):
     print(f'*** proc_alarm_job() start! pid=[{os.getpid()}]****')
     alarm_mgr.print_access_info()
+    alarm_mgr.get_remote_alarm()
 
     return True
 
@@ -48,6 +45,7 @@ if __name__ == '__main__':
     print(f'ALMIF main() start')
     print(f'sys.argv len = [{len(sys.argv)}]')
 
+    global myProcName
     # set Process Name
     myProcName = 'ALMIF'
 
