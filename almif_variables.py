@@ -1,0 +1,10 @@
+# define variables for ALMIF
+
+# Vendor
+VENDOR_TYPE_NOKIA = 'NOKIA'
+VENDOR_TYPE_ERICSSON = 'ERICSSON'
+
+# RAT
+RAT_TYPE_5G = '5G'
+RAT_TYPE_LTE = 'LTE'
+

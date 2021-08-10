@@ -5,6 +5,7 @@ from multiprocessing import Process, Queue
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
 from AlarmManager import AlarmMgr
+from almif_variables import *
 
 # define global variables
 global myProcName
@@ -28,6 +29,11 @@ def initConfig():
 
 def initLog():
     print(f'initLog Start!')
+    return True
+
+# multiprocessing function
+def proc_alarm_job(alarmObj):
+    print(f'*** proc_alarm_job() start! ****')
     return True
 
 if __name__ == '__main__':
@@ -62,10 +68,17 @@ if __name__ == '__main__':
     print(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
     alarm_mgr_list = list()
+    proc_list = list()
     for result in db_results:
         alarm_mgr = AlarmMgr(result)
         if alarm_mgr != None:
             alarm_mgr.print_access_info()
             alarm_mgr_list.append(alarm_mgr)
 
+            proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
+            proc_list.append(proc)
+            proc.start()
+
+    for proc in proc_list:
+        proc.join()
 
