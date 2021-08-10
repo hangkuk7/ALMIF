@@ -50,7 +50,12 @@ class AlarmMgr:
         else:
             raise ValueError('Error: Input must be a bytes or int type')
 
-    def ssh_connect(self):
+    def get_remote_alarm(self):
+        print(f'get_remote_alarm() Start!')
+
+        # SSH connect
+        self._cli.connect(self._conn_ip, port=self._conn_port,
+                          username=self._user_id, password=self._user_pass)
         return True
 
     def print_access_info(self):
