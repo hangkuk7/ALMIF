@@ -3,6 +3,7 @@ import paramiko
 import glob
 import getpass
 import time
+from almif_variables import *
 
 class AlarmMgr:
     def __init__(self, access_info, charset='utf8'):
@@ -103,6 +104,18 @@ class AlarmMgr:
                         alarm_file = text_data[:]
 
                 print(f'alarm_file type=[{type(alarm_file)}], alarm_file len=[{len(alarm_file)}]')
+                if self._rat_type == RAT_TYPE_5G:
+                    print(f'*** RAT_TYPE_5G ***')
+                    ret = self.__parse_5G_alarm(alarm_file)
+                    if ret != True:
+                        print(f'Error. __parse_5G_alarm() fail')
+                elif self._rat_type == RAT_TYPE_LTE:
+                    print(f'*** RAT_TYPE_LTE ***')
+                    ret = self.__parse_LTE_alarm(alarm_file)
+                else:
+                    print(f'*** Unknown RAT_TYPE ***, rat_type=[{self._rat_type}]')
+                    return False
+
 
         self._cli.close()
         return True
