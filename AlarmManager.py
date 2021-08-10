@@ -48,7 +48,8 @@ class AlarmMgr:
         if isinstance(byte_or_int_value, int):
             return chr(byte_or_int_value).encode(encoding).decode(encoding)
         else:
-            raise ValueError('Error: Input must be a bytes or int type')
+            print(f'Error: Input must be a bytes or int type')
+            return None
 
     def get_remote_alarm(self):
         print(f'get_remote_alarm() Start!')
@@ -68,8 +69,10 @@ class AlarmMgr:
                 print(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
 
                 text_data = self.__bytes_to_string(binary_data)
-                print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
+                if text_data == None:
+                    print(f'Error. __bytes_to_string() fail')
 
+                print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
 
         return True
 
