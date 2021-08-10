@@ -33,7 +33,7 @@ def initLog():
 
 # multiprocessing function
 def proc_alarm_job(alarm_mgr):
-    print(f'*** proc_alarm_job() start! ****')
+    print(f'*** proc_alarm_job() start! pid=[{os.getpid()}]****')
     alarm_mgr.print_access_info()
     return True
 
