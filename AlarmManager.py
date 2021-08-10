@@ -1,10 +1,19 @@
-
+# For SSH
+import paramiko
+import glob
+import getpass
+import time
 
 class AlarmMgr:
     def __init__(self, access_info, charset='utf8'):
         if len(access_info) < 1:
             return None
 
+        # Create SSH Client
+        self._cli = paramiko.SSHClient()
+        self._cli = set_missing_host_key_policy(paramiko.AutoAddPolicy)
+
+        # Save access information to self variables.
         self._name = access_info[0]
         self._conn_ip = access_info[1]
         self._conn_port = access_info[2]
@@ -32,6 +41,17 @@ class AlarmMgr:
         if len(self._file_path) < 1:
             print(f'Error. Invalid file info. file_path=[{self._file_path}]')
             return None
+
+    def bytes_to_string(byte_or_int_value, encoding='utf-8'):
+        if isinstance(byte_or_int_value, bytes):
+            return byte_or_int_value.decode(encoding)
+        if isinstance(byte_or_int_value, int):
+            return chr(byte_or_int_value).encode(encoding).decode(encoding)
+        else:
+            raise ValueError('Error: Input must be a bytes or int type')
+
+    def ssh_connect(self):
+        return True
 
     def print_access_info(self):
         print(f'name=[{self._name}], conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}], ' \
