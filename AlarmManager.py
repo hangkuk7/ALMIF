@@ -25,6 +25,10 @@ class AlarmMgr:
         self._last_alarm_info = access_info[8]
         self._access_at = access_info[9]
 
+        # private variation
+        self._alarm_file = None
+
+
         # check validation
         if len(self._conn_ip) < 1 or len(self._conn_port) < 1:
             print(f'Error. Invalid connection info. conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}]')
@@ -71,9 +75,29 @@ class AlarmMgr:
                 text_data = self.__bytes_to_string(binary_data)
                 if text_data == None:
                     print(f'Error. __bytes_to_string() fail')
+                    return False
 
                 print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
 
+                ##### search location of last alarm #####
+                search_loc = None
+                if len(self._last_alarm_info) < 1:
+                    print(f'last_alarm_info is empty')
+                    self._alarm_file = text_data[:]
+                else:
+                    print(f'last_alarm_info is NOT empty. last_alarm_info=[{self._last_alarm_info}]')
+                    search_loc = text_data.find(self._last_alarm_info)
+                    print(f'search_loc type=[{type(search_loc)}], search_loc=[{search_loc}]')
+                    if search_loc > 0:
+                        print(f'last alarm info search success! search_loc=[{search_loc}]]')
+                        #### slicing alarm information #####
+                        self._alarm_file = text_data[(search_loc):]
+                    else:
+                        print(f'Error. last alarm info search fail! search_loc=[{search_loc}]]')
+                        self._alarm_file = text_data[:]
+
+
+        self._cli.close()
         return True
 
     def print_access_info(self):
