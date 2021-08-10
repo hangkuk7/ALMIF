@@ -81,6 +81,7 @@ class AlarmMgr:
                 text_data = self.__bytes_to_string(binary_data)
                 if text_data == None:
                     print(f'Error. __bytes_to_string() fail')
+                    self._cli.close()
                     return False
 
                 print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
@@ -109,11 +110,19 @@ class AlarmMgr:
                     ret = self.__parse_5G_alarm(alarm_file)
                     if ret != True:
                         print(f'Error. __parse_5G_alarm() fail')
+                        self._cli.close()
+                        return False
+
                 elif self._rat_type == RAT_TYPE_LTE:
                     print(f'*** RAT_TYPE_LTE ***')
                     ret = self.__parse_LTE_alarm(alarm_file)
+                    if ret != True:
+                        print(f'Error. __parse_LTE_alarm() fail')
+                        self._cli.close()
+                        return False
                 else:
                     print(f'*** Unknown RAT_TYPE ***, rat_type=[{self._rat_type}]')
+                    self._cli.close()
                     return False
 
 
