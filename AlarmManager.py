@@ -11,7 +11,7 @@ class AlarmMgr:
 
         # Create SSH Client
         self._cli = paramiko.SSHClient()
-        self._cli = set_missing_host_key_policy(paramiko.AutoAddPolicy)
+        self._cli.set_missing_host_key_policy(paramiko.AutoAddPolicy)
 
         # Save access information to self variables.
         self._name = access_info[0]
