@@ -25,8 +25,7 @@ class AlarmMgr:
         self._last_alarm_info = access_info[8]
         self._access_at = access_info[9]
 
-        # private variation
-        self._alarm_file = None
+        # private variables
 
 
         # check validation
@@ -55,6 +54,12 @@ class AlarmMgr:
             print(f'Error: Input must be a bytes or int type')
             return None
 
+    def __parse_5G_alarm(self, file):
+        return True
+
+    def __parse_LTE_alarm(self, file):
+        return True
+
     def get_remote_alarm(self):
         print(f'get_remote_alarm() Start!')
 
@@ -81,9 +86,10 @@ class AlarmMgr:
 
                 ##### search location of last alarm #####
                 search_loc = None
+                alarm_file = None
                 if len(self._last_alarm_info) < 1:
                     print(f'last_alarm_info is empty')
-                    self._alarm_file = text_data[:]
+                    alarm_file = text_data[:]
                 else:
                     print(f'last_alarm_info is NOT empty. last_alarm_info=[{self._last_alarm_info}]')
                     search_loc = text_data.find(self._last_alarm_info)
@@ -91,11 +97,12 @@ class AlarmMgr:
                     if search_loc > 0:
                         print(f'last alarm info search success! search_loc=[{search_loc}]]')
                         #### slicing alarm information #####
-                        self._alarm_file = text_data[(search_loc):]
+                        alarm_file = text_data[(search_loc):]
                     else:
                         print(f'Error. last alarm info search fail! search_loc=[{search_loc}]]')
-                        self._alarm_file = text_data[:]
+                        alarm_file = text_data[:]
 
+                print(f'alarm_file type=[{type(alarm_file)}], alarm_file len=[{len(alarm_file)}]')
 
         self._cli.close()
         return True
