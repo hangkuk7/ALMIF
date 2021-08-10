@@ -34,7 +34,7 @@ class AlarmMgr:
             return None
 
     def print_access_info(self):
-        print(f'name=[{self._name}], conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}' \
+        print(f'name=[{self._name}], conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}], ' \
               f'user_id=[{self._user_id}], user_pass=[{self._user_pass}], ' \
               f'vendor_type=[{self._vendor_type}], rat_type=[{self._rat_type}], ' \
               f'file_path=[{self._file_path}], last_alarm_info=[{self._last_alarm_info}]')
