@@ -31,8 +31,6 @@ class AlarmMgr:
         self._access_at = access_info[9]
 
         # private variables
-        self._alarm_info_list = list()
-
         self._alarm_source = ''
         self._alarm_time = ''
         self._alarm_code = ''
@@ -77,16 +75,130 @@ class AlarmMgr:
             print(f'Error: Input must be a bytes or int type')
             return None
 
-    def __parse_5G_alarm(self, file):
+    def __parse_5G_alarm(self, alarm_file):
         print(f'__parse_5G_alarm() Start!')
-        if len(file) < 1:
-            print(f'Error. Invalid File length. file len=[{len(file)}]')
+        if len(alarm_file) < 1:
+            print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
+
+        regex = re.compile(r'RANEMS\S+.*\n' \
+                           r'\s[**].*\n' \
+                           r'\s+NETWORKELEMENT.*\n' \
+                           r'\s+LOCATION.*\n' \
+                           r'\s+EVENTTYPE.*\n' \
+                           r'\s+PROBABLECAUSE.*\n' \
+                           r'\s+SPECIFICPROBLEM.*\n' \
+                           r'\s+PERCEIVEDSEVERITY.*\n' \
+                           r'\s+ADDITIONALTEXT.*\n' \
+                           r'\s+COMPLETED.*\n' \
+                           , re.MULTILINE)
+
+        match_list = regex.findall(alarm_file)
+
+        print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
+        print(f'***** Remove duplicated items ******')
+        alarm_info_list = list()
+        # Remove duplicated items
+        for value in match_list:
+            if value not in alarm_info_list:
+                alarm_info_list.append(value)
+
+        print(f'************************************')
+        print(f'*** alarm_info_list type = [{type(alarm_info_list)}], alarm_info_list len=[{len(alarm_info_list)}] ***')
 
         # for sort.
         alarm_title_list = list()
-        for idx, item in enumerate(alarm_info_list):
 
+        for idx, item in enumerate(alarm_info_list):
+            alarm_item_str = ''.join(item)
+            # print(f'idx=[{idx + 1}], alarm_item_str=[\n{alarm_item_str}]')
+            split_str = alarm_item_str.split('\n')
+            # print(f'idx=[{idx + 1}], type_split_str=[{type(split_str)}], split_str=[\n{split_str}]')
+            for jdx, alarm_row in enumerate(split_str):
+                # print(f'\n*** jdx=[{jdx+1}], alarm_row=[{alarm_row}] ***\n')
+                if 'RANEMS' in alarm_row:
+                    split_row = alarm_row.split(' ', maxsplit=1)
+                    alarm_source = split_row[0]
+                    alarm_time = split_row[1]
+
+                    alarm_title_list.append(alarm_row)
+
+                    # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
+
+                elif '**' in alarm_row:
+                    # print(f'--- [**]=[{alarm_row}] ---')
+                    split_row = alarm_row.split(' ')
+                    split_row_len = len(split_row)
+                    alarm_code = ''
+                    alarm_name = ''
+                    alarm_state = ''
+                    for split_single_item in split_row:
+                        if '**' in split_single_item:
+                            continue
+                        elif split_single_item.startswith('A') and split_single_item.isalpha() == False:
+                            alarm_code = split_single_item
+                        elif 'OCCURRED' in split_single_item or 'CLEARED' in split_single_item:
+                            alarm_state = split_single_item
+                        elif len(split_single_item) > 1:
+                            alarm_name += split_single_item
+                            alarm_name += ' '
+                    # print(f'--- [**] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
+                elif 'NETWORKELEMENT' in alarm_row:
+                    # print(f'--- [NETWORKELEMENT]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    ne_name = split_row[1].lstrip().rstrip()
+                    # print(f'--- [NETWORKELEMENT] : ne_name=[{ne_name}] ---')
+                elif 'LOCATION' in alarm_row:
+                    # print(f'--- [LOCATION]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    location = split_row[1].lstrip().rstrip()
+                    # print(f'--- [LOCATION] : location=[{location}] ---')
+                elif 'EVENTTYPE' in alarm_row:
+                    # print(f'--- [EVENTTYPE]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    event_type = split_row[1].lstrip().rstrip()
+                    # print(f'--- [EVENTTYPE] : event_type=[{event_type}] ---')
+                elif 'PROBABLECAUSE' in alarm_row:
+                    # print(f'--- [PROBABLECAUSE]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    probable_cause = split_row[1].lstrip().rstrip()
+                    # print(f'--- [PROBABLECAUSE] : probable_cause=[{probable_cause}] ---')
+                elif 'SPECIFICPROBLEM' in alarm_row:
+                    # print(f'--- [SPECIFICPROBLEM]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    specific_problem = split_row[1].lstrip().rstrip()
+                    # print(f'--- [SPECIFICPROBLEM] : specific_problem=[{specific_problem}] ---')
+                elif 'PERCEIVEDSEVERITY' in alarm_row:
+                    # print(f'--- [PERCEIVEDSEVERITY]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    severity = split_row[1].lstrip().rstrip()
+                    # print(f'--- [PERCEIVEDSEVERITY] : severity=[{severity}] ---')
+                elif 'ADDITIONALTEXT' in alarm_row:
+                    # print(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    additional_text = split_row[1].lstrip().rstrip()
+                    # print(f'--- [ADDITIONALTEXT] : additional_text=[{additional_text}] ---')
+                elif 'COMPLETED' in alarm_row:
+                    # print(f'--- [COMPLETED]=[{alarm_row}] ---')
+                    pass
+                else:
+                    # print(f'--- [else]=[{alarm_row}] ---')
+                    pass
+
+                # print(f'***************************************\n')
+
+        # Sort alarm time list. latest alarm time is first item.
+        alarm_title_list.sort(key=lambda x: (x.split(' ')[1], x.split(' ')[2]), reverse=True)
+        lastest_alarm_info = alarm_title_list[0]
+
+        print(f'\n************* Alarm Time Info Start *******************')
+        print(f'alarm_title_list len=[{len(alarm_title_list)}]')
+
+        for idx, item in enumerate(alarm_title_list):
+            print(f'idx=[{idx + 1}] item=[{item}]')
+
+        print(f'\nlastest_alarm_info=[{lastest_alarm_info}]')
+        print(f'************* Alarm Time Info End *******************\n')
 
         return True
 
