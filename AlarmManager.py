@@ -27,7 +27,25 @@ class AlarmMgr:
         self._access_at = access_info[9]
 
         # private variables
+        self._alarm_info_list = list()
 
+        self._alarm_source = ''
+        self._alarm_time = ''
+        self._alarm_code = ''
+        self._alarm_name = ''
+        self._alarm_state = ''
+        self._ne_name = ''
+        self._location = ''
+        self._event_type = ''
+        self._probable_cause = ''
+        self._specific_problem = ''
+        self._severity = ''
+        self._additional_text = ''
+
+        # for Lte specific variables
+        self._alarm_id = ''
+        self._notification_id = ''
+        self._clear_user = ''
 
         # check validation
         if len(self._conn_ip) < 1 or len(self._conn_port) < 1:
@@ -57,6 +75,12 @@ class AlarmMgr:
 
     def __parse_5G_alarm(self, file):
         print(f'__parse_5G_alarm() Start!')
+        if len(file) < 1:
+            print(f'Error. Invalid File length. file len=[{len(file)}]')
+            return False
+
+
+
         return True
 
     def __parse_LTE_alarm(self, file):
