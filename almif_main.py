@@ -72,7 +72,7 @@ if __name__ == '__main__':
     for result in db_results:
         alarm_mgr = AlarmMgr(result)
         if alarm_mgr != None:
-            alarm_mgr.print_access_info()
+            # alarm_mgr.print_access_info()
             alarm_mgr_list.append(alarm_mgr)
 
             proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
