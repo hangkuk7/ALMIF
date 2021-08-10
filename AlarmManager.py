@@ -42,7 +42,7 @@ class AlarmMgr:
             print(f'Error. Invalid file info. file_path=[{self._file_path}]')
             return None
 
-    def bytes_to_string(byte_or_int_value, encoding='utf-8'):
+    def __bytes_to_string(byte_or_int_value, encoding='utf-8'):
         if isinstance(byte_or_int_value, bytes):
             return byte_or_int_value.decode(encoding)
         if isinstance(byte_or_int_value, int):
@@ -56,6 +56,21 @@ class AlarmMgr:
         # SSH connect
         self._cli.connect(self._conn_ip, port=self._conn_port,
                           username=self._user_id, password=self._user_pass)
+
+        # parsing the remote file
+        with self._cli.open_sftp() as sftp_client:
+            with sftp_client.open(self._file_path, 'r') as remote_file:
+                print(f'remote file open success! filename=[{self._file_path}]')
+
+                # Calling SFTPFile.prefetch should increase the read speed
+                remote_file.prefetch()
+                binary_data = remote_file.read()
+                print(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
+
+                text_data = self.__bytes_to_string(binary_data)
+                print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
+
+
         return True
 
     def print_access_info(self):
