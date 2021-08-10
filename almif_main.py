@@ -4,6 +4,7 @@ from multiprocessing import Process, Queue
 
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
+from AlarmManager import AlarmMgr
 
 # define global variables
 global myProcName
@@ -59,4 +60,12 @@ if __name__ == '__main__':
     print(f'sql_string=[{sql_string}]')
     db_results = Dbmanager.select(sql_string)
     print(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
+
+    alarm_mgr_list = list()
+    for result in db_results:
+        alarm_mgr = AlarmMgr(result)
+        if alarm_mgr != None:
+            alarm_mgr.print_access_info()
+            alarm_mgr_list.append(alarm_mgr)
+
 
