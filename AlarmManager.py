@@ -102,9 +102,11 @@ class AlarmMgr:
                          "AND rat_type='" + self._rat_type + "' " \
                          "AND alarm_code='" + data['alarm_code'] + "' " \
                          "AND location='" + data['location'] + "' "
-            # print(f'sql_string=[\n{sql_string}\n]')
 
             db_results = Dbmanager.select(sql_string)
+            print(f'sql_string=[\n{sql_string}\n]')
+            print(f'db_results=[\n{db_results}\n]')
+
             if db_results != ():
                 print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
                 # insert TB_E2EO_FC_FAULT_ALARM
