@@ -115,14 +115,14 @@ class AlarmMgr:
                 print(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
                 # insert TB_E2EO_FC_FAULT_ALARM
                 str_alarm_state = str(data['alarm_state'])
-                db_alarm_state = ''
+                alarm_state_type = ''
                 if str_alarm_state.upper() == 'OCCURRED':
-                    db_alarm_state = DB_ALARM_STATE_OCCURRED
+                    alarm_state_type = DB_ALARM_STATE_OCCURRED
                 elif str_alarm_state.upper() == 'CLEARED':
-                    db_alarm_state = DB_ALARM_STATE_CLEARED
+                    alarm_state_type = DB_ALARM_STATE_CLEARED
                 else:
                     print(f'unknown alarm_state. alarm_state=[{str_alarm_state}]')
-                    db_alarm_state = DB_ALARM_STATE_CLEARED
+                    alarm_state_type = DB_ALARM_STATE_CLEARED
 
                 sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm " \
                              "(vendor_type, rat_type, alarm_code, " \
@@ -134,7 +134,7 @@ class AlarmMgr:
                              "VALUES ('" + self._vendor_type + "', '" + self._rat_type + "', " \
                              "'" + data['alarm_code'] + "', '" + data['location'] + "', " \
                              "'" + data['alarm_source'] + "', '" + data['alarm_time'] + "', " \
-                             "'" + data['alarm_name'] + "', '" + db_alarm_state + "', " \
+                             "'" + data['alarm_name'] + "', '" + alarm_state_type + "', " \
                              "'" + data['event_type'] + "', '" + data['severity'] + "', " \
                              "'" + data['probable_cause'] + "', '" + data['additional_text'] + "', " \
                              "'" + data['ne_name'] + "', '" + data['specific_problem'] + "', " \
