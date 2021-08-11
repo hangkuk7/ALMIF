@@ -85,16 +85,16 @@ class AlarmMgr:
             db_notification_id = data['notification_id']
             db_clear_user = data['clear_user']
 
-            print(f'================================================================')
-            print(f'idx=[{idx}] : alarm_source=[{db_alarm_source}], ' \
-                  f'alarm_time=[{db_alarm_time}], alarm_code=[{db_alarm_code}], ' \
-                  f'alarm_name=[{db_alarm_name}], alarm_state=[{db_alarm_state}], ' \
-                  f'ne_name=[{db_ne_name}], location=[{db_location}], ' \
-                  f'event_type=[{db_event_type}], probable_cause=[{db_probable_cause}], ' \
-                  f'specific_problem=[{db_specific_problem}], severity=[{db_severity}], ' \
-                  f'additional_text=[{db_additional_text}], alarm_id=[{db_alarm_id}], ' \
-                  f'notification_id=[{db_notification_id}], clear_user=[{db_clear_user}]')
-            print(f'================================================================')
+            # print(f'================================================================')
+            # print(f'idx=[{idx}] : alarm_source=[{db_alarm_source}], ' \
+            #       f'alarm_time=[{db_alarm_time}], alarm_code=[{db_alarm_code}], ' \
+            #       f'alarm_name=[{db_alarm_name}], alarm_state=[{db_alarm_state}], ' \
+            #       f'ne_name=[{db_ne_name}], location=[{db_location}], ' \
+            #       f'event_type=[{db_event_type}], probable_cause=[{db_probable_cause}], ' \
+            #      f'specific_problem=[{db_specific_problem}], severity=[{db_severity}], ' \
+            #      f'additional_text=[{db_additional_text}], alarm_id=[{db_alarm_id}], ' \
+            #      f'notification_id=[{db_notification_id}], clear_user=[{db_clear_user}]')
+            # print(f'================================================================')
 
             # select TB_E2EO_FC_FAULT_ALARM
             sql_string = "select alarm_time, alarm_state, severity from tb_e2eo_fc_fault_alarm " \
