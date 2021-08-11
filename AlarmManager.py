@@ -69,21 +69,21 @@ class AlarmMgr:
 
         sql_string = ''
         for idx, data in enumerate(alarm_data_list):
-            db_alarm_source = data['alarm_source']
-            db_alarm_time = data['alarm_time']
-            db_alarm_code = data['alarm_code']
-            db_alarm_name = data['alarm_name']
-            db_alarm_state = data['alarm_state']
-            db_ne_name = data['ne_name']
-            db_location = data['location']
-            db_event_type = data['event_type']
-            db_probable_cause = data['probable_cause']
-            db_specific_problem = data['specific_problem']
-            db_severity = data['severity']
-            db_additional_text = data['additional_text']
-            db_alarm_id = data['alarm_id']
-            db_notification_id = data['notification_id']
-            db_clear_user = data['clear_user']
+            # db_alarm_source = data['alarm_source']
+            # db_alarm_time = data['alarm_time']
+            # db_alarm_code = data['alarm_code']
+            # db_alarm_name = data['alarm_name']
+            # db_alarm_state = data['alarm_state']
+            # db_ne_name = data['ne_name']
+            # db_location = data['location']
+            # db_event_type = data['event_type']
+            # db_probable_cause = data['probable_cause']
+            # db_specific_problem = data['specific_problem']
+            # db_severity = data['severity']
+            # db_additional_text = data['additional_text']
+            # db_alarm_id = data['alarm_id']
+            # db_notification_id = data['notification_id']
+            # db_clear_user = data['clear_user']
 
             # print(f'================================================================')
             # print(f'idx=[{idx}] : alarm_source=[{db_alarm_source}], ' \
@@ -97,14 +97,17 @@ class AlarmMgr:
             # print(f'================================================================')
 
             # select TB_E2EO_FC_FAULT_ALARM
-           sql_string = "select alarm_time, alarm_state, severity from tb_e2eo_fc_fault_alarm " \
+            sql_string = "select alarm_time, alarm_state, severity from tb_e2eo_fc_fault_alarm " \
                          "WHERE vendor_type='" + self._vendor_type + "' " \
                          "AND rat_type='" + self._rat_type + "' " \
                          "AND alarm_code='" + data['alarm_code'] + "' " \
                          "AND location='" + data['location'] + "' "
             print(f'sql_string=[\n{sql_string}\n]')
 
-            return True
+            db_results = Dbmanager.select(sql_string)
+            print(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
+
+        return True
 
     def __parse_5G_alarm(self, alarm_file):
         print(f'__parse_5G_alarm() Start!')
