@@ -59,6 +59,35 @@ class AlarmMgr:
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
         print(f'*********** __proc_alarm_db() Start! ***********')
         print(f'alarm_data_list len=[{len(alarm_data_list)}], latest_alarm_info=[{latest_alarm_info}]')
+
+        for idx, data in enumerate(alarm_data_list):
+            db_alarm_source = data['alarm_source']
+            db_alarm_time = data['alarm_time']
+            db_alarm_code = data['alarm_code']
+            db_alarm_name = data['alarm_name']
+            db_alarm_state = data['alarm_state']
+            db_ne_name = data['ne_name']
+            db_location = data['location']
+            db_event_type = data['event_type']
+            db_probable_cause = data['probable_cause']
+            db_specific_problem = data['specific_problem']
+            db_severity = data['severity']
+            db_additional_text = data['additional_text']
+            db_alarm_id = data['alarm_id']
+            db_notification_id = data['notification_id']
+            db_clear_user = data['clear_user']
+
+            print(f'================================================================')
+            print(f'idx=[{idx}] : alarm_source=[{db_alarm_source}], ' \
+                  f'alarm_time=[{db_alarm_time}], alarm_code=[{db_alarm_code}], ' \
+                  f'alarm_name=[{db_alarm_name}], alarm_state=[{db_alarm_state}], ' \
+                  f'ne_name=[{db_ne_name}], location=[{db_location}], ' \
+                  f'event_type=[{db_event_type}], probable_cause=[{db_probable_cause}], ' \
+                  f'specific_problem=[{db_specific_problem}], severity=[{db_severity}], ' \
+                  f'additional_text=[{db_additional_text}], alarm_id=[{db_alarm_id}], ' \
+                  f'notification_id=[{db_notification_id}], clear_user=[{db_clear_user}]')
+            print(f'================================================================')
+
         return True
 
     def __parse_5G_alarm(self, alarm_file):
@@ -193,8 +222,6 @@ class AlarmMgr:
                                     'alarm_time':alarm_time,
                                     'alarm_code':alarm_code,
                                     'alarm_name':alarm_name,
-                                    'alarm_code': alarm_code,
-                                    'alarm_name': alarm_name,
                                     'alarm_state': alarm_state,
                                     'ne_name': ne_name,
                                     'location': location,
