@@ -125,7 +125,7 @@ class AlarmMgr:
                              "'" + data['alarm_name'] + "', '" + data['alarm_state'] + "', " \
                              "'" + data['event_type'] + "', '" + data['severity'] + "', " \
                              "'" + data['probable_cause'] + "', '" + data['additional_text'] + "', " \
-                             "'" + data['ne_type'] + "', '" + data['specific_problem'] + "', " \
+                             "'" + data['ne_name'] + "', '" + data['specific_problem'] + "', " \
                              "'" + data['alarm_id'] + "', '" + data['notification_id'] + "', " \
                              "'" + data['clear_user'] + "', NOW());"
                 Dbmanager.insert(sql_string)
