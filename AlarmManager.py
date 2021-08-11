@@ -139,7 +139,7 @@ class AlarmMgr:
                              "'" + data['alarm_id'] + "', '" + data['notification_id'] + "', " \
                              "'" + data['clear_user'] + "', NOW());"
                 Dbmanager.insert(sql_string)
-                print(f'sql_string=[\n{sql_string}\n]')
+                # print(f'sql_string=[\n{sql_string}\n]')
 
 
 
