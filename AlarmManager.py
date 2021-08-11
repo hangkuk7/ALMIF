@@ -58,6 +58,7 @@ class AlarmMgr:
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
         print(f'*********** __proc_alarm_db() Start! ***********')
+        print(f'alarm_data_list len=[{len(alarm_data_list)}], latest_alarm_info=[{latest_alarm_info}]')
         return True
 
     def __parse_5G_alarm(self, alarm_file):
