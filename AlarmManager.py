@@ -106,9 +106,29 @@ class AlarmMgr:
 
             db_results = Dbmanager.select(sql_string)
             if db_results != ():
-                print(f'*** data found for DB ***')
+                print(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
+                # insert TB_E2EO_FC_FAULT_ALARM
+                sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm " \
+                             "(vendor_type, rat_type, alarm_code, " \
+                             "location, alarm_source, alarm_time, " \
+                             "alarm_name, alarm_state, event_type, " \
+                             "severity, probable_cause, additional_text, " \
+                             "ne_type, specific_problem, alarm_id, " \
+                             "noti_id, clear_user, updated_at) " \
+                             "VALUES ('" + self._vendor_type + "', '" + self._rat_type + "', " \
+                             "'" + data['alarm_code'] + "', '" + data['location'] + "', " \
+                             "'" + data['alarm_source'] + "', '" + data['alarm_time'] + "', " \
+                             "'" + data['alarm_name'] + "', '" + data['alarm_state'] + "', " \
+                             "'" + data['event_type'] + "', '" + data['severity'] + "', " \
+                             "'" + data['probable_cause'] + "', '" + data['additional_text'] + "', " \
+                             "'" + data['ne_type'] + "', '" + data['specific_problem'] + "', " \
+                             "'" + data['alarm_id'] + "', '" + data['notification_id'] + "', " \
+                             "'" + data['clear_user'] + "', NOW());"
+                Dbmanager.insert(sql_string)
+                print(f'sql_string=[\n{sql_string}\n]')
+
             else:
-                print(f'*** No data found for DB ***')
+                print(f'data is found at DB')
 
         return True
 
