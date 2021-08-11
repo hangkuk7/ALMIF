@@ -9,6 +9,11 @@ import re
 
 from almif_variables import *
 
+from ConfigManager import ConfManager
+from DatabaseManager import DbManager
+
+DB_INFO = ConfManager.getInstance().getDbConfig()
+
 class AlarmMgr:
     def __init__(self, access_info, charset='utf8'):
         if len(access_info) < 1:
@@ -60,6 +65,8 @@ class AlarmMgr:
         print(f'*********** __proc_alarm_db() Start! ***********')
         print(f'alarm_data_list len=[{len(alarm_data_list)}], latest_alarm_info=[{latest_alarm_info}]')
 
+        Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
+
         for idx, data in enumerate(alarm_data_list):
             db_alarm_source = data['alarm_source']
             db_alarm_time = data['alarm_time']
@@ -87,6 +94,8 @@ class AlarmMgr:
                   f'additional_text=[{db_additional_text}], alarm_id=[{db_alarm_id}], ' \
                   f'notification_id=[{db_notification_id}], clear_user=[{db_clear_user}]')
             print(f'================================================================')
+
+
 
         return True
 
