@@ -7,6 +7,9 @@ import time
 # For Regular expression
 import re
 
+from datetime import datetime
+
+# For other class or files
 from almif_variables import *
 
 from ConfigManager import ConfManager
@@ -121,6 +124,15 @@ class AlarmMgr:
                 print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
                 # Update TB_E2EO_FC_FAULT_ALARM
                 print(f'previous data : db_results=[{db_results}]')
+                # Compare alarm time
+                db_date_alarm_time = db_results[0]
+
+                data_date_alarm_time = datetime.sfrptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.").date()
+
+                if db_date_alarm_time == data_date_alarm_time:
+                    print(f'**** Same Data and skip *****')
+                    continue
+
                 sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
                              "SET alarm_source='" + data['alarm_source'] + "', " \
                              "alarm_time='" + data['alarm_time'] + "', " \
