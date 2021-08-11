@@ -67,6 +67,7 @@ class AlarmMgr:
 
         Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
 
+        sql_string = ''
         for idx, data in enumerate(alarm_data_list):
             db_alarm_source = data['alarm_source']
             db_alarm_time = data['alarm_time']
@@ -95,9 +96,17 @@ class AlarmMgr:
                   f'notification_id=[{db_notification_id}], clear_user=[{db_clear_user}]')
             print(f'================================================================')
 
+            # select TB_E2EO_FC_FAULT_ALARM
+            sql_string = "select alarm_time, alarm_state, severity from tb_e2eo_fc_fault_alarm " \
+                         "WHERE vendor_type='P' and start_time <= '" + str_group_date + "' and run_date >= '" + str_group_date  + "';"
+            sql_string = "select alarm_time, alarm_state, severity from tb_e2eo_fc_fault_alarm " \
+                         "WHERE vendor_type='" + self._vendor_type + "' " \
+                         "AND rat_type='" + self._rat_type + "' " \
+                         "AND alarm_code='" + data['alarm_code'] + "' " \
+                         "AND location='" + data['location'] + "' "
+            print(f'sql_string=[\n{sql_string}\n]')
 
-
-        return True
+            return True
 
     def __parse_5G_alarm(self, alarm_file):
         print(f'__parse_5G_alarm() Start!')
