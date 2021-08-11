@@ -127,7 +127,7 @@ class AlarmMgr:
                 # Compare alarm time
                 db_date_alarm_time = db_results[0]
 
-                data_date_alarm_time = datetime.sfrptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.").date()
+                data_date_alarm_time = datetime.sfrptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S").date()
 
                 if db_date_alarm_time == data_date_alarm_time:
                     print(f'**** Same Data and skip *****')
