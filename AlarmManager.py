@@ -120,6 +120,7 @@ class AlarmMgr:
             if db_results != ():
                 print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
                 # Update TB_E2EO_FC_FAULT_ALARM
+                print(f'previous data : db_results=[{db_results}]')
                 sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
                              "SET alarm_source='" + data['alarm_source'] + "', " \
                              "alarm_time='" + data['alarm_time'] + "', " \
