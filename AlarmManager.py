@@ -162,7 +162,7 @@ class AlarmMgr:
 
                     # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
 
-                elif '**' in alarm_row:
+                elif '**' in alarm_row or '##' in alarm_row:
                     # print(f'--- [**]=[{alarm_row}] ---')
                     split_row = alarm_row.split(' ')
                     split_row_len = len(split_row)
