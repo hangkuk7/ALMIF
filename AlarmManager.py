@@ -102,7 +102,7 @@ class AlarmMgr:
                          "AND rat_type='" + self._rat_type + "' " \
                          "AND alarm_code='" + data['alarm_code'] + "' " \
                          "AND location='" + data['location'] + "' "
-            print(f'sql_string=[\n{sql_string}\n]')
+            # print(f'sql_string=[\n{sql_string}\n]')
 
             db_results = Dbmanager.select(sql_string)
             if db_results != ():
