@@ -30,25 +30,6 @@ class AlarmMgr:
         self._last_alarm_info = access_info[8]
         self._access_at = access_info[9]
 
-        # private variables
-        self._alarm_source = ''
-        self._alarm_time = ''
-        self._alarm_code = ''
-        self._alarm_name = ''
-        self._alarm_state = ''
-        self._ne_name = ''
-        self._location = ''
-        self._event_type = ''
-        self._probable_cause = ''
-        self._specific_problem = ''
-        self._severity = ''
-        self._additional_text = ''
-
-        # for Lte specific variables
-        self._alarm_id = ''
-        self._notification_id = ''
-        self._clear_user = ''
-
         # check validation
         if len(self._conn_ip) < 1 or len(self._conn_port) < 1:
             print(f'Error. Invalid connection info. conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}]')
@@ -74,6 +55,10 @@ class AlarmMgr:
         else:
             print(f'Error: Input must be a bytes or int type')
             return None
+
+    def __proc_alarm_db(self, alarm_dict, last_alarm_info):
+        print(f'*********** __proc_alarm_db() Start! ***********')
+        return True
 
     def __parse_5G_alarm(self, alarm_file):
         print(f'__parse_5G_alarm() Start!')
@@ -108,6 +93,28 @@ class AlarmMgr:
 
         # for sort.
         alarm_title_list = list()
+
+        # alarm data list for database
+        db_alarm_data_list = list()
+
+        # variables for alarm data
+        alarm_source = ''
+        alarm_time = ''
+        alarm_code = ''
+        alarm_name = ''
+        alarm_state = ''
+        ne_name = ''
+        location = ''
+        event_type = ''
+        probable_cause = ''
+        specific_problem = ''
+        severity = ''
+        additional_text = ''
+
+        # for Lte specific variables
+        alarm_id = ''
+        notification_id = ''
+        clear_user = ''
 
         for idx, item in enumerate(alarm_info_list):
             alarm_item_str = ''.join(item)
@@ -180,12 +187,30 @@ class AlarmMgr:
                     # print(f'--- [ADDITIONALTEXT] : additional_text=[{additional_text}] ---')
                 elif 'COMPLETED' in alarm_row:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
-                    pass
+                    # Set 5G Alarm dictionary
+                    alarm_dict_5g = {'alarm_source':alarm_source,
+                                    'alarm_time':alarm_time,
+                                    'alarm_code':alarm_code,
+                                    'alarm_name':alarm_name,
+                                    'alarm_code': alarm_code,
+                                    'alarm_name': alarm_name,
+                                    'alarm_state': alarm_state,
+                                    'ne_name': ne_name,
+                                    'location': location,
+                                    'event_type': event_type,
+                                    'probable_cause': probable_cause,
+                                    'specific_problem': specific_problem,
+                                    'severity': severity,
+                                    'additional_text': additional_text,
+                                    'alarm_id': '',
+                                    'notification_id': '',
+                                    'clear_user': ''}
+
+                    db_alarm_data_list.append(alarm_dict_5g)
+
                 else:
                     # print(f'--- [else]=[{alarm_row}] ---')
                     pass
-
-                # print(f'***************************************\n')
 
         # Sort alarm time list. latest alarm time is first item.
         alarm_title_list.sort(key=lambda x: (x.split(' ')[1], x.split(' ')[2]), reverse=True)
@@ -199,6 +224,8 @@ class AlarmMgr:
 
         print(f'\nlastest_alarm_info=[{lastest_alarm_info}]')
         print(f'************* Alarm Time Info End *******************\n')
+
+
 
         return True
 
