@@ -221,7 +221,7 @@ class AlarmMgr:
                     alarm_dict_5g = {'alarm_source':alarm_source,
                                     'alarm_time':alarm_time,
                                     'alarm_code':alarm_code,
-                                    'alarm_name':alarm_name,
+                                    'alarm_name':alarm_name.rstrip().lstrip(),
                                     'alarm_state': alarm_state,
                                     'ne_name': ne_name,
                                     'location': location,
