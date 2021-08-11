@@ -56,7 +56,7 @@ class AlarmMgr:
             print(f'Error: Input must be a bytes or int type')
             return None
 
-    def __proc_alarm_db(self, alarm_dict, last_alarm_info):
+    def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
         print(f'*********** __proc_alarm_db() Start! ***********')
         return True
 
@@ -214,7 +214,7 @@ class AlarmMgr:
 
         # Sort alarm time list. latest alarm time is first item.
         alarm_title_list.sort(key=lambda x: (x.split(' ')[1], x.split(' ')[2]), reverse=True)
-        lastest_alarm_info = alarm_title_list[0]
+        latest_alarm_info = alarm_title_list[0]
 
         print(f'\n************* Alarm Time Info Start *******************')
         print(f'alarm_title_list len=[{len(alarm_title_list)}]')
@@ -222,10 +222,10 @@ class AlarmMgr:
         for idx, item in enumerate(alarm_title_list):
             print(f'idx=[{idx + 1}] item=[{item}]')
 
-        print(f'\nlastest_alarm_info=[{lastest_alarm_info}]')
+        print(f'\nlatest_alarm_info=[{latest_alarm_info}]')
         print(f'************* Alarm Time Info End *******************\n')
 
-
+        self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
         return True
 
