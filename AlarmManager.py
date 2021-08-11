@@ -104,8 +104,8 @@ class AlarmMgr:
                          "AND location='" + data['location'] + "' "
 
             db_results = Dbmanager.select(sql_string)
-            print(f'sql_string=[\n{sql_string}\n]')
-            print(f'db_results=[\n{db_results}\n]')
+            # print(f'sql_string=[\n{sql_string}\n]')
+            # print(f'db_results=[\n{db_results}\n]')
 
             if db_results != ():
                 print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
