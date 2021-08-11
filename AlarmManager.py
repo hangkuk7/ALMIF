@@ -131,6 +131,7 @@ class AlarmMgr:
 
                 if db_date_alarm_time == data_date_alarm_time:
                     print(f'**** Same Data and skip *****')
+                    print(f'alarm time : [{db_date_alarm_time}] vs [{data_date_alarm_time}]')
                     continue
 
                 sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
