@@ -106,6 +106,10 @@ class AlarmMgr:
 
             db_results = Dbmanager.select(sql_string)
             if db_results != ():
+                print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
+                # insert TB_E2EO_FC_FAULT_ALARM
+
+            else:
                 print(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
                 # insert TB_E2EO_FC_FAULT_ALARM
                 sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm " \
@@ -127,8 +131,7 @@ class AlarmMgr:
                 Dbmanager.insert(sql_string)
                 print(f'sql_string=[\n{sql_string}\n]')
 
-            else:
-                print(f'data is found at DB')
+
 
         return True
 
