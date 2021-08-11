@@ -106,7 +106,7 @@ class AlarmMgr:
 
             db_results = Dbmanager.select(sql_string)
             if db_results != ():
-                print(f'*** data found for DB *** ')
+                print(f'*** data found for DB ***')
             else:
                 print(f'*** No data found for DB ***')
 
