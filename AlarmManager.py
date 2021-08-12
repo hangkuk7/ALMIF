@@ -121,22 +121,19 @@ class AlarmMgr:
                 alarm_state_type = DB_ALARM_STATE_CLEARED
 
             if db_results != ():
-                print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
                 # Update TB_E2EO_FC_FAULT_ALARM
-                print(f'previous data : db_results=[{db_results}]')
+                # print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
+
                 # Compare alarm time
                 db_date_alarm_time = db_results[0][0]
                 db_alarm_state = db_results[0][1]
 
                 data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
 
-                print(f'db data : db_date_alarm_time=[{db_date_alarm_time}], db_alarm_state=[{db_alarm_state}]')
-                print(f'current data : data_date_alarm_time=[{data_date_alarm_time}], alarm_state_type=[{alarm_state_type}]')
-
                 if (data_date_alarm_time <= db_date_alarm_time) and (alarm_state_type == db_alarm_state):
-                    print(f'**** Same data and skip *****')
-                    print(f'alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
-                    print(f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
+                    print(f'**** Same data. so skip *****')
+                    print(f'alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]' \
+                          f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
                     continue
 
                 sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
@@ -161,8 +158,8 @@ class AlarmMgr:
                 Dbmanager.update(sql_string)
                 # print(f'sql_string=[\n{sql_string}\n]')
             else: # if db_results != ():
-                print(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
                 # Insert TB_E2EO_FC_FAULT_ALARM
+                # print(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
                 sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm " \
                              "(vendor_type, rat_type, alarm_code, " \
                              "location, alarm_source, alarm_time, " \
