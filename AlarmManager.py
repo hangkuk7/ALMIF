@@ -139,7 +139,7 @@ class AlarmMgr:
                     continue
                 else:
                     print(f'UPDATE ALARM. db_results=[{db_results}]')
-                    print(f'UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]' \
+                    print(f'UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}] ' \
                           f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
 
                 sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
