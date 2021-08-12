@@ -370,7 +370,7 @@ class AlarmMgr:
         print(f'alarm_title_list len=[{len(alarm_title_list)}]')
 
         for idx, item in enumerate(alarm_title_list):
-            print(f'idx=[{idx + 1}] item=[{item}]')
+            # print(f'idx=[{idx + 1}] item=[{item}]')
 
         print(f'\nlatest_alarm_info=[{latest_alarm_info}]')
         print(f'************* Alarm Time Info End *******************\n')
