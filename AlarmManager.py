@@ -101,7 +101,8 @@ class AlarmMgr:
             # print(f'================================================================')
 
             # select TB_E2EO_FC_FAULT_ALARM
-            sql_string = "select alarm_time, alarm_state, severity from tb_e2eo_fc_fault_alarm " \
+            sql_string = "SELECT vendor_type, rat_type, alarm_code, location, alarm_time, alarm_state, severity "\ 
+                         "FROM tb_e2eo_fc_fault_alarm " \
                          "WHERE vendor_type='" + self._vendor_type + "' " \
                          "AND rat_type='" + self._rat_type + "' " \
                          "AND alarm_code='" + data['alarm_code'] + "' " \
@@ -109,7 +110,7 @@ class AlarmMgr:
 
             db_results = Dbmanager.select(sql_string)
             # print(f'sql_string=[\n{sql_string}\n]')
-            # print(f'db_results=[\n{db_results}\n]')
+            # print(f'db_results=[{db_results}]')
 
             str_alarm_state = str(data['alarm_state'])
             alarm_state_type = DB_ALARM_STATE_CLEARED
@@ -124,11 +125,11 @@ class AlarmMgr:
             if db_results != ():
                 # Update TB_E2EO_FC_FAULT_ALARM
                 print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
-                print(f'**** TEST **** db_results=[\n{db_results}\n]')
+                print(f'**** TEST **** db_results=[{db_results}]')
 
                 # Compare alarm time and alarm state
-                db_date_alarm_time = db_results[0][0]
-                db_alarm_state = db_results[0][1]
+                db_date_alarm_time = db_results[0][4]
+                db_alarm_state = db_results[0][5]
 
                 data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
                 print(f'**** TEST **** alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]' \
