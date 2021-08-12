@@ -124,22 +124,23 @@ class AlarmMgr:
 
             if db_results != ():
                 # Update TB_E2EO_FC_FAULT_ALARM
-                print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
-                print(f'**** TEST **** db_results=[{db_results}]')
+                # print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
 
                 # Compare alarm time and alarm state
                 db_date_alarm_time = db_results[0][4]
                 db_alarm_state = db_results[0][5]
 
                 data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
-                print(f'**** TEST **** alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]' \
-                      f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
 
                 if (data_date_alarm_time <= db_date_alarm_time) and (alarm_state_type == db_alarm_state):
                     print(f'**** Same data. so skip *****')
                     print(f'alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}] ' \
                           f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
                     continue
+                else:
+                    print(f'UPDATE ALARM. db_results=[{db_results}]')
+                    print(f'UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]' \
+                          f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
 
                 sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
                              "SET alarm_source='" + data['alarm_source'] + "', " \
