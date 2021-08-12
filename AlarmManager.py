@@ -130,8 +130,8 @@ class AlarmMgr:
 
                 data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
 
-                print('db data : db_date_alarm_time=[{db_date_alarm_time}], db_alarm_state=[{db_alarm_state}]')
-                print('current data : data_date_alarm_time=[{data_date_alarm_time}], alarm_state_type=[{alarm_state_type}]')
+                print(f'db data : db_date_alarm_time=[{db_date_alarm_time}], db_alarm_state=[{db_alarm_state}]')
+                print(f'current data : data_date_alarm_time=[{data_date_alarm_time}], alarm_state_type=[{alarm_state_type}]')
 
                 if (data_date_alarm_time <= db_date_alarm_time) and (alarm_state_type == db_alarm_state):
                     print(f'**** Same Data and skip *****')
