@@ -77,7 +77,7 @@ class AlarmMgr:
             # db_alarm_code = data['alarm_code']
             # db_alarm_name = data['alarm_name']
             # db_alarm_state = data['alarm_state']
-            # db_ne_name = data['ne_name']
+            db_ne_name = data['ne_name']
             # db_location = data['location']
             # db_event_type = data['event_type']
             # db_probable_cause = data['probable_cause']
@@ -87,6 +87,7 @@ class AlarmMgr:
             # db_alarm_id = data['alarm_id']
             # db_notification_id = data['notification_id']
             # db_clear_user = data['clear_user']
+            print(f'idx=[{idx}], ne_name len=[{len(db_ne_name)}], ne_name=[{db_ne_name}]')
 
             # print(f'================================================================')
             # print(f'idx=[{idx}] : alarm_source=[{db_alarm_source}], ' \
