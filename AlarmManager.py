@@ -135,6 +135,8 @@ class AlarmMgr:
 
                 if (data_date_alarm_time <= db_date_alarm_time) and (alarm_state_type == db_alarm_state):
                     print(f'**** Same Data and skip *****')
+                    print(f'alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
+                    print(f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
                     continue
 
                 sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
@@ -157,9 +159,8 @@ class AlarmMgr:
                              "AND alarm_code='" + data['alarm_code'] + "' " \
                              "AND location='" + data['location'] + "'; "
                 Dbmanager.update(sql_string)
-                print(f'sql_string=[\n{sql_string}\n]')
-
-            else:
+                # print(f'sql_string=[\n{sql_string}\n]')
+            else: # if db_results != ():
                 print(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
                 # Insert TB_E2EO_FC_FAULT_ALARM
                 sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm " \
@@ -180,6 +181,30 @@ class AlarmMgr:
                              "'" + data['clear_user'] + "', NOW());"
                 Dbmanager.insert(sql_string)
                 # print(f'sql_string=[\n{sql_string}\n]')
+
+            # Insert TB_E2EO_FC_FAULT_ARLARM_HISTORY
+            sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm_history " \
+                         "(vendor_type, rat_type, alarm_code, " \
+                         "location, alarm_source, alarm_time, " \
+                         "alarm_name, alarm_state, event_type, " \
+                         "severity, probable_cause, additional_text, " \
+                         "ne_type, specific_problem, alarm_id, " \
+                         "noti_id, clear_user, updated_at) " \
+                         "VALUES ('" + self._vendor_type + "', '" + self._rat_type + "', " \
+                         "'" + data['alarm_code'] + "', '" + data['location'] + "', " \
+                         "'" + data['alarm_source'] + "', '" + data['alarm_time'] + "', " \
+                         "'" + data['alarm_name'] + "', '" + alarm_state_type + "', " \
+                         "'" + data['event_type'] + "', '" + data['severity'] + "', " \
+                         "'" + data['probable_cause'] + "', '" + data['additional_text'] + "', " \
+                         "'" + data['ne_name'] + "', '" + data['specific_problem'] + "', " \
+                         "'" + data['alarm_id'] + "', '" + data['notification_id'] + "', " \
+                         "'" + data['clear_user'] + "', NOW());"
+
+            Dbmanager.insert(sql_string)
+            # print(f'sql_string=[\n{sql_string}\n]')
+
+            # Update lastes alarm information to TB_E2EO_FC_ALARM_ACCESS_INFO
+
 
         return True
 
