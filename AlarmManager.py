@@ -101,7 +101,7 @@ class AlarmMgr:
             # print(f'================================================================')
 
             # select TB_E2EO_FC_FAULT_ALARM
-            sql_string = "SELECT vendor_type, rat_type, alarm_code, location, alarm_time, alarm_state, severity "\ 
+            sql_string = "SELECT vendor_type, rat_type, alarm_code, location, alarm_time, alarm_state, severity " \
                          "FROM tb_e2eo_fc_fault_alarm " \
                          "WHERE vendor_type='" + self._vendor_type + "' " \
                          "AND rat_type='" + self._rat_type + "' " \
