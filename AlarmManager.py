@@ -237,16 +237,14 @@ class AlarmMgr:
 
         match_list = regex.findall(alarm_file)
 
-        print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
-        print(f'***** Remove duplicated items ******')
+        # print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
         alarm_info_list = list()
         # Remove duplicated items
         for value in match_list:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        print(f'************************************')
-        print(f'*** alarm_info_list type = [{type(alarm_info_list)}], alarm_info_list len=[{len(alarm_info_list)}] ***')
+        print(f'before remove len=[{len(match_list)}], after remove len=[{len(alarm_info_list)}] ***')
 
         # for sort.
         alarm_title_list = list()
@@ -364,21 +362,16 @@ class AlarmMgr:
                     db_alarm_data_list.append(alarm_dict_5g)
 
                 else:
-                    # print(f'--- [else]=[{alarm_row}] ---')
-                    pass
+                    print(f'--- [else]=[{alarm_row}] ---')
 
         # Sort alarm time list. latest alarm time is first item.
         alarm_title_list.sort(key=lambda x: (x.split(' ')[1], x.split(' ')[2]), reverse=True)
         latest_alarm_info = alarm_title_list[0]
 
-        print(f'\n************* Alarm Time Info Start *******************')
-        print(f'alarm_title_list len=[{len(alarm_title_list)}]')
-
         # for idx, item in enumerate(alarm_title_list):
         #     print(f'idx=[{idx + 1}] item=[{item}]')
 
         print(f'\nlatest_alarm_info=[{latest_alarm_info}]')
-        print(f'************* Alarm Time Info End *******************\n')
 
         self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
@@ -403,7 +396,7 @@ class AlarmMgr:
                 # Calling SFTPFile.prefetch should increase the read speed
                 remote_file.prefetch()
                 binary_data = remote_file.read()
-                print(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
+                # print(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
 
                 text_data = self.__bytes_to_string(binary_data)
                 if text_data == None:
@@ -411,7 +404,7 @@ class AlarmMgr:
                     self._cli.close()
                     return False
 
-                print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
+                # print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
 
                 ##### search location of last alarm #####
                 search_loc = None
@@ -431,7 +424,7 @@ class AlarmMgr:
                         print(f'Error. last alarm info search fail! search_loc=[{search_loc}]]')
                         alarm_file = text_data[:]
 
-                print(f'alarm_file type=[{type(alarm_file)}], alarm_file len=[{len(alarm_file)}]')
+                print(f'alarm_file len=[{len(alarm_file)}]')
                 if self._rat_type == RAT_TYPE_5G:
                     print(f'*** RAT_TYPE_5G ***')
                     ret = self.__parse_5G_alarm(alarm_file)
