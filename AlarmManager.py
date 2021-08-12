@@ -123,8 +123,9 @@ class AlarmMgr:
 
             if db_results != ():
                 # Update TB_E2EO_FC_FAULT_ALARM
-                # print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
-
+                print(f'data is found at DB. Update tb_e2eo_fc_fault_alarm')
+                print(f'**** TEST **** alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]' \
+                      f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
                 # Compare alarm time
                 db_date_alarm_time = db_results[0][0]
                 db_alarm_state = db_results[0][1]
