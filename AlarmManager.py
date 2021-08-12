@@ -135,7 +135,7 @@ class AlarmMgr:
 
                 if (data_date_alarm_time <= db_date_alarm_time) and (alarm_state_type == db_alarm_state):
                     print(f'**** Same data. so skip *****')
-                    print(f'alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]' \
+                    print(f'alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}] ' \
                           f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
                     continue
 
