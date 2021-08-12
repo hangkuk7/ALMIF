@@ -362,7 +362,8 @@ class AlarmMgr:
                     db_alarm_data_list.append(alarm_dict_5g)
 
                 else:
-                    print(f'--- [else]=[{alarm_row}] ---')
+                    # print(f'--- [else]=[{alarm_row}] ---')
+                    pass
 
         # Sort alarm time list. latest alarm time is first item.
         alarm_title_list.sort(key=lambda x: (x.split(' ')[1], x.split(' ')[2]), reverse=True)
