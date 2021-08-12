@@ -134,7 +134,7 @@ class AlarmMgr:
                 print(f'current data : data_date_alarm_time=[{data_date_alarm_time}], alarm_state_type=[{alarm_state_type}]')
 
                 if (data_date_alarm_time <= db_date_alarm_time) and (alarm_state_type == db_alarm_state):
-                    print(f'**** Same Data and skip *****')
+                    print(f'**** Same data and skip *****')
                     print(f'alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
                     print(f'alarm state : current=[{alarm_state_type}], db=[{db_alarm_state}]')
                     continue
@@ -203,8 +203,14 @@ class AlarmMgr:
             Dbmanager.insert(sql_string)
             # print(f'sql_string=[\n{sql_string}\n]')
 
-            # Update lastes alarm information to TB_E2EO_FC_ALARM_ACCESS_INFO
-
+            # Update last alarm information to TB_E2EO_FC_ALARM_ACCESS_INFO
+            sql_string = "UPDATE tb_e2eo_fc_alarm_access_info " \
+                         "SET last_alarm_info='" + latest_alarm_info + "', " \
+                         "access_at=NOW() " \
+                         "WHERE name='" + self._name + "' " \
+                         "AND connect_ip='" + self._conn_ip + "'; "
+            Dbmanager.update(sql_string)
+            # print(f'sql_string=[\n{sql_string}\n]')
 
         return True
 
