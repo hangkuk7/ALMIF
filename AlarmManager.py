@@ -403,7 +403,11 @@ class AlarmMgr:
                            , re.MULTILINE)
 
         match_list = regex.findall(alarm_file)
-        # print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
+        print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
+
+        for idx, info in enumerate(match_list):
+            print(f'idx=[{idx}], match_info=[{info}]')
+
         alarm_info_list = list()
         # Remove duplicated items
         for value in match_list:
