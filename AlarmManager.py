@@ -503,7 +503,7 @@ class AlarmMgr:
                     split_row = alarm_row.split('=', maxsplit=1)
                     event_type = split_row[1].lstrip().rstrip()
                     # print(f'--- [EVENT TYPE] : event_type=[{event_type}] ---')
-                elif 'ADDITIONALTEXT' in alarm_row:
+                elif 'ADDITIONAL TEXT' in alarm_row:
                     # print(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     additional_text = split_row[1].lstrip().rstrip()
