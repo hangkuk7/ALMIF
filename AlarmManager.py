@@ -130,8 +130,10 @@ class AlarmMgr:
                 db_date_alarm_time = db_results[0][4]
                 db_alarm_state = db_results[0][5]
 
-                # data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
-                data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S")
+                if '.000' in data['alarm_time']:
+                    data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
+                else:
+                    data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S")
 
                 if data_date_alarm_time <= db_date_alarm_time:
                     print(f'SKIP UPDATE. db_results=[{db_results}]')
@@ -284,12 +286,7 @@ class AlarmMgr:
                 if 'RANEMS' in alarm_row:
                     split_row = alarm_row.split(' ', maxsplit=1)
                     alarm_source = split_row[0]
-                    temp_alarm_time = split_row[1]
-                    # add by hangkuk at 2021.08.13
-                    if '.000' in temp_alarm_time:
-                        alarm_time = temp_alarm_time.replace('.000', '')
-                    else:
-                        alarm_time = temp_alarm_time
+                    alarm_time = split_row[1]
 
                     alarm_title_list.append(alarm_row)
 
