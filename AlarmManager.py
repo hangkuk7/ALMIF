@@ -224,7 +224,7 @@ class AlarmMgr:
             return False
 
         regex = re.compile(r'RANEMS\S+.*\n' \
-                           r'\s[*+|#+].*\n' \
+                           r'\s[*|#]*.*\n' \
                            r'\s+NETWORKELEMENT.*\n' \
                            r'\s+LOCATION.*\n' \
                            r'\s+EVENTTYPE.*\n' \
