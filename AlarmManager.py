@@ -460,7 +460,7 @@ class AlarmMgr:
                     alarm_name = ''
                     alarm_state = ''
                     for split_single_item in split_row:
-                        if '**' in split_single_item:
+                        if '*' in split_single_item or '#' in split_single_item:
                             continue
                         elif split_single_item.startswith('A') and split_single_item.isalpha() == False:
                             alarm_code = split_single_item
@@ -512,10 +512,42 @@ class AlarmMgr:
                     # print(f'--- [ADDITIONAL TEXT] : clear_user=[{clear_user}] ---')
                 elif 'COMPLETED' in alarm_row:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
-                    pass
+                    # Set LTE Alarm dictionary
+                    alarm_dict_lte = {'alarm_source': alarm_source,
+                                      'alarm_time': alarm_time,
+                                      'alarm_code': alarm_code,
+                                      'alarm_name': alarm_name.rstrip().lstrip(),
+                                      'alarm_state': alarm_state,
+                                      'ne_name': '',
+                                      'location': location,
+                                      'event_type': event_type,
+                                      'probable_cause': probable_cause,
+                                      'specific_problem': '',
+                                      'severity': severity,
+                                      'additional_text': additional_text,
+                                      'alarm_id': alarm_id,
+                                      'notification_id': notification_id,
+                                      'clear_user': clear_user}
+
+                    db_alarm_data_list.append(alarm_dict_lte)
+
+                    #iniitialize variables
+                    additional_text = ''
+                    clear_user = ''
                 else:
                     # print(f'--- [else]=[{alarm_row}] ---')
                     pass
+
+        # Sort alarm time list. latest alarm time is first item.
+        alarm_title_list.sort(key=lambda x: (x.split(' ')[1], x.split(' ')[2]), reverse=True)
+        latest_alarm_info = alarm_title_list[0]
+
+        # for idx, item in enumerate(alarm_title_list):
+        #     print(f'idx=[{idx + 1}] item=[{item}]')
+
+        print(f'\nlatest_alarm_info=[{latest_alarm_info}]')
+
+        self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
         return True
 
