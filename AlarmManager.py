@@ -130,7 +130,9 @@ class AlarmMgr:
                 db_date_alarm_time = db_results[0][4]
                 db_alarm_state = db_results[0][5]
 
-                data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
+                # data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
+                data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S")
+
 
                 if data_date_alarm_time <= db_date_alarm_time:
                     print(f'SKIP UPDATE. db_results=[{db_results}]')
@@ -204,14 +206,14 @@ class AlarmMgr:
             Dbmanager.insert(sql_string)
             # print(f'sql_string=[\n{sql_string}\n]')
 
-            # Update last alarm information to TB_E2EO_FC_ALARM_ACCESS_INFO
-            sql_string = "UPDATE tb_e2eo_fc_alarm_access_info " \
-                         "SET last_alarm_info='" + latest_alarm_info + "', " \
-                         "access_at=NOW() " \
-                         "WHERE name='" + self._name + "' " \
-                         "AND connect_ip='" + self._conn_ip + "'; "
-            Dbmanager.update(sql_string)
-            # print(f'sql_string=[\n{sql_string}\n]')
+        # Update last alarm information to TB_E2EO_FC_ALARM_ACCESS_INFO
+        sql_string = "UPDATE tb_e2eo_fc_alarm_access_info " \
+                     "SET last_alarm_info='" + latest_alarm_info + "', " \
+                     "access_at=NOW() " \
+                     "WHERE name='" + self._name + "' " \
+                     "AND connect_ip='" + self._conn_ip + "'; "
+        Dbmanager.update(sql_string)
+        # print(f'sql_string=[\n{sql_string}\n]')
 
         return True
 
