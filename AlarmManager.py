@@ -285,7 +285,11 @@ class AlarmMgr:
                 if 'RANEMS' in alarm_row:
                     split_row = alarm_row.split(' ', maxsplit=1)
                     alarm_source = split_row[0]
-                    alarm_time = split_row[1]
+                    temp_alarm_time = split_row[1]
+                    if '.000' in temp_alarm_time:
+                        alarm_time = temp_alarm_time.replace('.000', '')
+                    else:
+                        alarm_time = temp_alarm_time
 
                     alarm_title_list.append(alarm_row)
 
