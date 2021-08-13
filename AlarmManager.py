@@ -290,7 +290,7 @@ class AlarmMgr:
 
                     # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
 
-                elif '**' in alarm_row or '##' in alarm_row:
+                elif '*' in alarm_row or '#' in alarm_row:
                     # print(f'--- [** or ##]=[{alarm_row}] ---')
                     split_row = alarm_row.split(' ')
                     split_row_len = len(split_row)
@@ -298,7 +298,7 @@ class AlarmMgr:
                     alarm_name = ''
                     alarm_state = ''
                     for split_single_item in split_row:
-                        if '**' in split_single_item or '##' in split_single_item:
+                        if '*' in split_single_item or '#' in split_single_item:
                             continue
                         elif split_single_item.startswith('A') and split_single_item.isalpha() == False:
                             alarm_code = split_single_item
