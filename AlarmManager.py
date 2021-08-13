@@ -133,7 +133,6 @@ class AlarmMgr:
                 # data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S.000")
                 data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S")
 
-
                 if data_date_alarm_time <= db_date_alarm_time:
                     print(f'SKIP UPDATE. db_results=[{db_results}]')
                     print(f'SKIP UPDATE. alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
