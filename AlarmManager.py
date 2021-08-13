@@ -379,8 +379,25 @@ class AlarmMgr:
 
         return True
 
-    def __parse_LTE_alarm(self, file):
+    def __parse_LTE_alarm(self, alarm_file):
         print(f'__parse_LTE_alarm() Start!')
+        if len(alarm_file) < 1:
+            print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
+            return False
+
+            regex = re.compile(r'RANEMS\S+.*\n' \
+                               r'\s+\S+.*\n' \
+                               r'\s+LOCATION.*\n' \
+                               r'\s+SEVERITY.*\n' \
+                               r'\s+PROBABLE CAUSE.*\n' \
+                               r'\s+ALARM ID.*\n' \
+                               r'\s+NOTIFICATION ID.*\n' \
+                               r'\s+EVENT TYPE.*\n' \
+                               r'\s+[ADDITIONAL TEXT|CLEAR USER].*\n' \
+                               r'\s+COMPLETED.*\n' \
+                               , re.MULTILINE)
+
+
         return True
 
     def get_remote_alarm(self):
