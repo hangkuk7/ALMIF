@@ -244,7 +244,7 @@ class AlarmMgr:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        print(f'before remove len=[{len(match_list)}], after remove len=[{len(alarm_info_list)}] ***')
+        print(f'Duplicate : before remove len=[{len(match_list)}], after remove len=[{len(alarm_info_list)}] ***')
 
         # for sort.
         alarm_title_list = list()
