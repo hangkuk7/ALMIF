@@ -221,6 +221,7 @@ class AlarmMgr:
             print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
 
+        # regular expression for 5G
         regex = re.compile(r'RANEMS\S+.*\n' \
                            r'\s*[*|#]*.*\n' \
                            r'\s+NETWORKELEMENT.*\n' \
@@ -385,18 +386,136 @@ class AlarmMgr:
             print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
 
-            regex = re.compile(r'RANEMS\S+.*\n' \
-                               r'\s+\S+.*\n' \
-                               r'\s+LOCATION.*\n' \
-                               r'\s+SEVERITY.*\n' \
-                               r'\s+PROBABLE CAUSE.*\n' \
-                               r'\s+ALARM ID.*\n' \
-                               r'\s+NOTIFICATION ID.*\n' \
-                               r'\s+EVENT TYPE.*\n' \
-                               r'\s+[ADDITIONAL TEXT|CLEAR USER].*\n' \
-                               r'\s+COMPLETED.*\n' \
-                               , re.MULTILINE)
+        # regular expression for LTE
+        regex = re.compile(r'RANEMS\S+.*\n' \
+                           r'\s*\S+[*|#]*.*\n' \
+                           r'\s+LOCATION.*\n' \
+                           r'\s+SEVERITY.*\n' \
+                           r'\s+PROBABLE CAUSE.*\n' \
+                           r'\s+ALARM ID.*\n' \
+                           r'\s+NOTIFICATION ID.*\n' \
+                           r'\s+EVENT TYPE.*\n' \
+                           r'\s+[ADDITIONAL TEXT|CLEAR USER].*\n' \
+                           r'\s+COMPLETED.*\n' \
+                           , re.MULTILINE)
 
+        match_list = regex.findall(alarm_file)
+        # print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
+        alarm_info_list = list()
+        # Remove duplicated items
+        for value in match_list:
+            if value not in alarm_info_list:
+                alarm_info_list.append(value)
+
+        print(f'Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
+
+        for idx, info in enumerate(alarm_info_list):
+            print(f'idx=[{idx}], alarm_info=[{info}]')
+
+        # for sort.
+        alarm_title_list = list()
+
+        # alarm data list for database
+        db_alarm_data_list = list()
+
+        # variables for alarm data
+        alarm_source = ''
+        alarm_time = ''
+        alarm_code = ''
+        alarm_name = ''
+        alarm_state = ''
+        ne_name = ''
+        location = ''
+        event_type = ''
+        probable_cause = ''
+        specific_problem = ''
+        severity = ''
+        additional_text = ''
+
+        # for Lte specific variables
+        alarm_id = ''
+        notification_id = ''
+        clear_user = ''
+
+        for idx, item in enumerate(alarm_info_list):
+            alarm_item_str = ''.join(item)
+            # print(f'idx=[{idx + 1}], alarm_item_str=[\n{alarm_item_str}]')
+            split_str = alarm_item_str.split('\n')
+            for jdx, alarm_row in enumerate(split_str):
+                # print(f'\n*** jdx=[{jdx+1}], alarm_row=[{alarm_row}] ***\n')
+                if 'RANEMS' in alarm_row:
+                    split_row = alarm_row.split(' ', maxsplit=1)
+                    alarm_source = split_row[0]
+                    alarm_time = split_row[1]
+
+                    alarm_title_list.append(alarm_row)
+
+                    # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
+
+                elif '* ' in alarm_row or '# ' in alarm_row:
+                    # print(f'--- [**]=[{alarm_row}] ---')
+                    split_row = alarm_row.split(' ')
+                    split_row_len = len(split_row)
+                    alarm_code = ''
+                    alarm_name = ''
+                    alarm_state = ''
+                    for split_single_item in split_row:
+                        if '**' in split_single_item:
+                            continue
+                        elif split_single_item.startswith('A') and split_single_item.isalpha() == False:
+                            alarm_code = split_single_item
+                        elif 'OCCURRED' in split_single_item or 'CLEARED' in split_single_item:
+                            alarm_state = split_single_item
+                        elif len(split_single_item) > 1:
+                            alarm_name += split_single_item
+                            alarm_name += ' '
+                        # print(f'--- [**] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
+                elif 'LOCATION' in alarm_row:
+                    # print(f'--- [LOCATION]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    location = split_row[1].lstrip().rstrip()
+                    # print(f'--- [LOCATION] : location=[{location}] ---')
+                elif 'SEVERITY' in alarm_row:
+                    # print(f'--- [SEVERITY]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    severity = split_row[1].lstrip().rstrip()
+                    # print(f'--- [SEVERITY] : severity=[{severity}] ---')
+                elif 'PROBABLE CAUSE' in alarm_row:
+                    # print(f'--- [PROBABLECAUSE]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    probable_cause = split_row[1].lstrip().rstrip()
+                    # print(f'--- [PROBABLE CAUSE] : probable_cause=[{probable_cause}] ---')
+                elif 'ALARM ID' in alarm_row:
+                    # print(f'--- [PROBABLECAUSE]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    alarm_id = split_row[1].lstrip().rstrip()
+                    # print(f'--- [ALARM ID] : alarm_id=[{alarm_id}] ---')
+                elif 'NOTIFICATION ID' in alarm_row:
+                    # print(f'--- [NOTIFICATION ID]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    notification_id = split_row[1].lstrip().rstrip()
+                    # print(f'--- [NOTIFICATION ID] : notification_id=[{notification_id}] ---')
+                elif 'EVENT TYPE' in alarm_row:
+                    # print(f'--- [EVENT TYPE]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    event_type = split_row[1].lstrip().rstrip()
+                    # print(f'--- [EVENT TYPE] : event_type=[{event_type}] ---')
+                elif 'ADDITIONALTEXT' in alarm_row:
+                    # print(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    additional_text = split_row[1].lstrip().rstrip()
+                    # print(f'--- [ADDITIONALTEXT] : additional_text=[{additional_text}] ---')
+                elif 'CLEAR USER' in alarm_row:
+                    # print(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    clear_user = split_row[1].lstrip().rstrip()
+                    # print(f'--- [ADDITIONAL TEXT] : clear_user=[{clear_user}] ---')
+                elif 'COMPLETED' in alarm_row:
+                    # print(f'--- [COMPLETED]=[{alarm_row}] ---')
+                    pass
+                else:
+                    # print(f'--- [else]=[{alarm_row}] ---')
+                    pass
 
         return True
 
