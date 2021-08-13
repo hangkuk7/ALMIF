@@ -286,6 +286,7 @@ class AlarmMgr:
                     split_row = alarm_row.split(' ', maxsplit=1)
                     alarm_source = split_row[0]
                     temp_alarm_time = split_row[1]
+                    # add by hangkuk at 2021.08.13
                     if '.000' in temp_alarm_time:
                         alarm_time = temp_alarm_time.replace('.000', '')
                     else:
