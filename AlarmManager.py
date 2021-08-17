@@ -459,8 +459,11 @@ class AlarmMgr:
 
                     # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
 
-                elif '* ' in alarm_row or '# ' in alarm_row:
-                    # print(f'--- [**]=[{alarm_row}] ---')
+                elif '* ' in alarm_row or '# ' in alarm_row or alarm_row.lstrip().startswith('A') == True:
+                    # print(f'--- [* Or # Or A~~~]=[{alarm_row}] ---')
+                    if alarm_row.startswith(' ') == True:
+                        alarm_row = alarm_row.lstrip()
+
                     split_row = alarm_row.split(' ')
                     split_row_len = len(split_row)
                     alarm_code = ''
@@ -477,24 +480,6 @@ class AlarmMgr:
                             alarm_name += split_single_item
                             alarm_name += ' '
                         # print(f'--- [* Or #] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
-                elif alarm_row.lstrip().startswith('A') == True:
-                    # print(f'1. --- [A~~]=[{alarm_row}] ---')
-                    if alarm_row.startswith(' ') == True:
-                        alarm_row = alarm_row.lstrip()
-
-                    split_row = alarm_row.split(' ')
-                    alarm_code = ''
-                    alarm_name = ''
-                    alarm_state = ''
-                    for split_single_item in split_row:
-                        if split_single_item.startswith('A') and split_single_item.isalpha() == False:
-                            alarm_code = split_single_item
-                        elif 'OCCURRED' in split_single_item or 'CLEARED' in split_single_item:
-                            alarm_state = split_single_item
-                        elif len(split_single_item) > 1:
-                            alarm_name += split_single_item
-                            alarm_name += ' '
-                        # print(f'--- [A~~] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
                 elif 'LOCATION' in alarm_row:
                     # print(f'--- [LOCATION]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
