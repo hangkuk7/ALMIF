@@ -460,7 +460,7 @@ class AlarmMgr:
                     # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
 
                 elif '* ' in alarm_row or '# ' in alarm_row \
-                        or (alarm_row.lstrip().startswith('A') and alarm_row.lstrip().isalpha() == False) :
+                        or (alarm_row.lstrip().startswith('A') and alarm_row.lstrip()[1:4].isdigit() == True) :
                     # print(f'--- [* Or # Or A~~~]=[{alarm_row}] ---')
                     if alarm_row.startswith(' ') == True:
                         alarm_row = alarm_row.lstrip()
