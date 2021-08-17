@@ -541,7 +541,6 @@ class AlarmMgr:
                                       'clear_user': clear_user}
 
                     db_alarm_data_list.append(alarm_dict_lte)
-
                     # print(f'==============================================================')
                     # print(f'alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ')
                     # print(f'alarm_code=[{alarm_code}], alarm_name=[{alarm_name}] ')
