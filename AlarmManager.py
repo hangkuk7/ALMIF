@@ -476,16 +476,25 @@ class AlarmMgr:
                         elif len(split_single_item) > 1:
                             alarm_name += split_single_item
                             alarm_name += ' '
-                        # print(f'--- [**] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
-                elif alarm_row.lstrip().startswith() == 'A':
-                    print(f'1. --- [A~~]=[{alarm_row}] ---')
-                    if alarm_row.startswith() == ' ':
+                        # print(f'--- [* Or #] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
+                elif alarm_row.lstrip().startswith('A') == True:
+                    # print(f'1. --- [A~~]=[{alarm_row}] ---')
+                    if alarm_row.startswith(' ') == True:
                         alarm_row = alarm_row.lstrip()
-                    print(f'2. --- [A~~]=[{alarm_row}] ---')
+
+                    split_row = alarm_row.split(' ')
                     alarm_code = ''
                     alarm_name = ''
                     alarm_state = ''
-
+                    for split_single_item in split_row:
+                        if split_single_item.startswith('A') and split_single_item.isalpha() == False:
+                            alarm_code = split_single_item
+                        elif 'OCCURRED' in split_single_item or 'CLEARED' in split_single_item:
+                            alarm_state = split_single_item
+                        elif len(split_single_item) > 1:
+                            alarm_name += split_single_item
+                            alarm_name += ' '
+                        # print(f'--- [A~~] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
                 elif 'LOCATION' in alarm_row:
                     # print(f'--- [LOCATION]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
@@ -546,7 +555,16 @@ class AlarmMgr:
                                       'clear_user': clear_user}
 
                     db_alarm_data_list.append(alarm_dict_lte)
-
+                    print(f'==============================================================')
+                    print(f'alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ')
+                    print(f'alarm_code=[{alarm_code}], alarm_name=[{alarm_name}] ')
+                    print(f'alarm_state=[{alarm_state}], ne_name=[{ne_name}] ')
+                    print(f'location=[{location}], event_type=[{event_type}] ')
+                    print(f'probable_cause=[{probable_cause}], specific_problem=[{specific_problem}] ')
+                    print(f'severity=[{severity}], additional_text=[{additional_text}] ')
+                    print(f'alarm_id=[{alarm_id}], notification_id=[{notification_id}] ')
+                    print(f'clear_user=[{clear_user}] ')
+                    print(f'==============================================================')
                     #iniitialize variables
                     additional_text = ''
                     clear_user = ''
