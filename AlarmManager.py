@@ -477,6 +477,15 @@ class AlarmMgr:
                             alarm_name += split_single_item
                             alarm_name += ' '
                         # print(f'--- [**] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
+                elif alarm_row.lstrip().startswith() == 'A':
+                    print(f'1. --- [A~~]=[{alarm_row}] ---')
+                    if alarm_row.startswith() == ' ':
+                        alarm_row = alarm_row.lstrip()
+                    print(f'2. --- [A~~]=[{alarm_row}] ---')
+                    alarm_code = ''
+                    alarm_name = ''
+                    alarm_state = ''
+
                 elif 'LOCATION' in alarm_row:
                     # print(f'--- [LOCATION]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
