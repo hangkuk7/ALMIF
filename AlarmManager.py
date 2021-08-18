@@ -360,8 +360,8 @@ class AlarmMgr:
                 elif 'COMPLETED' in alarm_row:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
 
-                    # Set BTS ID and Equipment Type for 5G
-                    split_row = alarm_row.split('/')
+                    # Set Equipment ID and Equipment Type for 5G
+                    split_row = location.split('/')
                     bts_name = split_row[1]
 
                     # parsing the BTS ID
