@@ -574,13 +574,17 @@ class AlarmMgr:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
 
                     # Set BTS ID and Equipment Type for LTE
-                    split_row = alarm_row.split('/')
-                    bts_name = split_row[2]
+                    split_row = alarm_row.split('=', maxsplit=1)
+                    loc_value = split_row[1].lstrip()
+
+                    bts_name = loc_value.split('/')
+
+                    print(f'loc_value=[{loc_value}], bts_name=[{bts_name}]')
 
                     # parsing the BTS ID
                     if bts_name.startswith('LNBTS') == True:
-                        split_row = bts_name.split('-')
-                        equip_id = split_row[1]
+                        temp_value = bts_name.split('-')
+                        equip_id = temp_value[1]
                     else:
                         print(f'Error. Invalid LTE BTS Name. location=[{location}], bts_name=[{bts_name}]')
                         equip_id = ''
