@@ -277,7 +277,7 @@ class AlarmMgr:
         clear_user = ''
 
         # etc variables
-        bts_id = ''
+        equip_id = ''
         equip_type = ''
 
         for idx, item in enumerate(alarm_info_list):
@@ -358,24 +358,23 @@ class AlarmMgr:
 
                     # Set BTS ID and Equipment Type for 5G
                     split_row = alarm_row.split('/')
-                    lte_bts_name = split_row[2]
+                    bts_name = split_row[1]
 
                     # parsing the BTS ID
-                    if lte_bts_name.startswith('LNBTS') == True:
-                        split_row = lte_bts_name.split('-')
-                        bts_id = split_row[1]
+                    if bts_name.startswith('MRBTS') == True:
+                        split_row = bts_name.split('-')
+                        equip_id = split_row[1]
                     else:
-                        print(f'Error. Invalid lte_bts_name. location=[{location}], lte_bts_name=[{lte_bts_name}]')
-                        bts_id = ''
+                        print(f'Error. Invalid 5G BTS Name. location=[{location}], bts_name=[{bts_name}]')
+                        equip_id = ''
 
                     # determine the equipment type
-                    if 'LNCEL-' in location:
+                    if 'NRCELL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
-                    print(f'lte_bts_name=[{lte_bts_name}], bts_id=[{bts_id}], equip_type=[{equip_type}]')
-
+                    print(f'bts_name=[{bts_name}], equip_id=[{equip_id}], equip_type=[{equip_type}]')
 
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
@@ -393,7 +392,7 @@ class AlarmMgr:
                                     'alarm_id': '',
                                     'notification_id': '',
                                     'clear_user': '',
-                                    'bts_id': bts_id,
+                                    'equip_id': equip_id,
                                     'equip_type':equip_type}
 
                     db_alarm_data_list.append(alarm_dict_5g)
@@ -487,7 +486,7 @@ class AlarmMgr:
         clear_user = ''
 
         # etc variables
-        bts_id = ''
+        equip_id = ''
         equip_type = ''
 
         for idx, item in enumerate(alarm_info_list):
@@ -572,15 +571,15 @@ class AlarmMgr:
 
                     # Set BTS ID and Equipment Type for LTE
                     split_row = alarm_row.split('/')
-                    lte_bts_name = split_row[2]
+                    bts_name = split_row[2]
 
                     # parsing the BTS ID
-                    if lte_bts_name.startswith('LNBTS') == True:
-                        split_row = lte_bts_name.split('-')
-                        bts_id = split_row[1]
+                    if bts_name.startswith('LNBTS') == True:
+                        split_row = bts_name.split('-')
+                        equip_id = split_row[1]
                     else:
-                        print(f'Error. Invalid lte_bts_name. location=[{location}], lte_bts_name=[{lte_bts_name}]')
-                        bts_id = ''
+                        print(f'Error. Invalid LTE BTS Name. location=[{location}], bts_name=[{bts_name}]')
+                        equip_id = ''
 
                     # determine the equipment type
                     if 'LNCEL-' in location:
@@ -588,7 +587,7 @@ class AlarmMgr:
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
-                    print(f'lte_bts_name=[{lte_bts_name}], bts_id=[{bts_id}], equip_type=[{equip_type}]')
+                    print(f'bts_name=[{bts_name}], equip_id=[{equip_id}], equip_type=[{equip_type}]')
 
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
@@ -606,7 +605,7 @@ class AlarmMgr:
                                       'alarm_id': alarm_id,
                                       'notification_id': notification_id,
                                       'clear_user': clear_user,
-                                      'bts_id':bts_id,
+                                      'equip_id':equip_id,
                                       'equip_type':equip_type}
 
                     db_alarm_data_list.append(alarm_dict_lte)
