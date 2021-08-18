@@ -380,8 +380,6 @@ class AlarmMgr:
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
-                    print(f'bts_name=[{bts_name}], equip_id=[{equip_id}], equip_type=[{equip_type}]')
-
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
                                     'alarm_time':alarm_time,
