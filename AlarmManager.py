@@ -292,8 +292,12 @@ class AlarmMgr:
 
                     # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
 
-                elif '*' in alarm_row or '#' in alarm_row:
-                    # print(f'--- [** or ##]=[{alarm_row}] ---')
+                elif '*' in alarm_row or '#' in alarm_row \
+                        or (alarm_row.lstrip().startswith('A') and alarm_row.lstrip()[1:4].isdigit() == True):
+                    # print(f'--- [* Or # Or A~~~]=[{alarm_row}] ---')
+                    if alarm_row.startswith(' ') == True:
+                        alarm_row = alarm_row.lstrip()
+
                     split_row = alarm_row.split(' ')
                     split_row_len = len(split_row)
                     alarm_code = ''
@@ -309,7 +313,7 @@ class AlarmMgr:
                         elif len(split_single_item) > 1:
                             alarm_name += split_single_item
                             alarm_name += ' '
-                    # print(f'--- [**] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
+                    # print(f'--- [* Or #] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
                 elif 'NETWORKELEMENT' in alarm_row:
                     # print(f'--- [NETWORKELEMENT]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
@@ -460,7 +464,7 @@ class AlarmMgr:
                     # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
 
                 elif '* ' in alarm_row or '# ' in alarm_row \
-                        or (alarm_row.lstrip().startswith('A') and alarm_row.lstrip()[1:4].isdigit() == True) :
+                        or (alarm_row.lstrip().startswith('A') and alarm_row.lstrip()[1:4].isdigit() == True):
                     # print(f'--- [* Or # Or A~~~]=[{alarm_row}] ---')
                     if alarm_row.startswith(' ') == True:
                         alarm_row = alarm_row.lstrip()
