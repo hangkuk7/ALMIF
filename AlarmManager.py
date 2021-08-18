@@ -175,7 +175,8 @@ class AlarmMgr:
                              "alarm_name, alarm_state, event_type, " \
                              "severity, probable_cause, additional_text, " \
                              "ne_type, specific_problem, alarm_id, " \
-                             "noti_id, clear_user, updated_at) " \
+                             "noti_id, clear_user, equip_id, " \
+                             "equip_type, updated_at) " \
                              "VALUES ('" + self._vendor_type + "', '" + self._rat_type + "', " \
                              "'" + data['alarm_code'] + "', '" + data['location'] + "', " \
                              "'" + data['alarm_source'] + "', '" + data['alarm_time'] + "', " \
@@ -196,7 +197,8 @@ class AlarmMgr:
                          "alarm_name, alarm_state, event_type, " \
                          "severity, probable_cause, additional_text, " \
                          "ne_type, specific_problem, alarm_id, " \
-                         "noti_id, clear_user, updated_at) " \
+                         "noti_id, clear_user, equip_id, " \
+                         "equip_type, updated_at) " \
                          "VALUES ('" + self._vendor_type + "', '" + self._rat_type + "', " \
                          "'" + data['alarm_code'] + "', '" + data['location'] + "', " \
                          "'" + data['alarm_source'] + "', '" + data['alarm_time'] + "', " \
