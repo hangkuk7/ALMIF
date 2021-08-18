@@ -577,7 +577,8 @@ class AlarmMgr:
                     split_row = alarm_row.split('=', maxsplit=1)
                     loc_value = split_row[1].lstrip()
 
-                    bts_name = loc_value.split('/')
+                    split_row = loc_value.split('/')
+                    bts_name = split_row[2]
 
                     print(f'loc_value=[{loc_value}], bts_name=[{bts_name}]')
 
