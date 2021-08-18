@@ -200,7 +200,7 @@ class AlarmMgr:
                          "severity, probable_cause, additional_text, " \
                          "ne_type, specific_problem, alarm_id, " \
                          "noti_id, clear_user, equip_id, " \
-                         "equip_type, updated_at) " \
+                         "equip_type, alarm_category, updated_at) " \
                          "VALUES ('" + self._vendor_type + "', '" + self._rat_type + "', " \
                          "'" + data['alarm_code'] + "', '" + data['location'] + "', " \
                          "'" + data['alarm_source'] + "', '" + data['alarm_time'] + "', " \
