@@ -285,6 +285,7 @@ class AlarmMgr:
         # etc variables
         equip_id = ''
         equip_type = ''
+        alarm_category = ''
 
         for idx, item in enumerate(alarm_info_list):
             alarm_item_str = ''.join(item)
@@ -380,6 +381,8 @@ class AlarmMgr:
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
+                    # To do later.....alarm_category
+                    alarm_category = ''
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
                                     'alarm_time':alarm_time,
@@ -397,7 +400,8 @@ class AlarmMgr:
                                     'notification_id': '',
                                     'clear_user': '',
                                     'equip_id': equip_id,
-                                    'equip_type':equip_type}
+                                    'equip_type':equip_type,
+                                     'alarm_category':alarm_category}
 
                     db_alarm_data_list.append(alarm_dict_5g)
                     # print(f'==============================================================')
