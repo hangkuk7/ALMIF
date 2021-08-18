@@ -365,7 +365,7 @@ class AlarmMgr:
                     bts_name = split_row[1]
 
                     # parsing the BTS ID
-                    if bts_name.startswith('MRBTS') == True:
+                    if bts_name.startswith('MRBTS-') == True:
                         split_row = bts_name.split('-')
                         equip_id = split_row[1]
                     else:
@@ -580,7 +580,7 @@ class AlarmMgr:
                     print(f'location=[{location}], bts_name=[{bts_name}]')
 
                     # parsing the BTS ID
-                    if bts_name.startswith('LNBTS') == True:
+                    if bts_name.startswith('LNBTS-') == True:
                         temp_value = bts_name.split('-')
                         equip_id = temp_value[1]
                     else:
