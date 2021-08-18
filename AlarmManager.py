@@ -382,7 +382,8 @@ class AlarmMgr:
                         equip_type = EQUIPMENT_DU_TYPE
 
                     # To do later.....alarm_category
-                    alarm_category = ''
+                    alarm_category = 'TEST_5G_CATEGORY'
+
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
                                     'alarm_time':alarm_time,
@@ -401,7 +402,7 @@ class AlarmMgr:
                                     'clear_user': '',
                                     'equip_id': equip_id,
                                     'equip_type':equip_type,
-                                     'alarm_category':alarm_category}
+                                    'alarm_category':alarm_category}
 
                     db_alarm_data_list.append(alarm_dict_5g)
                     # print(f'==============================================================')
@@ -496,6 +497,7 @@ class AlarmMgr:
         # etc variables
         equip_id = ''
         equip_type = ''
+        alarm_category = ''
 
         for idx, item in enumerate(alarm_info_list):
             alarm_item_str = ''.join(item)
@@ -597,7 +599,8 @@ class AlarmMgr:
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
-                    print(f'bts_name=[{bts_name}], equip_id=[{equip_id}], equip_type=[{equip_type}]')
+                    # To do later.....alarm_category
+                    alarm_category = 'TEST_LTE_CATEGORY'
 
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
@@ -616,7 +619,8 @@ class AlarmMgr:
                                       'notification_id': notification_id,
                                       'clear_user': clear_user,
                                       'equip_id':equip_id,
-                                      'equip_type':equip_type}
+                                      'equip_type':equip_type,
+                                      'alarm_category':alarm_category}
 
                     db_alarm_data_list.append(alarm_dict_lte)
                     # print(f'==============================================================')
