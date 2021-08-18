@@ -355,6 +355,28 @@ class AlarmMgr:
                     # print(f'--- [ADDITIONALTEXT] : additional_text=[{additional_text}] ---')
                 elif 'COMPLETED' in alarm_row:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
+
+                    # Set BTS ID and Equipment Type for 5G
+                    split_row = alarm_row.split('/')
+                    lte_bts_name = split_row[2]
+
+                    # parsing the BTS ID
+                    if lte_bts_name.startswith('LNBTS') == True:
+                        split_row = lte_bts_name.split('-')
+                        bts_id = split_row[1]
+                    else:
+                        print(f'Error. Invalid lte_bts_name. location=[{location}], lte_bts_name=[{lte_bts_name}]')
+                        bts_id = ''
+
+                    # determine the equipment type
+                    if 'LNCEL-' in location:
+                        equip_type = EQUIPMENT_RU_TYPE
+                    else:
+                        equip_type = EQUIPMENT_DU_TYPE
+
+                    print(f'lte_bts_name=[{lte_bts_name}], bts_id=[{bts_id}], equip_type=[{equip_type}]')
+
+
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
                                     'alarm_time':alarm_time,
