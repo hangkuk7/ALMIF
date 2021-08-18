@@ -458,6 +458,10 @@ class AlarmMgr:
         notification_id = ''
         clear_user = ''
 
+        # etc variables
+        bts_id = ''
+        equip_type = ''
+
         for idx, item in enumerate(alarm_info_list):
             alarm_item_str = ''.join(item)
             # print(f'idx=[{idx + 1}], alarm_item_str=[\n{alarm_item_str}]')
@@ -537,6 +541,15 @@ class AlarmMgr:
                     # print(f'--- [ADDITIONAL TEXT] : clear_user=[{clear_user}] ---')
                 elif 'COMPLETED' in alarm_row:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
+
+                    # Set BTS ID and Equipment Type for LTE
+                    split_row = alarm_row.split('/')
+                    lte_bts_name = split_row[2]
+                    split_row = lte_bts_name.split('-')
+                    bts_id = split_row[1]
+
+                    print(f'lte_bts_name=[{lte_bts_name}], bts_id=[{bts_id}]')
+
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
                                       'alarm_time': alarm_time,
@@ -552,7 +565,9 @@ class AlarmMgr:
                                       'additional_text': additional_text,
                                       'alarm_id': alarm_id,
                                       'notification_id': notification_id,
-                                      'clear_user': clear_user}
+                                      'clear_user': clear_user,
+                                      'bts_id':bts_id,
+                                      'equip_type':equip_type}
 
                     db_alarm_data_list.append(alarm_dict_lte)
                     # print(f'==============================================================')
