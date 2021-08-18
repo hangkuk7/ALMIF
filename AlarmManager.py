@@ -369,6 +369,16 @@ class AlarmMgr:
                                     'clear_user': ''}
 
                     db_alarm_data_list.append(alarm_dict_5g)
+                    # print(f'==============================================================')
+                    # print(f'alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ')
+                    # print(f'alarm_code=[{alarm_code}], alarm_name=[{alarm_name}] ')
+                    # print(f'alarm_state=[{alarm_state}], ne_name=[{ne_name}] ')
+                    # print(f'location=[{location}], event_type=[{event_type}] ')
+                    # print(f'probable_cause=[{probable_cause}], specific_problem=[{specific_problem}] ')
+                    # print(f'severity=[{severity}], additional_text=[{additional_text}] ')
+                    # print(f'alarm_id=[{alarm_id}], notification_id=[{notification_id}] ')
+                    # print(f'clear_user=[{clear_user}] ')
+                    # print(f'==============================================================')
 
                 else:
                     # print(f'--- [else]=[{alarm_row}] ---')
