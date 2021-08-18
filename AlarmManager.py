@@ -276,6 +276,10 @@ class AlarmMgr:
         notification_id = ''
         clear_user = ''
 
+        # etc variables
+        bts_id = ''
+        equip_type = ''
+
         for idx, item in enumerate(alarm_info_list):
             alarm_item_str = ''.join(item)
             # print(f'idx=[{idx + 1}], alarm_item_str=[\n{alarm_item_str}]')
@@ -366,7 +370,9 @@ class AlarmMgr:
                                     'additional_text': additional_text,
                                     'alarm_id': '',
                                     'notification_id': '',
-                                    'clear_user': ''}
+                                    'clear_user': '',
+                                    'bts_id': bts_id,
+                                    'equip_type':equip_type}
 
                     db_alarm_data_list.append(alarm_dict_5g)
                     # print(f'==============================================================')
@@ -545,10 +551,22 @@ class AlarmMgr:
                     # Set BTS ID and Equipment Type for LTE
                     split_row = alarm_row.split('/')
                     lte_bts_name = split_row[2]
-                    split_row = lte_bts_name.split('-')
-                    bts_id = split_row[1]
 
-                    print(f'lte_bts_name=[{lte_bts_name}], bts_id=[{bts_id}]')
+                    # parsing the BTS ID
+                    if lte_bts_name.startswith('LNBTS') == True:
+                        split_row = lte_bts_name.split('-')
+                        bts_id = split_row[1]
+                    else:
+                        print(f'Error. Invalid lte_bts_name. location=[{location}], lte_bts_name=[{lte_bts_name}]')
+                        bts_id = ''
+
+                    # determine the equipment type
+                    if 'LNCEL-' in location:
+                        equip_type = EQUIPMENT_RU_TYPE
+                    else:
+                        equip_type = EQUIPMENT_DU_TYPE
+
+                    print(f'lte_bts_name=[{lte_bts_name}], bts_id=[{bts_id}], equip_type=[{equip_type}]')
 
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
