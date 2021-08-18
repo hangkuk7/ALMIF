@@ -574,13 +574,10 @@ class AlarmMgr:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
 
                     # Set BTS ID and Equipment Type for LTE
-                    split_row = alarm_row.split('=', maxsplit=1)
-                    loc_value = split_row[1].lstrip()
-
-                    split_row = loc_value.split('/')
+                    split_row = location.split('/')
                     bts_name = split_row[2]
 
-                    print(f'loc_value=[{loc_value}], bts_name=[{bts_name}]')
+                    print(f'location=[{location}], bts_name=[{bts_name}]')
 
                     # parsing the BTS ID
                     if bts_name.startswith('LNBTS') == True:
