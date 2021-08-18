@@ -159,6 +159,7 @@ class AlarmMgr:
                              "clear_user='" + data['clear_user'] + "', " \
                              "equip_id='" + data['equip_id'] + "', " \
                              "equip_type='" + data['equip_type'] + "', " \
+                             "alarm_category='" + data['alarm_category'] + "', " \
                              "updated_at=NOW() " \
                              "WHERE vendor_type='" + self._vendor_type + "' " \
                              "AND rat_type='" + self._rat_type + "' " \
@@ -176,7 +177,7 @@ class AlarmMgr:
                              "severity, probable_cause, additional_text, " \
                              "ne_type, specific_problem, alarm_id, " \
                              "noti_id, clear_user, equip_id, " \
-                             "equip_type, updated_at) " \
+                             "equip_type, alarm_category, updated_at) " \
                              "VALUES ('" + self._vendor_type + "', '" + self._rat_type + "', " \
                              "'" + data['alarm_code'] + "', '" + data['location'] + "', " \
                              "'" + data['alarm_source'] + "', '" + data['alarm_time'] + "', " \
@@ -186,7 +187,8 @@ class AlarmMgr:
                              "'" + data['ne_name'] + "', '" + data['specific_problem'] + "', " \
                              "'" + data['alarm_id'] + "', '" + data['notification_id'] + "', " \
                              "'" + data['clear_user'] + "', '" + data['equip_id'] + "', " \
-                             "'" + data['equip_type'] + "', NOW());"
+                             "'" + data['equip_type'] + "', '" + data['alarm_category'] + "', " \
+                             "NOW());"
                 Dbmanager.insert(sql_string)
                 # print(f'sql_string=[\n{sql_string}\n]')
 
@@ -208,7 +210,8 @@ class AlarmMgr:
                          "'" + data['ne_name'] + "', '" + data['specific_problem'] + "', " \
                          "'" + data['alarm_id'] + "', '" + data['notification_id'] + "', " \
                          "'" + data['clear_user'] + "', '" + data['equip_id'] + "', " \
-                         "'" + data['equip_type'] + "', NOW());"
+                         "'" + data['equip_type'] + "', '" + data['alarm_category'] + "', " \
+                         "NOW());"
 
             Dbmanager.insert(sql_string)
             # print(f'sql_string=[\n{sql_string}\n]')
