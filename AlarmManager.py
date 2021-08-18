@@ -573,7 +573,7 @@ class AlarmMgr:
                 elif 'COMPLETED' in alarm_row:
                     # print(f'--- [COMPLETED]=[{alarm_row}] ---')
 
-                    # Set BTS ID and Equipment Type for LTE
+                    # Set Equipment ID and Equipment Type for LTE
                     split_row = location.split('/')
                     bts_name = split_row[2]
 
