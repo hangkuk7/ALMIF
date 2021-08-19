@@ -594,6 +594,7 @@ class AlarmMgr:
                         equip_id = temp_value[1]
                     else:
                         print(f'Error. Invalid LTE BTS Name. location=[{location}], bts_name=[{bts_name}]')
+                        print(f'*****  alarm_name=[{alarm_name}], probable_cause=[{probable_cause}] ***** ')
                         equip_id = ''
 
                     # determine the equipment type
