@@ -597,7 +597,7 @@ class AlarmMgr:
                         temp_str = temp_value[1].lstrip().rstrip()
                         lnbts_row = temp_str.split(' ')
                         equip_id = lnbts_row[0]
-                        print(f'*****  [LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
+                        # print(f'[LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
 
                     else:
                         print(f'Error. Invalid LTE BTS Name. location=[{location}], bts_name=[{bts_name}]')
@@ -608,6 +608,7 @@ class AlarmMgr:
                         equip_type = EQUIPMENT_RU_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
+                        print(f'Error. Invalid Equipment Type. location=[{location}], equip_type=[{equip_type}]')
 
                     # To do later.....alarm_category
                     alarm_category = 'TEST_LTE_CATEGORY'
