@@ -586,7 +586,7 @@ class AlarmMgr:
                     split_row = location.split('/')
                     bts_name = split_row[2]
 
-                    print(f'location=[{location}], bts_name=[{bts_name}]')
+                    # print(f'location=[{location}], bts_name=[{bts_name}]')
 
                     # parsing the BTS ID
                     if bts_name.startswith('LNBTS-') == True:
