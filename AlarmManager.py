@@ -233,6 +233,12 @@ class AlarmMgr:
             print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
 
+        # Loading Alarm Category for 5G
+        Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
+        sql_string = "SELECT vendor_type, rat_type, alarm_code, location, alarm_time, alarm_state, severity " \
+                     "FROM tb_e2eo_fc_alarm_category " \
+                     "WHERE rat_type='" + self._rat_type + "'; "
+
         # regular expression for 5G
         regex = re.compile(r'RANEMS\S+.*\n' \
                            r'\s*[*|#]*.*\n' \
