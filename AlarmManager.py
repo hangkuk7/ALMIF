@@ -257,8 +257,8 @@ class AlarmMgr:
 
         print(f'Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
 
-        for idx, info in enumerate(alarm_info_list):
-            print(f'idx=[{idx}], alarm_info=[{info}]')
+        # for idx, info in enumerate(alarm_info_list):
+        #     print(f'idx=[{idx}], alarm_info=[{info}]')
 
         # for sort.
         alarm_title_list = list()
