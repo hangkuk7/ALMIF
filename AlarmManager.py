@@ -235,9 +235,15 @@ class AlarmMgr:
 
         # Loading Alarm Category for 5G
         Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
-        sql_string = "SELECT vendor_type, rat_type, alarm_code, location, alarm_time, alarm_state, severity " \
+
+        sql_string = "SELECT category_name, alarm_text " \
                      "FROM tb_e2eo_fc_alarm_category " \
                      "WHERE rat_type='" + self._rat_type + "'; "
+
+        db_results = Dbmanager.select(sql_string)
+        print(f'db_results type =[{type(db_results)}], db_results=[{db_results}]')
+
+        return False
 
         # regular expression for 5G
         regex = re.compile(r'RANEMS\S+.*\n' \
