@@ -381,6 +381,9 @@ class AlarmMgr:
                     # determine the equipment type
                     if 'NRCELL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
+                    elif 'NRCELL-' not in location and len(equip_id) < 1:
+                        print(f'EQUIPMENT_ETC_TYPE')
+                        equip_type = EQUIPMENT_ETC_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
