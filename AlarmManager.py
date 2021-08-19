@@ -594,10 +594,10 @@ class AlarmMgr:
                         equip_id = temp_value[1]
                     elif 'LNBTS ID' in alarm_name:
                         temp_value = alarm_name.split('LNBTS ID')
-                        temp_str = temp_value[1]
+                        temp_str = temp_value[1].lstrip().rstrip()
                         lnbts_row = temp_str.split(' ')
                         equip_id = lnbts_row[0]
-                        print(f'*****  [LNBTS ID] temp_value=[{temp_value}], equip_id=[{equip_id}]')
+                        print(f'*****  [LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
 
                     else:
                         print(f'Error. Invalid LTE BTS Name. location=[{location}], bts_name=[{bts_name}]')
