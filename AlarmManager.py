@@ -143,29 +143,29 @@ class AlarmMgr:
                     # print(f'UPDATE ALARM. db_results=[{db_results}]')
                     # print(f'UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
 
-                sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
-                             "SET alarm_source='" + data['alarm_source'] + "', " \
-                             "alarm_time='" + data['alarm_time'] + "', " \
-                             "alarm_name='" + data['alarm_name'] + "', "\
-                             "alarm_state='" + alarm_state_type + "', " \
-                             "event_type='" + data['event_type'] + "', " \
-                             "severity='" + data['severity'] + "', " \
-                             "probable_cause='" + data['probable_cause'] + "', " \
-                             "additional_text='" + data['additional_text'] + "', " \
-                             "ne_type='" + data['ne_name'] + "', " \
-                             "specific_problem='" + data['specific_problem'] + "', " \
-                             "alarm_id='" + data['alarm_id'] + "', " \
-                             "noti_id='" + data['notification_id'] + "', " \
-                             "clear_user='" + data['clear_user'] + "', " \
-                             "equip_id='" + data['equip_id'] + "', " \
-                             "equip_type='" + data['equip_type'] + "', " \
-                             "alarm_category='" + data['alarm_category'] + "', " \
-                             "updated_at=NOW() " \
-                             "WHERE vendor_type='" + self._vendor_type + "' " \
-                             "AND rat_type='" + self._rat_type + "' " \
-                             "AND alarm_code='" + data['alarm_code'] + "' " \
-                             "AND location='" + data['location'] + "'; "
-                Dbmanager.update(sql_string)
+                    sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
+                                 "SET alarm_source='" + data['alarm_source'] + "', " \
+                                 "alarm_time='" + data['alarm_time'] + "', " \
+                                 "alarm_name='" + data['alarm_name'] + "', "\
+                                 "alarm_state='" + alarm_state_type + "', " \
+                                 "event_type='" + data['event_type'] + "', " \
+                                 "severity='" + data['severity'] + "', " \
+                                 "probable_cause='" + data['probable_cause'] + "', " \
+                                 "additional_text='" + data['additional_text'] + "', " \
+                                 "ne_type='" + data['ne_name'] + "', " \
+                                 "specific_problem='" + data['specific_problem'] + "', " \
+                                 "alarm_id='" + data['alarm_id'] + "', " \
+                                 "noti_id='" + data['notification_id'] + "', " \
+                                 "clear_user='" + data['clear_user'] + "', " \
+                                 "equip_id='" + data['equip_id'] + "', " \
+                                 "equip_type='" + data['equip_type'] + "', " \
+                                 "alarm_category='" + data['alarm_category'] + "', " \
+                                 "updated_at=NOW() " \
+                                 "WHERE vendor_type='" + self._vendor_type + "' " \
+                                 "AND rat_type='" + self._rat_type + "' " \
+                                 "AND alarm_code='" + data['alarm_code'] + "' " \
+                                 "AND location='" + data['location'] + "'; "
+                    Dbmanager.update(sql_string)
                 # print(f'sql_string=[\n{sql_string}\n]')
             else: # if db_results != ():
                 # Insert TB_E2EO_FC_FAULT_ALARM
