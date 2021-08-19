@@ -592,9 +592,14 @@ class AlarmMgr:
                     if bts_name.startswith('LNBTS-') == True:
                         temp_value = bts_name.split('-')
                         equip_id = temp_value[1]
+                    elif 'LNBTS ID' in alarm_name:
+                        temp_value = alarm_name.split('LNBTS ID')
+                        lnbts_str = temp_value.split(' ')
+                        equip_id = lnbts_str[0]
+                        print(f'*****  [LNBTS ID] temp_value=[{temp_value}], equip_id=[{equip_id}]')
+
                     else:
                         print(f'Error. Invalid LTE BTS Name. location=[{location}], bts_name=[{bts_name}]')
-                        print(f'*****  alarm_name=[{alarm_name}], probable_cause=[{probable_cause}] ***** ')
                         equip_id = ''
 
                     # determine the equipment type
