@@ -606,6 +606,9 @@ class AlarmMgr:
                     # determine the equipment type
                     if 'LNCEL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
+                    elif 'LNCELL ID' in alarm_name:
+                        print(f'Equipment Type. [LNCELL ID] alarm_name=[{alarm_name}]')
+                        equip_type = EQUIPMENT_RU_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
                         print(f'Error. Invalid Equipment Type. location=[{location}], equip_type=[{equip_type}]')
