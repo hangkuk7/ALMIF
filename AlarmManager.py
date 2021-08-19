@@ -136,12 +136,12 @@ class AlarmMgr:
                     data_date_alarm_time = datetime.strptime(data['alarm_time'], "%Y-%m-%d %H:%M:%S")
 
                 if data_date_alarm_time <= db_date_alarm_time:
-                    print(f'SKIP UPDATE. db_results=[{db_results}]')
+                    # print(f'SKIP UPDATE. db_results=[{db_results}]')
                     print(f'SKIP UPDATE. alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
                     continue
                 else:
                     # print(f'UPDATE ALARM. db_results=[{db_results}]')
-                    # print(f'UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
+                    print(f'UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
 
                     sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
                                  "SET alarm_source='" + data['alarm_source'] + "', " \
