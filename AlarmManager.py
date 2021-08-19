@@ -611,7 +611,6 @@ class AlarmMgr:
                         equip_type = EQUIPMENT_RU_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
-                        print(f'Error. Invalid Equipment Type. location=[{location}], equip_type=[{equip_type}]')
 
                     # To do later.....alarm_category
                     alarm_category = 'TEST_LTE_CATEGORY'
