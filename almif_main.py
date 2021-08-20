@@ -19,9 +19,11 @@ def initConfig():
     ALL_CONFIG_INFO = ConfManager.getInstance().get_flexconf_config()
 
     global CRON_CONFIG
+    global TIME_CONFIG
     global DB_INFO
 
     CRON_CONFIG = ALL_CONFIG_INFO['CRON_CONFIG']
+
     DB_INFO = ConfManager.getInstance().getDbConfig()
 
     print('CRON_CONFIG = {}'.format(CRON_CONFIG))
