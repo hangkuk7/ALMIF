@@ -69,10 +69,24 @@ class ConfManager:
             self.localdictList[each_section] = dictionary
 
         # [3] LOG INFO
-        self.msglogFile = str(self.getLocalConfigData("LOG_INFO", "MSG_LOG_FILE"))
-        self.errlogFile = str(self.getLocalConfigData("LOG_INFO", "ERR_LOG_FILE"))
+        # self.msglogFile = str(self.getLocalConfigData("LOG_INFO", "MSG_LOG_FILE"))
+        # self.errlogFile = str(self.getLocalConfigData("LOG_INFO", "ERR_LOG_FILE"))
 
+        # Load LocalConfig
         try:
+            # [GENERAL] section
+            self.err_log_level = self.getLocalConfigData("GENERAL", "ERR_LOG_LEVEL")
+            self.msg_log_level = self.getLocalConfigData("GENERAL", "MSG_LOG_LEVEL")
+
+            # [TIME_CONFIG] section
+            self.time_interval = self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL")
+
+        except Exception as errmsg:
+            print('Error. Exception in read LocalConfig config : {}'.format(errmsg))
+
+        # Load SYSCONFIG
+        try:
+            # SYSCONFIG
             self.db_user = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_ID", 1))
             self.db_passwd = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PW", 1))
             self.db_port = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PORT", 1))
@@ -80,9 +94,7 @@ class ConfManager:
             self.db_host = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_IPADDR", 1))
 
         except Exception as errmsg:
-            print('Error. Exception in read config : {}'.format(errmsg))
-            # from ExceptionHandler import ExceptionManager
-            # ExceptionManager.process_stop()
+            print('Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
 
         try:
             self.host_name = os.environ['HOSTNAME']
@@ -142,49 +154,52 @@ class ConfManager:
         dbInfo['user'] = self.db_user
         dbInfo['db'] = self.db_name
 
-        '''
-        # POSTGRE SQL
-        dbInfo = {}
-        dbInfo['host'] = self.db_host
-        dbInfo['port'] = self.db_port
-        dbInfo['password'] = self.db_passwd
-        dbInfo['user'] = self.db_user
-        dbInfo['database'] = self.db_name
-        '''
-
         return dbInfo
 
-    def get_config_data(self):
-        parser = configparser.ConfigParser()
-        parser.read(ConfManager.CONFIG_PATH)
+    def getLocalConfig(self):
 
-        ALL_CONFIG_INFO = {}
+        localConfigInfo = {}
+        # [GENERAL] section
+        localConfigInfo['err_log_level'] = self.err_log_level
+        localConfigInfo['msg_log_level'] = self.msg_log_level
 
-        CRON_CONFIG = {}
-        TIME_CONFIG = {}
+        # [TIME_CONFIG] section
+        localConfigInfo['time_interval'] = self.time_interval
 
+        return localConfigInfo
 
-        CRON_KEY = ['CRON_FILE_PATH', 'CRON_LOG_PATH', 'CRON_USER']
-        TIME_KEY = ['TIME_INTERVAL']
-
-        raw = 'CRON_CONFIG'
-        for k in CRON_KEY:
-            CRON_CONFIG[k] = parser.get(raw, k)
-
-        raw = 'TIME_CONFIG'
-        for k in TIME_KEY:
-            TIME_CONFIG[k] = parser.get(raw, k)
-
-        ALL_CONFIG_INFO['CRON_CONFIG'] = CRON_CONFIG
-        ALL_CONFIG_INFO['TIME_CONFIG'] = TIME_CONFIG
-
-        return ALL_CONFIG_INFO
+    # def get_config_data(self):
+    #     parser = configparser.ConfigParser()
+    #     parser.read(ConfManager.CONFIG_PATH)
+    #
+    #     ALL_CONFIG_INFO = {}
+    #
+    #     CRON_CONFIG = {}
+    #     TIME_CONFIG = {}
+    #
+    #     CRON_KEY = ['CRON_FILE_PATH', 'CRON_LOG_PATH', 'CRON_USER']
+    #     TIME_KEY = ['TIME_INTERVAL']
+    #
+    #     raw = 'CRON_CONFIG'
+    #     for k in CRON_KEY:
+    #         CRON_CONFIG[k] = parser.get(raw, k)
+    #
+    #     raw = 'TIME_CONFIG'
+    #     for k in TIME_KEY:
+    #         TIME_CONFIG[k] = parser.get(raw, k)
+    #
+    #     ALL_CONFIG_INFO['CRON_CONFIG'] = CRON_CONFIG
+    #     ALL_CONFIG_INFO['TIME_CONFIG'] = TIME_CONFIG
+    #
+    #     return ALL_CONFIG_INFO
 
 if __name__ == '__main__':
     # example 1
     # print(ConfManager.getInstance().getSysConfigData("MSGQUEUE_INFO", "PLTEIB"))
     # print(ConfManager.getInstance().getSysConfigData("MSGQUEUE_INFO", "proc2"))
-    ALL_CONFIG_INFO = ConfManager.getInstance().get_config_data()
-    print(ALL_CONFIG_INFO)
-    print(ALL_CONFIG_INFO['CRON_CONFIG'])
+    # ALL_CONFIG_INFO = ConfManager.getInstance().get_config_data()
+    # print(ALL_CONFIG_INFO)
+    # print(ALL_CONFIG_INFO['CRON_CONFIG'])
+
+
 
