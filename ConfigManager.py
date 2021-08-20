@@ -60,7 +60,7 @@ class ConfManager:
         # [2] FILE READ LOCAL CONFIG
         self.localConfig = configparser.ConfigParser()
         # self.localConfig.read('ALMIF.dat')
-        self.sysConfig.read(self.home_str + '/data/CONFIG/ALMIF.dat', encoding='euc-kr')
+        self.localConfig.read(self.home_str + '/data/CONFIG/ALMIF.dat', encoding='euc-kr')
         print(f'**** TEST ***** Local - self.home_str=[{self.home_str}]')
         local_config_section = self.localConfig.sections()
         print(f'**** TEST ***** Local - self.local_config_section=[{local_config_section}]')
