@@ -77,11 +77,11 @@ class AlarmMgr:
             return None
 
     def __get_alarm_category(self, probable_cause):
-        category_name = ''
+        category_name = ALARM_CATEGORY_DEFAULT
 
         if len(self._db_alarm_category_info) < 1:
             print(f'Error. Invaild. db_alarm_category_info. len=[{len(self._db_alarm_category_info)}] ')
-            return ALARM_CATEGORY_DEFAULT
+            return category_name
 
         for idx, item in enumerate(self._db_alarm_category_info):
             # print(f'idx=[{idx}], item=[{item}]')
@@ -91,7 +91,7 @@ class AlarmMgr:
                 return category_name
 
         # print(f'[__get_alarm_category] Error. Matching fail. category_name=[{category_name}]')
-        return ALARM_CATEGORY_DEFAULT
+        return category_name
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
         print(f'*********** __proc_alarm_db() Start! ***********')
