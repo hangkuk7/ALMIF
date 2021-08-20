@@ -63,9 +63,9 @@ class AlarmMgr:
                      "WHERE rat_type='" + self._rat_type + "'; "
         print(f'[__init__] sql_string=[{sql_string}]')
 
-        db_results = Dbmanager.select(sql_string)
+        self._db_alarm_category_info = Dbmanager.select(sql_string)
         print(f'[__init__] sql_string=[\n{sql_string}\n]')
-        print(f'db_results type =[{type(db_results)}], db_results=[{db_results}]')
+        print(f'self._db_alarm_category_info=[{self._db_alarm_category_info}]')
 
         return None
 
