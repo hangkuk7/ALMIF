@@ -76,23 +76,23 @@ class AlarmMgr:
             print(f'Error: Input must be a bytes or int type')
             return None
 
-    def __get_alarm_category(self, category_name, probable_cause):
+    def __get_alarm_category(self, probable_cause):
         print(f'*********** __get_alarm_category() Start! ***********')
+        category_name = ''
+
         if len(self._db_alarm_category_info) < 1:
             print(f'Error. Invaild. db_alarm_category_info. len=[{len(self._db_alarm_category_info)}] ')
-            category_name = ''
-            return False
+            return ALARM_CATEGORY_DEFAULT
 
         for idx, item in enumerate(self._db_alarm_category_info):
-            print(f'idx=[{idx}], item=[{item}]')
+            # print(f'idx=[{idx}], item=[{item}]')
             if probable_cause.upper() in item[1].upper():
                 category_name = item[0].upper()
                 print(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
-                return True
+                return category_name
 
-        category_name = ''
         print(f'[__get_alarm_category] Error. Matching fail. category_name=[{category_name}]')
-        return False
+        return ALARM_CATEGORY_DEFAULT
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
         print(f'*********** __proc_alarm_db() Start! ***********')
