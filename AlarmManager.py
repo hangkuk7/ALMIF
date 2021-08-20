@@ -418,10 +418,9 @@ class AlarmMgr:
                         equip_type = EQUIPMENT_DU_TYPE
 
                     # To do later.....alarm_category
-                    alarm_category = 'TEST_5G_CATEGORY'
                     alarm_category = self.__get_alarm_category(probable_cause)
 
-                    print(f'__get_alarm_category() success!. alarm_category=[{alarm_category}]')
+                    print(f'***** TEST ******. alarm_category=[{alarm_category}]')
                     return False
 
                     # Set 5G Alarm dictionary
