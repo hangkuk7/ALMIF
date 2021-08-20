@@ -67,9 +67,6 @@ class AlarmMgr:
         print(f'[__init__] sql_string=[\n{sql_string}\n]')
         print(f'self._db_alarm_category_info=[{self._db_alarm_category_info}]')
 
-        return None
-
-
     def __bytes_to_string(self, byte_or_int_value, encoding='utf-8'):
         if isinstance(byte_or_int_value, bytes):
             return byte_or_int_value.decode(encoding)
@@ -78,6 +75,24 @@ class AlarmMgr:
         else:
             print(f'Error: Input must be a bytes or int type')
             return None
+
+    def __get_alarm_category(self, category_name, probable_cause):
+        print(f'*********** __get_alarm_category() Start! ***********')
+        if len(self._db_alarm_category_info) < 1:
+            print(f'Error. Invaild. db_alarm_category_info. len=[{len(self._db_alarm_category_info)}] ')
+            category_name = ''
+            return False
+
+        for idx, item in enumerate(self._db_alarm_category_info):
+            print(f'idx=[{idx}], item=[{item}]')
+            if probable_cause.upper() in item[1].upper():
+                category_name = item[0].upper()
+                print(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
+                return True
+
+        category_name = ''
+        print(f'[__get_alarm_category] Error. Matching fail. category_name=[{category_name}]')
+        return False
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
         print(f'*********** __proc_alarm_db() Start! ***********')
