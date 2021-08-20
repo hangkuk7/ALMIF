@@ -47,6 +47,7 @@ class ConfManager:
             # append(index, value)
             self.sysdictList[each_section] = dictionary
 
+        print(f'**** TEST **** sysdictList self.localdictList=[{self.sysdictList}]')
         try:
             self.sys_name_str = os.environ["MY_SYS_NAME"]
             print("HOME : " + str(self.sys_name_str))
@@ -60,7 +61,9 @@ class ConfManager:
         self.localConfig = configparser.ConfigParser()
         # self.localConfig.read('ALMIF.dat')
         self.sysConfig.read(self.home_str + '/data/CONFIG/ALMIF.dat', encoding='euc-kr')
-        print(f'**** TEST ***** self.home_str=[{self.home_str}]')
+        print(f'**** TEST ***** Local - self.home_str=[{self.home_str}]')
+        local_config_section = self.localConfig.sections()
+        print(f'**** TEST ***** Local - self.local_config_section=[{local_config_section}]')
 
         for each_section in self.localConfig.sections():
             dictionary = dict()
@@ -70,7 +73,7 @@ class ConfManager:
             # append(index, value)
             self.localdictList[each_section] = dictionary
 
-        print(f'self.localdictList=[{self.localdictList}]')
+        print(f'**** TEST **** Local self.localdictList=[{self.localdictList}]')
         # [3] LOG INFO
         # self.msglogFile = str(self.getLocalConfigData("LOG_INFO", "MSG_LOG_FILE"))
         # self.errlogFile = str(self.getLocalConfigData("LOG_INFO", "ERR_LOG_FILE"))
