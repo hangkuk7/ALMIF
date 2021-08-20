@@ -419,8 +419,7 @@ class AlarmMgr:
 
                     # To do later.....alarm_category
                     alarm_category = 'TEST_5G_CATEGORY'
-                    if self.__get_alarm_category(alarm_category, probable_cause) != True:
-                        print(f'__get_alarm_category() fail. alarm_category=[{alarm_category}]')
+                    alarm_category = self.__get_alarm_category(probable_cause)
 
                     print(f'__get_alarm_category() success!. alarm_category=[{alarm_category}]')
                     return False
