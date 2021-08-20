@@ -194,6 +194,7 @@ class ConfManager:
     #     return ALL_CONFIG_INFO
 
 if __name__ == '__main__':
+    pass
     # example 1
     # print(ConfManager.getInstance().getSysConfigData("MSGQUEUE_INFO", "PLTEIB"))
     # print(ConfManager.getInstance().getSysConfigData("MSGQUEUE_INFO", "proc2"))
