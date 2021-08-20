@@ -15,16 +15,19 @@ from almif_variables import *
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
 
-DB_INFO = ConfManager.getInstance().getDbConfig()
-
 class AlarmMgr:
     def __init__(self, access_info, charset='utf8'):
         if len(access_info) < 1:
             return None
 
+        # Process ID
+        self._pid = os
         # Create SSH Client
         self._cli = paramiko.SSHClient()
         self._cli.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+
+        # For Database
+        DB_INFO = ConfManager.getInstance().getDbConfig()
 
         # Save access information to self variables.
         self._name = access_info[0]
