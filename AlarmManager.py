@@ -88,10 +88,10 @@ class AlarmMgr:
             # print(f'idx=[{idx}], item=[{item}]')
             if probable_cause.upper() in item[1].upper():
                 category_name = item[0].upper()
-                print(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
+                # print(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
                 return category_name
 
-        print(f'[__get_alarm_category] Error. Matching fail. category_name=[{category_name}]')
+        # print(f'[__get_alarm_category] Error. Matching fail. category_name=[{category_name}]')
         return ALARM_CATEGORY_DEFAULT
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
