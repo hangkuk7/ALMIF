@@ -702,7 +702,8 @@ class AlarmMgr:
         return True
 
     def get_remote_alarm(self):
-        print(f'get_remote_alarm() Start!')
+        self._pid =  os.getpid()
+        print(f'get_remote_alarm() Start! pid=[{self._pid}]')
 
         # SSH connect
         self._cli.connect(self._conn_ip, port=self._conn_port,
