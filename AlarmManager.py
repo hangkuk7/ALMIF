@@ -55,6 +55,19 @@ class AlarmMgr:
             print(f'Error. Invalid file info. file_path=[{self._file_path}]')
             return None
 
+        # Loading Alarm Category for 5G
+        Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
+
+        sql_string = "SELECT category_name, alarm_text " \
+                     "FROM tb_e2eo_fc_alarm_category " \
+                     "WHERE rat_type='" + self._rat_type + "'; "
+
+        db_results = Dbmanager.select(sql_string)
+        print(f'db_results type =[{type(db_results)}], db_results=[{db_results}]')
+
+        return None
+
+
     def __bytes_to_string(self, byte_or_int_value, encoding='utf-8'):
         if isinstance(byte_or_int_value, bytes):
             return byte_or_int_value.decode(encoding)
@@ -232,18 +245,6 @@ class AlarmMgr:
         if len(alarm_file) < 1:
             print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
-
-        # Loading Alarm Category for 5G
-        Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
-
-        sql_string = "SELECT category_name, alarm_text " \
-                     "FROM tb_e2eo_fc_alarm_category " \
-                     "WHERE rat_type='" + self._rat_type + "'; "
-
-        db_results = Dbmanager.select(sql_string)
-        print(f'db_results type =[{type(db_results)}], db_results=[{db_results}]')
-
-        return False
 
         # regular expression for 5G
         regex = re.compile(r'RANEMS\S+.*\n' \
