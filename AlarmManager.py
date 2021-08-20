@@ -17,6 +17,9 @@ from almif_variables import *
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
 
+# For Database
+DB_INFO = ConfManager.getInstance().getDbConfig()
+
 class AlarmMgr:
     def __init__(self, access_info, charset='utf8'):
         if len(access_info) < 1:
@@ -25,9 +28,6 @@ class AlarmMgr:
         # Process ID
         self._pid = os.getpid()
         print(f'[__init__] self._pid=[{self._pid}]')
-
-        # For Database
-        DB_INFO = ConfManager.getInstance().getDbConfig()
 
         # Create SSH Client
         self._cli = paramiko.SSHClient()
