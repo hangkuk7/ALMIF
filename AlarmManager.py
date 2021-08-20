@@ -417,7 +417,7 @@ class AlarmMgr:
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
-                    # To do later.....alarm_category
+                    # set alarm_category for 5G
                     alarm_category = self.__get_alarm_category(probable_cause)
 
                     print(f'***** TEST ******. 5G alarm_category=[{alarm_category}]')
@@ -621,8 +621,6 @@ class AlarmMgr:
                     split_row = location.split('/')
                     bts_name = split_row[2]
 
-                    # print(f'location=[{location}], bts_name=[{bts_name}]')
-
                     # parsing the BTS ID
                     if bts_name.startswith('LNBTS-') == True:
                         temp_value = bts_name.split('-')
@@ -647,8 +645,8 @@ class AlarmMgr:
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
 
-                    # To do later.....alarm_category
-                    alarm_category = 'TEST_LTE_CATEGORY'
+                    # set alarm_category for LTE
+                    alarm_category = self.__get_alarm_category(probable_cause)
 
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
