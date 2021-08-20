@@ -23,12 +23,15 @@ def initConfig():
     global DB_INFO
 
     CRON_CONFIG = ALL_CONFIG_INFO['CRON_CONFIG']
+    TIME_CONFIG = ALL_CONFIG_INFO['TIME_CONFIG']
 
     DB_INFO = ConfManager.getInstance().getDbConfig()
 
     print('CRON_CONFIG = {}'.format(CRON_CONFIG))
+    print('TIME_CONFIG = {}'.format(TIME_CONFIG))
     print('dbinfo = {}'.format(DB_INFO))
 
+    return False
     return True
 
 def initLog():
