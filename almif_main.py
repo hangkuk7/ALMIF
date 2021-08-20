@@ -31,7 +31,6 @@ def initConfig():
     print('TIME_CONFIG = {}'.format(TIME_CONFIG))
     print('dbinfo = {}'.format(DB_INFO))
 
-    return False
     return True
 
 def initLog():
