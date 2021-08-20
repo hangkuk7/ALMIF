@@ -420,7 +420,7 @@ class AlarmMgr:
                     # To do later.....alarm_category
                     alarm_category = self.__get_alarm_category(probable_cause)
 
-                    print(f'***** TEST ******. alarm_category=[{alarm_category}]')
+                    print(f'***** TEST ******. 5G alarm_category=[{alarm_category}]')
 
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
