@@ -647,6 +647,7 @@ class AlarmMgr:
 
                     # set alarm_category for LTE
                     alarm_category = self.__get_alarm_category(probable_cause)
+                    print(f'***** TEST ******. LTE alarm_category=[{alarm_category}]')
 
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
