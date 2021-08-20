@@ -26,12 +26,12 @@ class AlarmMgr:
         self._pid = os.getpid()
         print(f'[__init__] self._pid=[{self._pid}]')
 
+        # For Database
+        DB_INFO = ConfManager.getInstance().getDbConfig()
+
         # Create SSH Client
         self._cli = paramiko.SSHClient()
         self._cli.set_missing_host_key_policy(paramiko.AutoAddPolicy)
-
-        # For Database
-        DB_INFO = ConfManager.getInstance().getDbConfig()
 
         # Save access information to self variables.
         self._name = access_info[0]
