@@ -68,6 +68,7 @@ class ConfManager:
             # append(index, value)
             self.localdictList[each_section] = dictionary
 
+        print(f'self.localdictList=[{self.localdictList}]')
         # [3] LOG INFO
         # self.msglogFile = str(self.getLocalConfigData("LOG_INFO", "MSG_LOG_FILE"))
         # self.errlogFile = str(self.getLocalConfigData("LOG_INFO", "ERR_LOG_FILE"))
