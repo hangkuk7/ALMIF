@@ -1,3 +1,5 @@
+import os
+
 # For SSH
 import paramiko
 import glob
@@ -21,7 +23,8 @@ class AlarmMgr:
             return None
 
         # Process ID
-        self._pid = os
+        self._pid = os.getpid()
+        print(f'[__init__] self._pid=[{self._pid}]')
         # Create SSH Client
         self._cli = paramiko.SSHClient()
         self._cli.set_missing_host_key_policy(paramiko.AutoAddPolicy)
@@ -64,7 +67,6 @@ class AlarmMgr:
         sql_string = "SELECT category_name, alarm_text " \
                      "FROM tb_e2eo_fc_alarm_category " \
                      "WHERE rat_type='" + self._rat_type + "'; "
-        print(f'[__init__] sql_string=[{sql_string}]')
 
         self._db_alarm_category_info = Dbmanager.select(sql_string)
         print(f'[__init__] sql_string=[\n{sql_string}\n]')
