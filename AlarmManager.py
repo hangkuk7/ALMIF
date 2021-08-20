@@ -77,7 +77,6 @@ class AlarmMgr:
             return None
 
     def __get_alarm_category(self, probable_cause):
-        print(f'*********** __get_alarm_category() Start! ***********')
         category_name = ''
 
         if len(self._db_alarm_category_info) < 1:
@@ -420,8 +419,6 @@ class AlarmMgr:
                     # set alarm_category for 5G
                     alarm_category = self.__get_alarm_category(probable_cause)
 
-                    print(f'***** TEST ******. 5G alarm_category=[{alarm_category}]')
-
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
                                     'alarm_time':alarm_time,
@@ -647,7 +644,6 @@ class AlarmMgr:
 
                     # set alarm_category for LTE
                     alarm_category = self.__get_alarm_category(probable_cause)
-                    print(f'***** TEST ******. LTE alarm_category=[{alarm_category}]')
 
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
