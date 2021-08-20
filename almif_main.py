@@ -16,7 +16,7 @@ import time
 def initConfig():
     print(f'-------------------- initConfig() --------------------')
     print(f'--------------------Get Config--------------------')
-    ALL_CONFIG_INFO = ConfManager.getInstance().get_flexconf_config()
+    ALL_CONFIG_INFO = ConfManager.getInstance().get_config_data()
 
     global CRON_CONFIG
     global TIME_CONFIG
