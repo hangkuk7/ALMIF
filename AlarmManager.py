@@ -25,6 +25,7 @@ class AlarmMgr:
         # Process ID
         self._pid = os.getpid()
         print(f'[__init__] self._pid=[{self._pid}]')
+
         # Create SSH Client
         self._cli = paramiko.SSHClient()
         self._cli.set_missing_host_key_policy(paramiko.AutoAddPolicy)
