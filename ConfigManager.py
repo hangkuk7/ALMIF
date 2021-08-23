@@ -180,7 +180,7 @@ class ConfManager:
 
         return localConfigInfo
 
- if __name__ == '__main__':
+if __name__ == '__main__':
     pass
     # example 1
     # print(ConfManager.getInstance().getSysConfigData("MSGQUEUE_INFO", "PLTEIB"))
