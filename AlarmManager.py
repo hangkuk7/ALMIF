@@ -466,7 +466,7 @@ class AlarmMgr:
         # for idx, item in enumerate(alarm_title_list):
         #     print(f'idx=[{idx + 1}] item=[{item}]')
 
-        print(f'\nlatest_alarm_info=[{latest_alarm_info}]')
+        print(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
 
         self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
@@ -698,7 +698,7 @@ class AlarmMgr:
         # for idx, item in enumerate(alarm_title_list):
         #     print(f'idx=[{idx + 1}] item=[{item}]')
 
-        print(f'\nlatest_alarm_info=[{latest_alarm_info}]')
+        print(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
 
         self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
