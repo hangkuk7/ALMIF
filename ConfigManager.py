@@ -79,7 +79,6 @@ class ConfManager:
         #############################################################################
         # [2] FILE READ LOCAL CONFIG
         self.localConfig = configparser.ConfigParser()
-        # self.localConfig.read('ALMIF.dat')
         self.localConfig.read(self.home_str + '/data/CONFIG/ALMIF.dat', encoding='euc-kr')
         local_config_section = self.localConfig.sections()
 
@@ -197,32 +196,7 @@ class ConfManager:
 
         return localConfigInfo
 
-    # def get_config_data(self):
-    #     parser = configparser.ConfigParser()
-    #     parser.read(ConfManager.CONFIG_PATH)
-    #
-    #     ALL_CONFIG_INFO = {}
-    #
-    #     CRON_CONFIG = {}
-    #     TIME_CONFIG = {}
-    #
-    #     CRON_KEY = ['CRON_FILE_PATH', 'CRON_LOG_PATH', 'CRON_USER']
-    #     TIME_KEY = ['TIME_INTERVAL']
-    #
-    #     raw = 'CRON_CONFIG'
-    #     for k in CRON_KEY:
-    #         CRON_CONFIG[k] = parser.get(raw, k)
-    #
-    #     raw = 'TIME_CONFIG'
-    #     for k in TIME_KEY:
-    #         TIME_CONFIG[k] = parser.get(raw, k)
-    #
-    #     ALL_CONFIG_INFO['CRON_CONFIG'] = CRON_CONFIG
-    #     ALL_CONFIG_INFO['TIME_CONFIG'] = TIME_CONFIG
-    #
-    #     return ALL_CONFIG_INFO
-
-if __name__ == '__main__':
+ if __name__ == '__main__':
     pass
     # example 1
     # print(ConfManager.getInstance().getSysConfigData("MSGQUEUE_INFO", "PLTEIB"))
