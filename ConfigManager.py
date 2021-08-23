@@ -5,7 +5,6 @@ import json
 
 
 class ConfManager:
-
     LOG_INFO = "LOG_INFO"
     SYS_CONFIG_GENERAL = "GENERAL"
 
@@ -95,11 +94,11 @@ class ConfManager:
         # Load LocalConfig
         try:
             # [GENERAL] section
-            self.err_log_level = self.getLocalConfigData("GENERAL", "ERR_LOG_LEVEL", 1)
-            self.msg_log_level = self.getLocalConfigData("GENERAL", "MSG_LOG_LEVEL", 1)
+            self.err_log_level = str(self.getLocalConfigData("GENERAL", "ERR_LOG_LEVEL", 1))
+            self.msg_log_level = str(self.getLocalConfigData("GENERAL", "MSG_LOG_LEVEL", 1))
 
             # [TIME_CONFIG] section
-            self.time_interval = self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL", 1)
+            self.time_interval = str(self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL", 1))
 
         except Exception as errmsg:
             print('Error. Exception in read LocalConfig config : {}'.format(errmsg))

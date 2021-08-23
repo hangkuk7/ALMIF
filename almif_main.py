@@ -18,19 +18,12 @@ def initConfig():
     print(f'--------------------Get Config--------------------')
     # ALL_CONFIG_INFO = ConfManager.getInstance().get_config_data()
 
-    # global CRON_CONFIG
-    # global TIME_CONFIG
     global LOCAL_CONFIG
     global DB_INFO
-
-    # CRON_CONFIG = ALL_CONFIG_INFO['CRON_CONFIG']
-    # TIME_CONFIG = ALL_CONFIG_INFO['TIME_CONFIG']
 
     DB_INFO = ConfManager.getInstance().getDbConfig()
     LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
 
-    # print('CRON_CONFIG = {}'.format(CRON_CONFIG))
-    # print('TIME_CONFIG = {}'.format(TIME_CONFIG))
     print('local_config = {}'.format(LOCAL_CONFIG))
     print('dbinfo = {}'.format(DB_INFO))
 
