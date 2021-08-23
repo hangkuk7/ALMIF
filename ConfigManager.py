@@ -47,7 +47,7 @@ class ConfManager:
             # append(index, value)
             self.sysdictList[each_section] = dictionary
 
-        print(f'**** TEST **** sysdictList self.localdictList=[{self.sysdictList}]')
+        #
         try:
             self.sys_name_str = os.environ["MY_SYS_NAME"]
             print("HOME : " + str(self.sys_name_str))
@@ -55,6 +55,25 @@ class ConfManager:
         except KeyError:
             self.sys_name_str = ""
             print("Please set the environment variable MY_SYS_NAME")
+
+        try:
+            self.host_name = os.environ['HOSTNAME']
+        except KeyError:
+            self.host_name = 'E2E-O'
+            print("Please set the environment variable HOSTNAME")
+
+        #############################################################################
+        # [1] Load SYSCONFIG
+        try:
+            # SYSCONFIG
+            self.db_user = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_ID", 1))
+            self.db_passwd = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PW", 1))
+            self.db_port = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PORT", 1))
+            self.db_name = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_NAME", 1))
+            self.db_host = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_IPADDR", 1))
+
+        except Exception as errmsg:
+            print('Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
 
         #############################################################################
         # [2] FILE READ LOCAL CONFIG
