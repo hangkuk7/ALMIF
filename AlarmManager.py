@@ -678,7 +678,8 @@ class AlarmMgr:
                     # print(f'alarm_id=[{alarm_id}], notification_id=[{notification_id}] ')
                     # print(f'clear_user=[{clear_user}] ')
                     # print(f'==============================================================')
-                    #iniitialize variables
+
+                    # Iniitialize variables
                     additional_text = ''
                     clear_user = ''
                 else:
