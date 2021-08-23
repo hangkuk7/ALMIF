@@ -132,7 +132,22 @@ class ConfManager:
         print("Sys Conf -Can't not found SECTION[%s] KEY[%s] " % (section, confKey))
         return None
 
-    def getLocalConfigData(self, section, confKey):
+    # def getLocalConfigData(self, section, confKey):
+    #
+    #     for key in self.localdictList.keys():
+    #         print (key)
+    #         if key.upper() != section.upper():
+    #             continue
+    #
+    #         for instance in self.localdictList[key].keys():
+    #             if instance.upper() != confKey.upper():
+    #                 continue
+    #
+    #             return self.localdictList[key][instance]
+    #
+    #     print("Local Conf - Can't not found SECTION[%s] KEY[%s] " % (section, confKey))
+    #     return None
+    def getLocalConfigData(self, section, confKey, offset=0):
 
         for key in self.localdictList.keys():
             print (key)
@@ -143,7 +158,18 @@ class ConfManager:
                 if instance.upper() != confKey.upper():
                     continue
 
-                return self.localdictList[key][instance]
+                val = self.localdictList[key][instance]
+
+            if offset == 0:
+                return val
+            else:
+
+                idx = 1
+                vList = val.split()
+                for v in vList:
+                    if offset == idx:
+                        return v
+                    idx = idx + 1
 
         print("Local Conf - Can't not found SECTION[%s] KEY[%s] " % (section, confKey))
         return None
