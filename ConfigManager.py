@@ -33,19 +33,7 @@ class ConfManager:
             self.home_str = os.environ["HOME"]
             print("HOME : " + str(self.home_str))
         except KeyError:
-            print("Error. Please set the environment variable HOME")
-            sys.exit(1)
-
-        self.sysConfig = configparser.ConfigParser()
-        self.sysConfig.read(self.home_str + '/data/sysconfig', encoding='euc-kr')
-
-        for each_section in self.sysConfig.sections():
-            dictionary = dict()
-            for (each_key, each_val) in self.sysConfig.items(each_section):
-                dictionary[each_key] = each_val
-
-            # append(index, value)
-            self.sysdictList[each_section] = dictionary
+            print("Error. Exception. Please set the environment variable HOME")
 
         # MY_SYS_NAME
         try:
@@ -63,6 +51,17 @@ class ConfManager:
         except KeyError:
             self.host_name = 'E2E-O'
             print("'Error. Exception. Please set the environment variable HOSTNAME")
+
+        self.sysConfig = configparser.ConfigParser()
+        self.sysConfig.read(self.home_str + '/data/sysconfig', encoding='euc-kr')
+
+        for each_section in self.sysConfig.sections():
+            dictionary = dict()
+            for (each_key, each_val) in self.sysConfig.items(each_section):
+                dictionary[each_key] = each_val
+
+            # append(index, value)
+            self.sysdictList[each_section] = dictionary
 
         #############################################################################
         # [1] Load SYSCONFIG
