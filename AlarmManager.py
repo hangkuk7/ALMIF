@@ -742,7 +742,6 @@ class AlarmMgr:
                 else:
                     print(f'last_alarm_info is NOT empty. last_alarm_info=[{self._last_alarm_info}]')
                     search_loc = text_data.find(self._last_alarm_info)
-                    print(f'search_loc type=[{type(search_loc)}], search_loc=[{search_loc}]')
                     if search_loc > 0:
                         print(f'last alarm info search success! search_loc=[{search_loc}]]')
                         #### slicing alarm information #####
