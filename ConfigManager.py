@@ -133,7 +133,6 @@ class ConfManager:
     def getLocalConfigData(self, section, confKey, offset=0):
 
         for key in self.localdictList.keys():
-            print (key)
             if key.upper() != section.upper():
                 continue
 
