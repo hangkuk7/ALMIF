@@ -278,15 +278,18 @@ class AlarmMgr:
                            , re.MULTILINE)
 
         match_list = regex.findall(alarm_file)
+        # print(f'*** [{self._rat_type}] match_list len=[{len(match_list)}] ***')
 
-        # print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
+        # for idx, info in enumerate(match_list):
+        #     print(f'idx=[{idx}], match_info=[{info}]')
+
         alarm_info_list = list()
         # Remove duplicated items
         for value in match_list:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        print(f'Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
+        print(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
 
         # for idx, info in enumerate(alarm_info_list):
         #     print(f'idx=[{idx}], alarm_info=[{info}]')
@@ -492,7 +495,7 @@ class AlarmMgr:
                            , re.MULTILINE)
 
         match_list = regex.findall(alarm_file)
-        print(f'*** match_list type = [{type(match_list)}], match_list len=[{len(match_list)}] ***')
+        # print(f'*** [{self._rat_type}] match_list len=[{len(match_list)}] ***')
 
         # for idx, info in enumerate(match_list):
         #     print(f'idx=[{idx}], match_info=[{info}]')
@@ -503,7 +506,7 @@ class AlarmMgr:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        print(f'Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
+        print(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
 
         # for idx, info in enumerate(alarm_info_list):
         #     print(f'idx=[{idx}], alarm_info=[{info}]')
