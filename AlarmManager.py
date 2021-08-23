@@ -689,7 +689,7 @@ class AlarmMgr:
         # Sort alarm time list. latest alarm time is first item.
         print(f'**** TEST.  alarm_title_list len=[{len(alarm_title_list)}], alarm_title_list=[{alarm_title_list}] ******')
         alarm_title_list.sort(key=lambda x: (x.split(' ')[1], x.split(' ')[2]), reverse=True)
-        if len(alarm_title_list) > 1:
+        if len(alarm_title_list) > 0:
             latest_alarm_info = alarm_title_list[0]
         else:
             latest_alarm_info=''
