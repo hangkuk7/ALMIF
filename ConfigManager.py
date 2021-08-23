@@ -95,11 +95,11 @@ class ConfManager:
         # Load LocalConfig
         try:
             # [GENERAL] section
-            self.err_log_level = self.getLocalConfigData("GENERAL", "ERR_LOG_LEVEL")
-            self.msg_log_level = self.getLocalConfigData("GENERAL", "MSG_LOG_LEVEL")
+            self.err_log_level = self.getLocalConfigData("GENERAL", "ERR_LOG_LEVEL", 1)
+            self.msg_log_level = self.getLocalConfigData("GENERAL", "MSG_LOG_LEVEL", 1)
 
             # [TIME_CONFIG] section
-            self.time_interval = self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL")
+            self.time_interval = self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL", 1)
 
         except Exception as errmsg:
             print('Error. Exception in read LocalConfig config : {}'.format(errmsg))
