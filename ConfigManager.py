@@ -54,13 +54,13 @@ class ConfManager:
 
         except KeyError:
             self.sys_name_str = ""
-            print("Please set the environment variable MY_SYS_NAME")
+            print("'Error. Exception. Please set the environment variable MY_SYS_NAME")
 
         try:
             self.host_name = os.environ['HOSTNAME']
         except KeyError:
             self.host_name = 'E2E-O'
-            print("Please set the environment variable HOSTNAME")
+            print("'Error. Exception. Please set the environment variable HOSTNAME")
 
         #############################################################################
         # [1] Load SYSCONFIG
@@ -80,9 +80,7 @@ class ConfManager:
         self.localConfig = configparser.ConfigParser()
         # self.localConfig.read('ALMIF.dat')
         self.localConfig.read(self.home_str + '/data/CONFIG/ALMIF.dat', encoding='euc-kr')
-        print(f'**** TEST ***** Local - self.home_str=[{self.home_str}]')
         local_config_section = self.localConfig.sections()
-        print(f'**** TEST ***** Local - self.local_config_section=[{local_config_section}]')
 
         for each_section in self.localConfig.sections():
             dictionary = dict()
@@ -91,11 +89,6 @@ class ConfManager:
 
             # append(index, value)
             self.localdictList[each_section] = dictionary
-
-        print(f'**** TEST **** Local self.localdictList=[{self.localdictList}]')
-        # [3] LOG INFO
-        # self.msglogFile = str(self.getLocalConfigData("LOG_INFO", "MSG_LOG_FILE"))
-        # self.errlogFile = str(self.getLocalConfigData("LOG_INFO", "ERR_LOG_FILE"))
 
         # Load LocalConfig
         try:
