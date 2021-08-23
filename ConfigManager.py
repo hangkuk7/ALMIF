@@ -74,6 +74,7 @@ class ConfManager:
 
         except Exception as errmsg:
             print('Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
+        #############################################################################
 
         #############################################################################
         # [2] FILE READ LOCAL CONFIG
@@ -102,22 +103,6 @@ class ConfManager:
         except Exception as errmsg:
             print('Error. Exception in read LocalConfig config : {}'.format(errmsg))
 
-        # Load SYSCONFIG
-        try:
-            # SYSCONFIG
-            self.db_user = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_ID", 1))
-            self.db_passwd = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PW", 1))
-            self.db_port = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_PORT", 1))
-            self.db_name = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_NAME", 1))
-            self.db_host = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_IPADDR", 1))
-
-        except Exception as errmsg:
-            print('Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
-
-        try:
-            self.host_name = os.environ['HOSTNAME']
-        except KeyError:
-            self.host_name = 'E2E-O'
         #############################################################################
 
     def getSysConfigData(self, section, confKey, offset=0):
