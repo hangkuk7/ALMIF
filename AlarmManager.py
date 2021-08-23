@@ -406,7 +406,7 @@ class AlarmMgr:
                         split_row = bts_name.split('-')
                         equip_id = split_row[1]
                     else:
-                        print(f'Error. Invalid 5G BTS Name. location=[{location}], bts_name=[{bts_name}]')
+                        print(f'Error. Invalid [{self._rat_type}] BTS Name. location=[{location}], bts_name=[{bts_name}]')
                         equip_id = ''
 
                     # determine the equipment type
@@ -634,7 +634,7 @@ class AlarmMgr:
                         # print(f'[LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
 
                     else:
-                        print(f'Error. Invalid LTE BTS Name. location=[{location}], bts_name=[{bts_name}]')
+                        print(f'Error. Invalid [{self._rat_type}] BTS Name. location=[{location}], bts_name=[{bts_name}]')
                         equip_id = ''
 
                     # determine the equipment type
