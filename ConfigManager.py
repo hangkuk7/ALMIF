@@ -47,17 +47,19 @@ class ConfManager:
             # append(index, value)
             self.sysdictList[each_section] = dictionary
 
-        #
+        # MY_SYS_NAME
         try:
             self.sys_name_str = os.environ["MY_SYS_NAME"]
-            print("HOME : " + str(self.sys_name_str))
+            print("MY_SYS_NAME : " + str(self.sys_name_str))
 
         except KeyError:
             self.sys_name_str = ""
             print("'Error. Exception. Please set the environment variable MY_SYS_NAME")
 
+        # HOSTNAME
         try:
             self.host_name = os.environ['HOSTNAME']
+            print("HOSTNAME : " + str(self.host_name))
         except KeyError:
             self.host_name = 'E2E-O'
             print("'Error. Exception. Please set the environment variable HOSTNAME")
