@@ -97,7 +97,7 @@ class AlarmMgr:
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
         print(f'*********** __proc_alarm_db() Start! ***********')
-        print(f'alarm_data_list len=[{len(alarm_data_list)}], latest_alarm_info=[{latest_alarm_info}]')
+        print(f'[{self._rat_type}] alarm_data_list len=[{len(alarm_data_list)}], latest_alarm_info=[{latest_alarm_info}]')
 
         Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
 
@@ -150,7 +150,7 @@ class AlarmMgr:
             elif str_alarm_state.upper() == 'CLEARED':
                 alarm_state_type = DB_ALARM_STATE_CLEARED
             else:
-                print(f'unknown alarm_state. alarm_state=[{str_alarm_state}]')
+                print(f'[{self._rat_type}] unknown alarm_state. alarm_state=[{str_alarm_state}]')
                 alarm_state_type = DB_ALARM_STATE_CLEARED
 
             if db_results != ():
@@ -168,11 +168,11 @@ class AlarmMgr:
 
                 if data_date_alarm_time <= db_date_alarm_time:
                     # print(f'SKIP UPDATE. db_results=[{db_results}]')
-                    print(f'SKIP UPDATE. alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
+                    print(f'[{self._rat_type}] SKIP UPDATE. alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
                     continue
                 else:
                     # print(f'UPDATE ALARM. db_results=[{db_results}]')
-                    print(f'UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
+                    print(f'[{self._rat_type}] UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
 
                     sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
                                  "SET alarm_source='" + data['alarm_source'] + "', " \
