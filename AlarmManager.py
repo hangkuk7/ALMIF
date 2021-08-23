@@ -718,7 +718,7 @@ class AlarmMgr:
         # process the remote file
         with self._cli.open_sftp() as sftp_client:
             with sftp_client.open(self._file_path, 'r') as remote_file:
-                print(f'remote file open success! filename=[{self._file_path}]')
+                print(f'[{self._rat_type}] remote file open success! filename=[{self._file_path}]')
 
                 # Calling SFTPFile.prefetch should increase the read speed
                 remote_file.prefetch()
@@ -727,7 +727,7 @@ class AlarmMgr:
 
                 text_data = self.__bytes_to_string(binary_data)
                 if text_data == None:
-                    print(f'Error. __bytes_to_string() fail')
+                    print(f'[{self._rat_type}] Error. __bytes_to_string() fail')
                     self._cli.close()
                     return False
 
@@ -737,20 +737,20 @@ class AlarmMgr:
                 search_loc = None
                 alarm_file = None
                 if len(self._last_alarm_info) < 1:
-                    print(f'last_alarm_info is empty')
+                    print(f'[{self._rat_type}] last_alarm_info is empty')
                     alarm_file = text_data[:]
                 else:
-                    print(f'last_alarm_info is NOT empty. last_alarm_info=[{self._last_alarm_info}]')
+                    print(f'[{self._rat_type}] last_alarm_info is NOT empty. last_alarm_info=[{self._last_alarm_info}]')
                     search_loc = text_data.find(self._last_alarm_info)
                     if search_loc > 0:
-                        print(f'last alarm info search success! search_loc=[{search_loc}]]')
+                        print(f'[{self._rat_type}] last alarm info search success! search_loc=[{search_loc}]]')
                         #### slicing alarm information #####
                         alarm_file = text_data[(search_loc):]
                     else:
-                        print(f'Error. last alarm info search fail! search_loc=[{search_loc}]]')
+                        print(f'[{self._rat_type}] Error. last alarm info search fail! search_loc=[{search_loc}]]')
                         alarm_file = text_data[:]
 
-                print(f'alarm_file len=[{len(alarm_file)}]')
+                print(f'[{self._rat_type}] alarm_file len=[{len(alarm_file)}]')
                 if self._rat_type == RAT_TYPE_5G:
                     print(f'*** RAT_TYPE_5G ***')
                     ret = self.__parse_5G_alarm(alarm_file)
@@ -770,7 +770,6 @@ class AlarmMgr:
                     print(f'*** Unknown RAT_TYPE ***, rat_type=[{self._rat_type}]')
                     self._cli.close()
                     return False
-
 
         self._cli.close()
         return True
