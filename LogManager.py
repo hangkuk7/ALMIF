@@ -38,33 +38,23 @@ class LogManager:
             os.makedirs(self._log_dir)
             print(f'Make Log Directory. log_dir=[{self._log_dir}]')
 
-        # currentDate = datetime.datetime.now()
-        # current     = currentDate.strftime('%Y-%m-%d')
-        #
-        # self.set_fileHandler(current)
+        self.set_fileHandler()
 
-    def set_fileHandler(self, current):
-
-        maxSize         = 10400
-        maxBackupCnt    = 10
-
-        try:
-            home_str = os.environ["HOME"]
-        except:
-            home_str = '/data1/e2e'
-
-        # File
-        dirLoc  = '%s/log/MSG_LOG/SYNC/%s' % (home_str , current)
-        fileLoc = dirLoc + "/pyscript_file.log"
-
-        if not os.path.exists(dirLoc):
-            os.makedirs(dirLoc)
+    def set_fileHandler(self):
 
         # 10 MB ( Automation File Control )
-        self.fileHandler = logging.handlers.RotatingFileHandler(filename=fileLoc, maxBytes=maxSize, backupCount=maxBackupCnt, encoding='utf-8')
-
+        # self.fileHandler = logging.handlers.RotatingFileHandler(filename=fileLoc, maxBytes=maxSize, backupCount=maxBackupCnt, encoding='utf-8')
+        log_file_name = '%s/%s' % (self._log_dir, self._log_name)
+        print(f'log_file_name=[{log_file_name}]')
+        self.fileHandler = logging.handlers.TimedRotatingFileHandler(
+            filename=log_file_name,
+            when='midnight',
+            interval=1,
+            encoding='utf-8'
+        )
+        self.fileHandler.suffix = self._log_suffix
         #formatter
-        self.formatter = logging.Formatter('[%(asctime)s|%(filename)s:%(lineno)s][%(levelname)s] > %(message)s')
+        self.formatter = logging.Formatter('[%(asctime)s.%(msecs)03d] %(levelname)s %(message)s')
         self.fileHandler.setFormatter(self.formatter)
         self.logger.handlers = []
         self.logger.addHandler(self.fileHandler)
