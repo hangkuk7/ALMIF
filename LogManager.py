@@ -27,6 +27,7 @@ class LogManager:
 
         self._log_name = log_name
         self._log_dir = log_dir
+        self._log_suffix = '_log-%Y-%m-%d'
 
         self.logger = logging.getLogger(self._log_name)
         # To do later. set log level.
