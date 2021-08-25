@@ -24,8 +24,8 @@ def initConfig():
     DB_INFO = ConfManager.getInstance().getDbConfig()
     LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
 
-    print('local_config = {}'.format(LOCAL_CONFIG))
-    print('dbinfo = {}'.format(DB_INFO))
+    print('LOCAL_CONFIG = {}'.format(LOCAL_CONFIG))
+    print('DB_INFO = {}'.format(DB_INFO))
 
     return True
 
