@@ -1,5 +1,6 @@
 # define variables for ALMIF
 MY_PROC_NAME = 'ALMIF'
+MY_LOG_FILE_NAME ='almif_log'
 
 # Vendor
 VENDOR_TYPE_NOKIA = 'Nokia'

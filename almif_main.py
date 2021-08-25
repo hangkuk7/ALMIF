@@ -32,21 +32,6 @@ def initConfig():
 def initLog():
     print(f'-------------------- initLog() --------------------')
 
-    # Set Log name.
-    log_name = '%s' % (myProcName)
-    print(f'[initLog] log_name = [{log_name}]')
-
-    # Set Log Directory.
-    try:
-        home_str = os.environ["HOME"]
-        print("[initLog] HOME : " + str(home_str))
-    except KeyError:
-        print("[initLog] Error. Please set the environment variable HOME")
-        return False
-
-    log_dir = '%s/log/%s' % (home_str, myProcName)
-    print(f'[initLog] log_dir = [{log_dir}]')
-
     # Create LogManager
     logMgr = LogManager()
     if logMgr is None:
@@ -58,8 +43,8 @@ def initLog():
     # Create Log Instance
     logger = LogManager.getInstance().get_logger()
 
-    logger.debug(f'TEST LOG. debug')
-    logger.info(f'TEST LOG. info')
+    logger.debug(f'****** TEST LOG. debug')
+    logger.info(f'****** TEST LOG. info')
 
     return True
 
