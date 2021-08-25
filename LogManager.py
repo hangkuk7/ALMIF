@@ -37,10 +37,10 @@ class LogManager:
             os.makedirs(self._log_dir)
             print(f'Make Log Directory. log_dir=[{self._log_dir}]')
 
-        currentDate = datetime.datetime.now()
-        current     = currentDate.strftime('%Y-%m-%d')
-
-        self.set_fileHandler(current)
+        # currentDate = datetime.datetime.now()
+        # current     = currentDate.strftime('%Y-%m-%d')
+        #
+        # self.set_fileHandler(current)
 
     def set_fileHandler(self, current):
 
