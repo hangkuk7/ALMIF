@@ -14,6 +14,8 @@ import glob
 import getpass
 import time
 
+logger = LogManager.getInstance().get_logger()
+
 def initConfig():
     print(f'-------------------- initConfig() --------------------')
     # ALL_CONFIG_INFO = ConfManager.getInstance().get_config_data()
@@ -29,21 +31,21 @@ def initConfig():
 
     return True
 
-def initLog():
-    print(f'-------------------- initLog() --------------------')
-
-    # Create LogManager
-    logMgr = LogManager()
-    if logMgr is None:
-        print(f'[initLog] Create LogManager fail')
-        return False
-    else:
-        print(f'[initLog] Create LogManager success. logMgr=[{logMgr}]')
-
-    # Create Log Instance
-    logger = LogManager.getInstance().get_logger()
-
-    return True
+# def initLog():
+#     print(f'-------------------- initLog() --------------------')
+#
+#     # Create LogManager
+#     logMgr = LogManager()
+#     if logMgr is None:
+#         print(f'[initLog] Create LogManager fail')
+#         return False
+#     else:
+#         print(f'[initLog] Create LogManager success. logMgr=[{logMgr}]')
+#
+#     # Create Log Instance
+#     logger = LogManager.getInstance().get_logger()
+#
+#     return True
 
 # multiprocessing function
 def proc_alarm_job(alarm_mgr):
@@ -58,27 +60,24 @@ if __name__ == '__main__':
     print(f'ALMIF main() start')
     print(f'sys.argv len = [{len(sys.argv)}]')
 
-    global myProcName
-    # set Process Name
-    myProcName = MY_PROC_NAME
-
     if len(sys.argv) != 2:
         print(f"Error. Insufficient arguments")
         sys.exit()
 
-    if sys.argv[1] != myProcName:
+    if sys.argv[1] != MY_PROC_NAME:
         print(f'Error. Invalid ProcName. ProcName=[{sys.argv[1]}]')
         sys.exit()
 
-    print(f'***** {myProcName} Start! *****')
+    print(f'***** {MY_PROC_NAME} Start! *****')
     if initConfig() != True:
         print(f'Error. initConfig() fail')
         sys.exit()
 
-    if initLog() != True:
-        print(f'Error. initLog() fail')
-        sys.exit()
+    # if initLog() != True:
+    #     print(f'Error. initLog() fail')
+    #     sys.exit()
 
+    logger.info(f'********* {MY_PROC_NAME} Start! *********')
     # select tb_e2eo_fc_alarm_access_info
     Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
     sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
