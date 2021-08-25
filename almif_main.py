@@ -43,9 +43,6 @@ def initLog():
     # Create Log Instance
     logger = LogManager.getInstance().get_logger()
 
-    logger.debug(f'****** TEST LOG. debug')
-    logger.info(f'****** TEST LOG. info')
-
     return True
 
 # multiprocessing function
