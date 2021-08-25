@@ -21,13 +21,21 @@ class LogManager:
             print(f'Invalid log name. log_name=[{log_name}]')
             return None
 
-
+        if len(log_dir) < 1:
+            print(f'Invalid log dir. log_dir=[{log_dir}]')
+            return None
 
         self._log_name = log_name
+        self._log_dir = log_dir
 
-
-        self.logger = logging.getLogger(log_name)
+        self.logger = logging.getLogger(self._log_name)
+        # To do later. set log level.
         self.logger.setLevel(logging.DEBUG)
+
+        # Create Log Directory
+        if not os.path.exists(self._log_dir):
+            os.makedirs(self._log_dir)
+            print(f'Make Log Directory. log_dir=[{self._log_dir}]')
 
         currentDate = datetime.datetime.now()
         current     = currentDate.strftime('%Y-%m-%d')
