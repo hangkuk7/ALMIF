@@ -34,7 +34,7 @@ def initLog():
     print(f'initLog Start!')
 
     # Set Log name.
-    log_name = myProcName + "_log"
+    log_name = '%s_log' % (myProcName)
     print(f'[initLog] log_name = [{log_name}]')
 
     # Set Log Directory.
@@ -45,7 +45,8 @@ def initLog():
         print("[initLog] Error. Please set the environment variable HOME")
         return False
 
-    # log_dir =
+    log_dir = '%s/log/%s' % (home_str, myProcName)
+    print(f'[initLog] log_dir = [{log_dir}]')
 
     return True
 
