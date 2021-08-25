@@ -22,14 +22,11 @@ class LogManager:
         self._log_name = MY_LOG_FILE_NAME
         try:
             home_str = os.environ["HOME"]
-            print("[initLog] HOME : " + str(home_str))
+            print("HOME : " + str(home_str))
         except KeyError:
-            print("[initLog] Error. Please set the environment variable HOME")
+            print("Error. Please set the environment variable HOME")
 
-        log_dir = '%s/log/%s' % (home_str, self._log_name)
-        print(f'[initLog] log_dir = [{log_dir}]')
-
-        self._log_dir = '%s/log/%s' % (home_str, self._log_name)
+        self._log_dir = '%s/log/%s' % (home_str, MY_PROC_NAME)
         print(f'[initLog] self._log_dir = [{self._log_dir}]')
         self._log_suffix = '-%Y-%m-%d'
 
