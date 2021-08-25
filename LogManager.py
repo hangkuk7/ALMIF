@@ -18,16 +18,18 @@ class LogManager:
         return LogManager.__instance
 
     def __init__(self):
+
+        self._log_name = MY_PROC_NAME
         try:
             home_str = os.environ["HOME"]
             print("[initLog] HOME : " + str(home_str))
         except KeyError:
             print("[initLog] Error. Please set the environment variable HOME")
 
-        log_dir = '%s/log/%s' % (home_str, MY_PROC_NAME)
+        log_dir = '%s/log/%s' % (home_str, self._log_name)
         print(f'[initLog] log_dir = [{log_dir}]')
 
-        self._log_dir = '%s/log/%s' % (home_str, MY_PROC_NAME)
+        self._log_dir = '%s/log/%s' % (home_str, self._log_name)
         print(f'[initLog] self._log_dir = [{self._log_dir}]')
         self._log_suffix = '_log-%Y-%m-%d'
 
