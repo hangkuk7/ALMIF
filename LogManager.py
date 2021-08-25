@@ -19,7 +19,7 @@ class LogManager:
 
     def __init__(self):
 
-        self._log_name = MY_PROC_NAME
+        self._log_name = MY_LOG_FILE_NAME
         try:
             home_str = os.environ["HOME"]
             print("[initLog] HOME : " + str(home_str))
