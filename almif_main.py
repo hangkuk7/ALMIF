@@ -43,16 +43,16 @@ def proc_alarm_job(alarm_mgr):
 if __name__ == '__main__':
 
     if len(sys.argv) != 2:
-        logger.crital(f"Error. Insufficient arguments")
+        logger.critical(f"Error. Insufficient arguments")
         sys.exit()
 
     if sys.argv[1] != MY_PROC_NAME:
-        logger.crital(f'Error. Invalid ProcName. ProcName=[{sys.argv[1]}]')
+        logger.critical(f'Error. Invalid ProcName. ProcName=[{sys.argv[1]}]')
         sys.exit()
 
-    logger.crital(f'\n********* {MY_PROC_NAME} Start! *********')
+    logger.critical(f'\n********* {MY_PROC_NAME} Start! *********')
     if initConfig() != True:
-        logger.crital(f'Error. initConfig() fail')
+        logger.critical(f'Error. initConfig() fail')
         sys.exit()
 
     # select tb_e2eo_fc_alarm_access_info
