@@ -16,7 +16,6 @@ import time
 
 def initConfig():
     print(f'-------------------- initConfig() --------------------')
-    print(f'--------------------Get Config--------------------')
     # ALL_CONFIG_INFO = ConfManager.getInstance().get_config_data()
 
     global LOCAL_CONFIG
@@ -31,7 +30,7 @@ def initConfig():
     return True
 
 def initLog():
-    print(f'initLog Start!')
+    print(f'-------------------- initLog() --------------------')
 
     # Set Log name.
     log_name = '%s_log' % (myProcName)
