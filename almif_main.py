@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     global myProcName
     # set Process Name
-    myProcName = 'ALMIF'
+    myProcName = MY_PROC_NAME
 
     if len(sys.argv) != 2:
         print(f"Error. Insufficient arguments")
