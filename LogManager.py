@@ -28,7 +28,7 @@ class LogManager:
             return None
 
         self._log_dir = '%s/log/%s' % (home_str, MY_PROC_NAME)
-        print(f'[initLog] self._log_dir = [{self._log_dir}]')
+        print(f'[__init__] self._log_dir = [{self._log_dir}]')
         self._log_suffix = '-%Y-%m-%d'
 
         self.logger = logging.getLogger(self._log_name)
