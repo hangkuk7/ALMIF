@@ -17,8 +17,16 @@ class LogManager:
         return LogManager.__instance
 
     def __init__(self, log_name, log_dir):
+        if len(log_name) < 1:
+            print(f'Invalid log name. log_name=[{log_name}]')
+            return None
 
-        self.logger = logging.getLogger("msglog")
+
+
+        self._log_name = log_name
+
+
+        self.logger = logging.getLogger(log_name)
         self.logger.setLevel(logging.DEBUG)
 
         currentDate = datetime.datetime.now()

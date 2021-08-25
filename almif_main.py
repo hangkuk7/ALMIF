@@ -49,6 +49,11 @@ def initLog():
 
     # Create LogManager
     logMgr = LogManager(log_name, log_dir)
+    if logMgr is None:
+        print(f'[initLog] Create LogManager fail')
+        return False
+    else:
+        print(f'[initLog] Create LogManager success. logMgr=[{logMgr}]')
 
     return True
 
