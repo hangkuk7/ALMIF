@@ -31,7 +31,7 @@ class LogManager:
         print(f'[initLog] self._log_dir = [{self._log_dir}]')
         self._log_suffix = '_log-%Y-%m-%d'
 
-        self.logger = logging.getLogger(self._log_name)
+        self.logger = logging.getLogger(MY_PROC_NAME)
         # To do later. set log level.
         self.logger.setLevel(logging.DEBUG)
 
