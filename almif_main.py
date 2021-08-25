@@ -42,7 +42,7 @@ def initLog():
         home_str = os.environ["HOME"]
         print("[initLog] HOME : " + str(home_str))
     except KeyError:
-        print("[initLog] Error. Exception. Please set the environment variable HOME")
+        print("[initLog] Error. Please set the environment variable HOME")
         return False
 
     # log_dir =
