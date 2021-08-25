@@ -33,7 +33,7 @@ def initLog():
     print(f'-------------------- initLog() --------------------')
 
     # Set Log name.
-    log_name = '%s_log' % (myProcName)
+    log_name = '%s' % (myProcName)
     print(f'[initLog] log_name = [{log_name}]')
 
     # Set Log Directory.
