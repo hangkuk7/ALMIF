@@ -3,6 +3,7 @@ import logging
 import logging.handlers
 import os
 import sys
+from almif_variables import *
 
 class LogManager:
 
@@ -16,17 +17,18 @@ class LogManager:
             LogManager.__instance = LogManager()
         return LogManager.__instance
 
-    def __init__(self, log_name, log_dir):
-        if len(log_name) < 1:
-            print(f'Invalid log name. log_name=[{log_name}]')
-            return None
+    def __init__(self):
+        try:
+            home_str = os.environ["HOME"]
+            print("[initLog] HOME : " + str(home_str))
+        except KeyError:
+            print("[initLog] Error. Please set the environment variable HOME")
 
-        if len(log_dir) < 1:
-            print(f'Invalid log dir. log_dir=[{log_dir}]')
-            return None
+        log_dir = '%s/log/%s' % (home_str, MY_PROC_NAME)
+        print(f'[initLog] log_dir = [{log_dir}]')
 
-        self._log_name = log_name
-        self._log_dir = log_dir
+        self._log_dir = '%s/log/%s' % (home_str, MY_PROC_NAME)
+        print(f'[initLog] self._log_dir = [{self._log_dir}]')
         self._log_suffix = '_log-%Y-%m-%d'
 
         self.logger = logging.getLogger(self._log_name)

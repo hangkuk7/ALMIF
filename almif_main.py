@@ -55,6 +55,12 @@ def initLog():
     else:
         print(f'[initLog] Create LogManager success. logMgr=[{logMgr}]')
 
+    # Create Log Instance
+    logger = LogManager.getInstance().get_logger()
+
+    logger.debug(f'TEST LOG. debug')
+    logger.info(f'TEST LOG. info')
+
     return True
 
 # multiprocessing function
