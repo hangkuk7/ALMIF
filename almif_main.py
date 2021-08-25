@@ -50,7 +50,7 @@ if __name__ == '__main__':
         logger.critical(f'Error. Invalid ProcName. ProcName=[{sys.argv[1]}]')
         sys.exit()
 
-    logger.critical(f'\n********* {MY_PROC_NAME} Start! *********')
+    logger.info(f'-------------------- {MY_PROC_NAME} Start! --------------------')
     if initConfig() != True:
         logger.critical(f'Error. initConfig() fail')
         sys.exit()
