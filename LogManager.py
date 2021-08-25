@@ -56,9 +56,10 @@ class LogManager:
             interval=1,
             encoding='utf-8'
         )
-        self.fileHandler.suffix = self._log_suffix
+
         self.formatter = logging.Formatter('[%(asctime)s.%(msecs)03d] %(levelname)s %(message)s')
         self.fileHandler.setFormatter(self.formatter)
+        self.fileHandler.suffix = self._log_suffix
 
         self.logger.handlers = []
         self.logger.addHandler(self.fileHandler)
