@@ -47,6 +47,9 @@ def initLog():
     log_dir = '%s/log/%s' % (home_str, myProcName)
     print(f'[initLog] log_dir = [{log_dir}]')
 
+    # Create LogManager
+    logMgr = LogManager(log_name, log_dir)
+
     return True
 
 # multiprocessing function
