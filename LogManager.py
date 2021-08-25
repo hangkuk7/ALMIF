@@ -16,7 +16,7 @@ class LogManager:
             LogManager.__instance = LogManager()
         return LogManager.__instance
 
-    def __init__(self):
+    def __init__(self, log_name, log_dir):
 
         self.logger = logging.getLogger("msglog")
         self.logger.setLevel(logging.DEBUG)

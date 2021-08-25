@@ -4,6 +4,7 @@ from multiprocessing import Process, Queue
 
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
+from LogManager import LogManager
 from AlarmManager import AlarmMgr
 from almif_variables import *
 
@@ -31,6 +32,21 @@ def initConfig():
 
 def initLog():
     print(f'initLog Start!')
+
+    # Set Log name.
+    log_name = myProcName + "_log"
+    print(f'[initLog] log_name = [{log_name}]')
+
+    # Set Log Directory.
+    try:
+        home_str = os.environ["HOME"]
+        print("[initLog] HOME : " + str(home_str))
+    except KeyError:
+        print("[initLog] Error. Exception. Please set the environment variable HOME")
+        return False
+
+    # log_dir =
+
     return True
 
 # multiprocessing function
