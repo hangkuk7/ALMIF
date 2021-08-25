@@ -17,7 +17,7 @@ import time
 logger = LogManager.getInstance().get_logger()
 
 def initConfig():
-    print(f'-------------------- initConfig() --------------------')
+    logger.info(f'-------------------- initConfig() --------------------')
     # ALL_CONFIG_INFO = ConfManager.getInstance().get_config_data()
 
     global LOCAL_CONFIG
@@ -26,8 +26,8 @@ def initConfig():
     DB_INFO = ConfManager.getInstance().getDbConfig()
     LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
 
-    print('LOCAL_CONFIG = {}'.format(LOCAL_CONFIG))
-    print('DB_INFO = {}'.format(DB_INFO))
+    logger.info('LOCAL_CONFIG = {}'.format(LOCAL_CONFIG))
+    logger.info('DB_INFO = {}'.format(DB_INFO))
 
     return True
 
@@ -58,9 +58,9 @@ if __name__ == '__main__':
     # select tb_e2eo_fc_alarm_access_info
     Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
     sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
-    print(f'sql_string=[{sql_string}]')
+    logger.debug(f'sql_string=[{sql_string}]')
     db_results = Dbmanager.select(sql_string)
-    print(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
+    logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
     alarm_mgr_list = list()
     proc_list = list()
