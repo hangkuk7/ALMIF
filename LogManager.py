@@ -52,14 +52,14 @@ class LogManager:
         self.logger.handlers = []
         self.logger.addHandler(self.fileHandler)
 
-    def updateLogLoc(self):
-
-        currentDate = datetime.datetime.now()
-
-        if  currentDate.strftime('%H:%M:%S') == "00:00:00":
-
-            current     = currentDate.strftime('%Y-%m-%d')
-            LogManager.getInstance().set_fileHandler(current)
+    # def updateLogLoc(self):
+    #
+    #     currentDate = datetime.datetime.now()
+    #
+    #     if  currentDate.strftime('%H:%M:%S') == "00:00:00":
+    #
+    #         current = currentDate.strftime('%Y-%m-%d')
+    #         LogManager.getInstance().set_fileHandler(current)
 
     def get_logger(self):
         # type: () -> object
