@@ -661,7 +661,7 @@ class AlarmMgr:
                             temp_str = temp_value[1].lstrip().rstrip()
                             lnbts_row = temp_str.split(' ')
                             equip_id = lnbts_row[0]
-                    elif 'LNBTS-' not in location and 'MRBTS-' in alarm_name:
+                    elif 'MRBTS-' in location and 'LNBTS-' not in location:
 
                     else:
                         logger.warning(f'[PID-{self._pid}] [{self._rat_type}] Invalid Location. location=[{location}]')
