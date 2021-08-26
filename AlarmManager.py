@@ -26,7 +26,6 @@ logger = LogManager.getInstance().get_logger()
 
 class AlarmMgr:
     def __init__(self, access_info, charset='utf8'):
-        logger.info('*** TEST [AlarmMgr] __init() Start ****')
         if len(access_info) < 1:
             return None
 
@@ -48,19 +47,19 @@ class AlarmMgr:
 
         # check validation
         if len(self._conn_ip) < 1 or len(self._conn_port) < 1:
-            print(f'Error. Invalid connection info. conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}]')
+            logger.critical(f'Error. Invalid connection info. conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}]')
             return None
 
         if len(self._user_id) < 1 or len(self._user_pass) < 1:
-            print(f'Error. Invalid access info. user_id=[{self._user_id}], user_pass=[{self._user_pass}]')
+            logger.critical(f'Error. Invalid access info. user_id=[{self._user_id}], user_pass=[{self._user_pass}]')
             return None
 
         if len(self._vendor_type) < 1 or len(self._rat_type) < 1:
-            print(f'Error. Invalid vendor info. vendor_type=[{self._vendor_type}], rat_type=[{self._rat_type}]')
+            logger.critical(f'Error. Invalid vendor info. vendor_type=[{self._vendor_type}], rat_type=[{self._rat_type}]')
             return None
 
         if len(self._file_path) < 1:
-            print(f'Error. Invalid file info. file_path=[{self._file_path}]')
+            logger.critical(f'Error. Invalid file info. file_path=[{self._file_path}]')
             return None
 
         # Loading Alarm Category for 5G
@@ -71,8 +70,8 @@ class AlarmMgr:
                      "WHERE rat_type='" + self._rat_type + "'; "
 
         self._db_alarm_category_info = Dbmanager.select(sql_string)
-        print(f'[__init__] sql_string=[\n{sql_string}\n]')
-        print(f'self._db_alarm_category_info=[{self._db_alarm_category_info}]')
+        logger.debug(f'[__init__] sql_string=[\n{sql_string}\n]')
+        logger.debug(f'self._db_alarm_category_info=[{self._db_alarm_category_info}]')
 
     def __bytes_to_string(self, byte_or_int_value, encoding='utf-8'):
         if isinstance(byte_or_int_value, bytes):
@@ -80,14 +79,14 @@ class AlarmMgr:
         if isinstance(byte_or_int_value, int):
             return chr(byte_or_int_value).encode(encoding).decode(encoding)
         else:
-            print(f'Error: Input must be a bytes or int type')
+            logger.critical(f'Error: Input must be a bytes or int type')
             return None
 
     def __get_alarm_category(self, probable_cause):
         category_name = ALARM_CATEGORY_DEFAULT
 
         if len(self._db_alarm_category_info) < 1:
-            print(f'Error. Invaild. db_alarm_category_info. len=[{len(self._db_alarm_category_info)}] ')
+            logger.critical(f'Error. Invaild. db_alarm_category_info. len=[{len(self._db_alarm_category_info)}] ')
             return category_name
 
         for idx, item in enumerate(self._db_alarm_category_info):
@@ -101,8 +100,9 @@ class AlarmMgr:
         return category_name
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
-        print(f'*********** __proc_alarm_db() Start! ***********')
-        print(f'[{self._rat_type}] alarm_data_list len=[{len(alarm_data_list)}], latest_alarm_info=[{latest_alarm_info}]')
+        logger.debug(f'*********** __proc_alarm_db() Start! ***********')
+        logger.debug(f'[{self._rat_type}] alarm_data_list len=[{len(alarm_data_list)}], ' \
+                     f'latest_alarm_info=[{latest_alarm_info}]')
 
         Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
 
