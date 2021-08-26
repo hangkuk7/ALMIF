@@ -180,8 +180,8 @@ class AlarmMgr:
                     continue
                 else:
                     # logger.debug(f'UPDATE ALARM. db_results=[{db_results}]')
-                    logger.debug(f'[{self._rat_type}] UPDATE ALARM. current=[{data_date_alarm_time}], ' \
-                                 f'db=[{db_date_alarm_time}]')
+                    logger.debug(f'[PID-{self._pid}] [{self._rat_type}] UPDATE ALARM. ' \
+                                 f'current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
 
                     sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
                                  "SET alarm_source='" + data['alarm_source'] + "', " \
