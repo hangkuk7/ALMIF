@@ -90,13 +90,13 @@ class AlarmMgr:
             return category_name
 
         for idx, item in enumerate(self._db_alarm_category_info):
-            # print(f'idx=[{idx}], item=[{item}]')
+            # logger.debug(f'idx=[{idx}], item=[{item}]')
             if probable_cause.upper() in item[1].upper():
                 category_name = item[0].upper()
-                # print(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
+                # logger.debug(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
                 return category_name
 
-        # print(f'[__get_alarm_category] Error. Matching fail. category_name=[{category_name}]')
+        # logger.debug(f'[__get_alarm_category] Error. Matching fail. category_name=[{category_name}]')
         return category_name
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
@@ -123,18 +123,18 @@ class AlarmMgr:
             # db_alarm_id = data['alarm_id']
             # db_notification_id = data['notification_id']
             # db_clear_user = data['clear_user']
-            # print(f'idx=[{idx}], ne_name len=[{len(db_ne_name)}], ne_name=[{db_ne_name}]')
+            # logger.debug(f'idx=[{idx}], ne_name len=[{len(db_ne_name)}], ne_name=[{db_ne_name}]')
 
-            # print(f'================================================================')
-            # print(f'idx=[{idx}] : alarm_source=[{db_alarm_source}], ' \
-            #       f'alarm_time=[{db_alarm_time}], alarm_code=[{db_alarm_code}], ' \
-            #       f'alarm_name=[{db_alarm_name}], alarm_state=[{db_alarm_state}], ' \
-            #       f'ne_name=[{db_ne_name}], location=[{db_location}], ' \
-            #       f'event_type=[{db_event_type}], probable_cause=[{db_probable_cause}], ' \
-            #      f'specific_problem=[{db_specific_problem}], severity=[{db_severity}], ' \
-            #      f'additional_text=[{db_additional_text}], alarm_id=[{db_alarm_id}], ' \
-            #      f'notification_id=[{db_notification_id}], clear_user=[{db_clear_user}]')
-            # print(f'================================================================')
+            # logger.debug(f'================================================================')
+            # logger.debug(f'idx=[{idx}] : alarm_source=[{db_alarm_source}], ' \
+            #              f'alarm_time=[{db_alarm_time}], alarm_code=[{db_alarm_code}], ' \
+            #              f'alarm_name=[{db_alarm_name}], alarm_state=[{db_alarm_state}], ' \
+            #              f'ne_name=[{db_ne_name}], location=[{db_location}], ' \
+            #              f'event_type=[{db_event_type}], probable_cause=[{db_probable_cause}], ' \
+            #              f'specific_problem=[{db_specific_problem}], severity=[{db_severity}], ' \
+            #              f'additional_text=[{db_additional_text}], alarm_id=[{db_alarm_id}], ' \
+            #              f'notification_id=[{db_notification_id}], clear_user=[{db_clear_user}]')
+            # logger.debug(f'================================================================')
 
             # select TB_E2EO_FC_FAULT_ALARM
             sql_string = "SELECT vendor_type, rat_type, alarm_code, location, alarm_time, alarm_state, severity " \
