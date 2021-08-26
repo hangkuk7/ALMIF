@@ -682,12 +682,17 @@ class AlarmMgr:
                             equip_type = EQUIPMENT_RU_TYPE
                             temp_value = alarm_name.split('LNCELL ID')
                             temp_str = temp_value[1].lstrip().rstrip()
+                            logger.debug(f'[PID-{self._pid}] [{self._rat_type}] **** TEST : LNCELL ID**** ' \
+                                         f'temp_value=[{temp_value}], temp_str=[{temp_str}]')
                             lnbts_row = temp_str.split(' ')
                             equip_id = lnbts_row[0]
                         else:
                             equip_type = EQUIPMENT_DU_TYPE
                             temp_value = alarm_name.split('LNBTS ID')
                             temp_str = temp_value[1].lstrip().rstrip()
+                            logger.debug(f'[PID-{self._pid}] [{self._rat_type}] **** TEST : LNBTS ID**** ' \
+                                         f'temp_value=[{temp_value}], temp_str=[{temp_str}]')
+                            lnbts_row = temp_str.split(' ')
                             lnbts_row = temp_str.split(' ')
                             equip_id = lnbts_row[0]
 
