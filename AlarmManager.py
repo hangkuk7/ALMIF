@@ -633,7 +633,7 @@ class AlarmMgr:
                     # logger.debug(f'--- [COMPLETED]=[{alarm_row}] ---')
 
                     # Set Equipment ID and Equipment Type for LTE
-                    if 'LNBTS-' in location and 'LNCEL-' in location:
+                    if 'MRBTS-' in location and 'LNCEL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
                         split_row = location.split('/')
                         for item in split_row:
@@ -641,11 +641,11 @@ class AlarmMgr:
                                 split_item = item.split('-')
                                 equip_id = split_item[1]
 
-                    elif 'LNBTS-' in location and 'LNCEL-' not in location:
+                    elif 'MRBTS-' in location and 'LNCEL-' not in location:
                         equip_type = EQUIPMENT_DU_TYPE
                         split_row = location.split('/')
                         for item in split_row:
-                            if 'LNBTS-' in item:
+                            if 'MRBTS-' in item:
                                 split_item = item.split('-')
                                 equip_id = split_item[1]
                     elif 'LNBTS-' not in location and 'LNBTS ID' in alarm_name:
