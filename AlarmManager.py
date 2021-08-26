@@ -155,7 +155,7 @@ class AlarmMgr:
             elif str_alarm_state.upper() == 'CLEARED':
                 alarm_state_type = DB_ALARM_STATE_CLEARED
             else:
-                print(f'[{self._rat_type}] unknown alarm_state. alarm_state=[{str_alarm_state}]')
+                logger.critical(f'[{self._rat_type}] unknown alarm_state. alarm_state=[{str_alarm_state}]')
                 alarm_state_type = DB_ALARM_STATE_CLEARED
 
             if db_results != ():
@@ -173,11 +173,13 @@ class AlarmMgr:
 
                 if data_date_alarm_time <= db_date_alarm_time:
                     # print(f'SKIP UPDATE. db_results=[{db_results}]')
-                    print(f'[{self._rat_type}] SKIP UPDATE. alarm time : current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
+                    logger.debug(f'[{self._rat_type}] SKIP UPDATE. alarm time : current=[{data_date_alarm_time}], ' \
+                                 f'db=[{db_date_alarm_time}]')
                     continue
                 else:
                     # print(f'UPDATE ALARM. db_results=[{db_results}]')
-                    print(f'[{self._rat_type}] UPDATE ALARM. current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
+                    logger.debug(f'[{self._rat_type}] UPDATE ALARM. current=[{data_date_alarm_time}], ' \
+                                 f'db=[{db_date_alarm_time}]')
 
                     sql_string = "UPDATE tb_e2eo_fc_fault_alarm " \
                                  "SET alarm_source='" + data['alarm_source'] + "', " \
