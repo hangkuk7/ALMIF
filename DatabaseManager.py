@@ -79,7 +79,6 @@ class DbManager:
             curs = self._connection.cursor()
 
             if raw_data:
-                print('a')
                 result = curs.execute(query=sql_string, args=(raw_data))
             else:
                 result = curs.execute(sql_string)

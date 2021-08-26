@@ -3,6 +3,10 @@ import os
 import sys
 import json
 
+from LogManager import LogManager
+
+# For log
+logger = LogManager.getInstance().get_logger()
 
 class ConfManager:
     LOG_INFO = "LOG_INFO"
@@ -30,26 +34,26 @@ class ConfManager:
         # [1] FILE READ SYSCONFIG
         try:
             self.home_str = os.environ["HOME"]
-            print("HOME : " + str(self.home_str))
+            logger.info("HOME : " + str(self.home_str))
         except KeyError:
-            print("Error. Exception. Please set the environment variable HOME")
+            logger.critical("Error. Exception. Please set the environment variable HOME")
 
         # MY_SYS_NAME
         try:
             self.sys_name_str = os.environ["MY_SYS_NAME"]
-            print("MY_SYS_NAME : " + str(self.sys_name_str))
+            logger.info("MY_SYS_NAME : " + str(self.sys_name_str))
 
         except KeyError:
             self.sys_name_str = ""
-            print("'Error. Exception. Please set the environment variable MY_SYS_NAME")
+            logger.critical("'Error. Exception. Please set the environment variable MY_SYS_NAME")
 
         # HOSTNAME
         try:
             self.host_name = os.environ['HOSTNAME']
-            print("HOSTNAME : " + str(self.host_name))
+            logger.info("HOSTNAME : " + str(self.host_name))
         except KeyError:
             self.host_name = 'E2E-O'
-            print("'Error. Exception. Please set the environment variable HOSTNAME")
+            logger.critical("'Error. Exception. Please set the environment variable HOSTNAME")
 
         self.sysConfig = configparser.ConfigParser()
         self.sysConfig.read(self.home_str + '/data/sysconfig', encoding='euc-kr')
@@ -73,7 +77,7 @@ class ConfManager:
             self.db_host = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_IPADDR", 1))
 
         except Exception as errmsg:
-            print('Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
+            logger.critical('Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
         #############################################################################
 
         #############################################################################
@@ -100,7 +104,7 @@ class ConfManager:
             self.time_interval = str(self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL", 1))
 
         except Exception as errmsg:
-            print('Error. Exception in read LocalConfig config : {}'.format(errmsg))
+            logger.critical('Error. Exception in read LocalConfig config : {}'.format(errmsg))
 
         #############################################################################
 
@@ -127,7 +131,7 @@ class ConfManager:
                             return v
                         idx = idx + 1
 
-        print("Sys Conf -Can't not found SECTION[%s] KEY[%s] " % (section, confKey))
+        logger.critical("[getSysConfigData] -Can't not found SECTION[%s] KEY[%s] " % (section, confKey))
         return None
 
     def getLocalConfigData(self, section, confKey, offset=0):
@@ -153,7 +157,7 @@ class ConfManager:
                         return v
                     idx = idx + 1
 
-        print("Local Conf - Can't not found SECTION[%s] KEY[%s] " % (section, confKey))
+        logger.critical("[getLocalConfigData] Can't not found SECTION[%s] KEY[%s] " % (section, confKey))
         return None
 
     def getDbConfig(self):
