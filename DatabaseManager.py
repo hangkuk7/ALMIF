@@ -3,16 +3,19 @@ import os
 import sys
 import json
 import pymysql
-import logging
 
 # from .ConfigManager import ConfManager
 from pymysql import MySQLError
+
+from LogManager import LogManager
+
+# For log
+logger = LogManager.getInstance().get_logger()
 
 class DbManager:
 
     def __init__(self, host, user, password, db, port=3306, charset='utf8'):
         # DB_INFO = ConfManager.getInstance().getDbConfig()
-        self._logger = logging.getLogger(__name__)
         self._host = host  # DB_INFO['host']
         self._user = user  # DB_INFO['user']
         self._passwd = password  # DB_INFO['passwd']
@@ -28,7 +31,7 @@ class DbManager:
             charset=self._charset
             )
         except MySQLError as error:
-            print('Exception number: {}, value {!r}'.format(error.args[0], error))
+            logger.critical('[init] Exception number: {}, value {!r}'.format(error.args[0], error))
             raise
 
     def select(self, sql_string):
@@ -44,7 +47,7 @@ class DbManager:
         except Exception as e:
             error_msg = str(e)
             #self._logger.debug('[select] error_msg = {}'.format(error_msg))
-            print(f'[select] error_msg = [{error_msg}]')
+            logger.critical(f'[select] error_msg = [{error_msg}]')
             return result
 
     def insert(self, sql_string, raw_data=None):
@@ -66,7 +69,7 @@ class DbManager:
         except Exception as e:
             error_msg = str(e)
             #self._logger.debug('[insert] error_msg = {}'.format(error_msg))
-            print(f'[insert] error_msg = [{error_msg}]')
+            logger.critical(f'[insert] error_msg = [{error_msg}]')
             return last_id
 
     def update(self, sql_string, raw_data=None):
@@ -88,7 +91,7 @@ class DbManager:
         except Exception as e:
             error_msg = str(e)
             #self._logger.debug('[update] error_msg = {}'.format(error_msg))
-            print(f'[update] error_msg = [{error_msg}]')
+            logger.critical(f'[update] error_msg = [{error_msg}]')
             return result
 
     def ping(self):
@@ -99,8 +102,8 @@ class DbManager:
             try:
                 return self._connection.close()
             except MySQLError as error:
-                print("While closing connection ...")
-                print('Exception number: {}, value {!r}'.format(error.args[0], error))
+                logger.critical("While closing connection ...")
+                logger.critical('Exception number: {}, value {!r}'.format(error.args[0], error))
                 raise
 
     def __del__(self):
