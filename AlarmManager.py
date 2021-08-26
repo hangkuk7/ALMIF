@@ -417,8 +417,8 @@ class AlarmMgr:
                         split_row = bts_name.split('-')
                         equip_id = split_row[1]
                     else:
-                        logger.info(f'Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
-                                    f'bts_name=[{bts_name}]')
+                        logger.warning(f'Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
+                                       f'bts_name=[{bts_name}]')
                         equip_id = ''
 
                     # determine the equipment type
