@@ -86,7 +86,8 @@ class AlarmMgr:
         category_name = ALARM_CATEGORY_DEFAULT
 
         if len(self._db_alarm_category_info) < 1:
-            logger.critical(f'Error. Invaild. db_alarm_category_info. len=[{len(self._db_alarm_category_info)}] ')
+            logger.critical(f'[PID-{self._pid}] Error. Invaild. db_alarm_category_info. ' \
+                            f'len=[{len(self._db_alarm_category_info)}]')
             return category_name
 
         for idx, item in enumerate(self._db_alarm_category_info):
@@ -100,8 +101,8 @@ class AlarmMgr:
         return category_name
 
     def __proc_alarm_db(self, alarm_data_list, latest_alarm_info):
-        logger.debug(f'*********** __proc_alarm_db() Start! ***********')
-        logger.debug(f'[{self._rat_type}] alarm_data_list len=[{len(alarm_data_list)}], ' \
+        logger.debug(f'[PID-{self._pid}] *********** __proc_alarm_db() Start! ***********')
+        logger.debug(f'[PID-{self._pid}] [{self._rat_type}] alarm_data_list len=[{len(alarm_data_list)}], ' \
                      f'latest_alarm_info=[{latest_alarm_info}]')
 
         Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
@@ -155,7 +156,8 @@ class AlarmMgr:
             elif str_alarm_state.upper() == 'CLEARED':
                 alarm_state_type = DB_ALARM_STATE_CLEARED
             else:
-                logger.critical(f'[{self._rat_type}] unknown alarm_state. alarm_state=[{str_alarm_state}]')
+                logger.critical(f'[PID-{self._pid}] [{self._rat_type}] unknown alarm_state. ' \
+                                f'alarm_state=[{str_alarm_state}]')
                 alarm_state_type = DB_ALARM_STATE_CLEARED
 
             if db_results != ():
@@ -173,8 +175,8 @@ class AlarmMgr:
 
                 if data_date_alarm_time <= db_date_alarm_time:
                     # logger.debug(f'SKIP UPDATE. db_results=[{db_results}]')
-                    logger.debug(f'[{self._rat_type}] SKIP UPDATE. alarm time : current=[{data_date_alarm_time}], ' \
-                                 f'db=[{db_date_alarm_time}]')
+                    logger.debug(f'[PID-{self._pid}] [{self._rat_type}] SKIP UPDATE. alarm time : ' \
+                                 f'current=[{data_date_alarm_time}], db=[{db_date_alarm_time}]')
                     continue
                 else:
                     # logger.debug(f'UPDATE ALARM. db_results=[{db_results}]')
@@ -266,9 +268,9 @@ class AlarmMgr:
         return True
 
     def __parse_5G_alarm(self, alarm_file):
-        logger.info(f'__parse_5G_alarm() Start!')
+        logger.info(f'[PID-{self._pid}] __parse_5G_alarm() Start!')
         if len(alarm_file) < 1:
-            logger.critical(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
+            logger.critical(f'[PID-{self._pid}] Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
 
         # regular expression for 5G
@@ -296,7 +298,7 @@ class AlarmMgr:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        logger.info(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], ' \
+        logger.info(f'[PID-{self._pid}] [{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], ' \
                     f'after len=[{len(alarm_info_list)}] ***')
 
         # for idx, info in enumerate(alarm_info_list):
@@ -417,7 +419,7 @@ class AlarmMgr:
                         split_row = bts_name.split('-')
                         equip_id = split_row[1]
                     else:
-                        logger.warning(f'Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
+                        logger.warning(f'[PID-{self._pid}] Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
                                        f'bts_name=[{bts_name}]')
                         equip_id = ''
 
@@ -425,7 +427,7 @@ class AlarmMgr:
                     if 'NRCELL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
                     elif 'NRCELL-' not in location and len(equip_id) < 1:
-                        logger.debug(f'EQUIPMENT_ETC_TYPE')
+                        logger.debug(f'[PID-{self._pid}] EQUIPMENT_ETC_TYPE')
                         equip_type = EQUIPMENT_ETC_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
@@ -478,16 +480,16 @@ class AlarmMgr:
         # for idx, item in enumerate(alarm_title_list):
         #     logger.debug(f'idx=[{idx + 1}] item=[{item}]')
 
-        logger.info(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
+        logger.info(f'\n[PID-{self._pid}] rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
 
         self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
         return True
 
     def __parse_LTE_alarm(self, alarm_file):
-        logger.info(f'__parse_LTE_alarm() Start!')
+        logger.info(f'[PID-{self._pid}] __parse_LTE_alarm() Start!')
         if len(alarm_file) < 1:
-            logger.critical(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
+            logger.critical(f'[PID-{self._pid}] Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
 
         # regular expression for LTE
@@ -515,7 +517,7 @@ class AlarmMgr:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        logger.info(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], ' \
+        logger.info(f'[PID-{self._pid}] [{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], ' \
                     f'after len=[{len(alarm_info_list)}] ***')
 
         # for idx, info in enumerate(alarm_info_list):
@@ -647,7 +649,7 @@ class AlarmMgr:
                         # logger.debug(f'[LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
 
                     else:
-                        logger.warning(f'Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
+                        logger.warning(f'[PID-{self._pid}] Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
                                        f'bts_name=[{bts_name}]')
                         equip_id = ''
 
@@ -655,7 +657,7 @@ class AlarmMgr:
                     if 'LNCEL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
                     elif 'LNCELL ID' in alarm_name:
-                        logger.debug(f'Equipment Type. [LNCELL ID] alarm_name=[{alarm_name}]')
+                        logger.debug(f'[PID-{self._pid}] Equipment Type. [LNCELL ID] alarm_name=[{alarm_name}]')
                         equip_type = EQUIPMENT_RU_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
@@ -712,7 +714,7 @@ class AlarmMgr:
         # for idx, item in enumerate(alarm_title_list):
         #     logger.debug(f'idx=[{idx + 1}] item=[{item}]')
 
-        logger.info(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
+        logger.info(f'\n[PID-{self._pid}] rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
 
         self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
@@ -720,7 +722,7 @@ class AlarmMgr:
 
     def get_remote_alarm(self):
         self._pid =  os.getpid()
-        logger.info(f'get_remote_alarm() Start! pid=[{self._pid}]')
+        logger.info(f'[PID-{self._pid}] [{self._rat_type}] get_remote_alarm() Start!')
 
         # SSH connect
         self._cli.connect(self._conn_ip, port=self._conn_port,
@@ -729,7 +731,7 @@ class AlarmMgr:
         # process the remote file
         with self._cli.open_sftp() as sftp_client:
             with sftp_client.open(self._file_path, 'r') as remote_file:
-                logger.info(f'[{self._rat_type}] remote file open success! ' \
+                logger.info(f'[PID-{self._pid}] [{self._rat_type}] remote file open success! ' \
                             f'filename=[{self._file_path}]')
 
                 # Calling SFTPFile.prefetch should increase the read speed
@@ -739,7 +741,7 @@ class AlarmMgr:
 
                 text_data = self.__bytes_to_string(binary_data)
                 if text_data == None:
-                    logger.critical(f'[{self._rat_type}] Error. __bytes_to_string() fail')
+                    logger.critical(f'[PID-{self._pid}] [{self._rat_type}] Error. __bytes_to_string() fail')
                     self._cli.close()
                     return False
 
@@ -749,40 +751,40 @@ class AlarmMgr:
                 search_loc = None
                 alarm_file = None
                 if len(self._last_alarm_info) < 1:
-                    logger.warning(f'[{self._rat_type}] last_alarm_info is empty')
+                    logger.warning(f'[PID-{self._pid}] [{self._rat_type}] last_alarm_info is empty')
                     alarm_file = text_data[:]
                 else:
-                    logger.info(f'[{self._rat_type}] last_alarm_info is NOT empty. ' \
+                    logger.info(f'[PID-{self._pid}] [{self._rat_type}] last_alarm_info is NOT empty. ' \
                                 f'last_alarm_info=[{self._last_alarm_info}]')
                     search_loc = text_data.find(self._last_alarm_info)
                     if search_loc > 0:
-                        logger.info(f'[{self._rat_type}] last alarm info search success! ' \
+                        logger.info(f'[PID-{self._pid}] [{self._rat_type}] last alarm info search success! ' \
                                     f'search_loc=[{search_loc}]]')
                         #### slicing alarm information #####
                         alarm_file = text_data[(search_loc):]
                     else:
-                        logger.warning(f'[{self._rat_type}] Error. last alarm info search fail! ' \
+                        logger.warning(f'[PID-{self._pid}] [{self._rat_type}] Error. last alarm info search fail! ' \
                                        f'search_loc=[{search_loc}]]')
                         alarm_file = text_data[:]
 
-                logger.info(f'[{self._rat_type}] alarm_file len=[{len(alarm_file)}]')
+                logger.info(f'[PID-{self._pid}] [{self._rat_type}] alarm_file len=[{len(alarm_file)}]')
                 if self._rat_type == RAT_TYPE_5G:
-                    logger.debug(f'*** RAT_TYPE_5G ***')
+                    logger.debug(f'[PID-{self._pid}] *** RAT_TYPE_5G ***')
                     ret = self.__parse_5G_alarm(alarm_file)
                     if ret != True:
-                        logger.critical(f'Error. __parse_5G_alarm() fail')
+                        logger.critical(f'[PID-{self._pid}] Error. __parse_5G_alarm() fail')
                         self._cli.close()
                         return False
 
                 elif self._rat_type == RAT_TYPE_LTE:
-                    logger.debug(f'*** RAT_TYPE_LTE ***')
+                    logger.debug(f'[PID-{self._pid}] *** RAT_TYPE_LTE ***')
                     ret = self.__parse_LTE_alarm(alarm_file)
                     if ret != True:
-                        logger.critical(f'Error. __parse_LTE_alarm() fail')
+                        logger.critical(f'[PID-{self._pid}] Error. __parse_LTE_alarm() fail')
                         self._cli.close()
                         return False
                 else:
-                    logger.critical(f'*** Unknown RAT_TYPE ***, rat_type=[{self._rat_type}]')
+                    logger.critical(f'[PID-{self._pid}] Unknown RAT_TYPE, rat_type=[{self._rat_type}]')
                     self._cli.close()
                     return False
 
