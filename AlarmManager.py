@@ -204,10 +204,10 @@ class AlarmMgr:
                                  "AND alarm_code='" + data['alarm_code'] + "' " \
                                  "AND location='" + data['location'] + "'; "
                     Dbmanager.update(sql_string)
-                # print(f'sql_string=[\n{sql_string}\n]')
+                # logger.debug(f'sql_string=[\n{sql_string}\n]')
             else: # if db_results != ():
                 # Insert TB_E2EO_FC_FAULT_ALARM
-                # print(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
+                # logger.debug(f'DB no data. Insert tb_e2eo_fc_fault_alarm')
                 sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm " \
                              "(vendor_type, rat_type, alarm_code, " \
                              "location, alarm_source, alarm_time, " \
