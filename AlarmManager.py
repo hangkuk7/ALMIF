@@ -228,7 +228,7 @@ class AlarmMgr:
                              "'" + data['equip_type'] + "', '" + data['alarm_category'] + "', " \
                              "NOW());"
                 Dbmanager.insert(sql_string)
-                # print(f'sql_string=[\n{sql_string}\n]')
+                # logger.debug(f'sql_string=[\n{sql_string}\n]')
 
             # Insert TB_E2EO_FC_FAULT_ARLARM_HISTORY
             sql_string = "INSERT INTO tb_e2eo_fc_fault_alarm_history " \
@@ -252,7 +252,7 @@ class AlarmMgr:
                          "NOW());"
 
             Dbmanager.insert(sql_string)
-            # print(f'sql_string=[\n{sql_string}\n]')
+            # logger.debug(f'sql_string=[\n{sql_string}\n]')
 
         # Update last alarm information to TB_E2EO_FC_ALARM_ACCESS_INFO
         sql_string = "UPDATE tb_e2eo_fc_alarm_access_info " \
@@ -261,14 +261,14 @@ class AlarmMgr:
                      "WHERE name='" + self._name + "' " \
                      "AND connect_ip='" + self._conn_ip + "'; "
         Dbmanager.update(sql_string)
-        # print(f'sql_string=[\n{sql_string}\n]')
+        # logger.debug(f'sql_string=[\n{sql_string}\n]')
 
         return True
 
     def __parse_5G_alarm(self, alarm_file):
-        print(f'__parse_5G_alarm() Start!')
+        logger.info(f'__parse_5G_alarm() Start!')
         if len(alarm_file) < 1:
-            print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
+            logger.critical(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
 
         # regular expression for 5G
@@ -296,7 +296,8 @@ class AlarmMgr:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        print(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
+        print(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], ' \
+              f'after len=[{len(alarm_info_list)}] ***')
 
         # for idx, info in enumerate(alarm_info_list):
         #     print(f'idx=[{idx}], alarm_info=[{info}]')
