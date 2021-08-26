@@ -16,12 +16,17 @@ from almif_variables import *
 
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
+from LogManager import LogManager
 
 # For Database
 DB_INFO = ConfManager.getInstance().getDbConfig()
 
+# For log
+logger = LogManager.getInstance().get_logger()
+
 class AlarmMgr:
     def __init__(self, access_info, charset='utf8'):
+        logger.info('*** TEST [AlarmMgr] __init() Start ****')
         if len(access_info) < 1:
             return None
 
