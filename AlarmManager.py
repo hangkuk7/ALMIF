@@ -417,14 +417,15 @@ class AlarmMgr:
                         split_row = bts_name.split('-')
                         equip_id = split_row[1]
                     else:
-                        print(f'Error. Invalid [{self._rat_type}] BTS Name. location=[{location}], bts_name=[{bts_name}]')
+                        logger.info(f'Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
+                                    f'bts_name=[{bts_name}]')
                         equip_id = ''
 
                     # determine the equipment type
                     if 'NRCELL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
                     elif 'NRCELL-' not in location and len(equip_id) < 1:
-                        print(f'EQUIPMENT_ETC_TYPE')
+                        logger.debug(f'EQUIPMENT_ETC_TYPE')
                         equip_type = EQUIPMENT_ETC_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
@@ -477,16 +478,16 @@ class AlarmMgr:
         # for idx, item in enumerate(alarm_title_list):
         #     print(f'idx=[{idx + 1}] item=[{item}]')
 
-        print(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
+        logger.info(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
 
         self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
         return True
 
     def __parse_LTE_alarm(self, alarm_file):
-        print(f'__parse_LTE_alarm() Start!')
+        logger.info(f'__parse_LTE_alarm() Start!')
         if len(alarm_file) < 1:
-            print(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
+            logger.critical(f'Error. Invalid File length. file len=[{len(alarm_file)}]')
             return False
 
         # regular expression for LTE
@@ -514,7 +515,8 @@ class AlarmMgr:
             if value not in alarm_info_list:
                 alarm_info_list.append(value)
 
-        print(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], after len=[{len(alarm_info_list)}] ***')
+        logger.info(f'[{self._rat_type}] Duplicate remove : before len=[{len(match_list)}], ' \
+                    f'after len=[{len(alarm_info_list)}] ***')
 
         # for idx, info in enumerate(alarm_info_list):
         #     print(f'idx=[{idx}], alarm_info=[{info}]')
@@ -551,10 +553,10 @@ class AlarmMgr:
 
         for idx, item in enumerate(alarm_info_list):
             alarm_item_str = ''.join(item)
-            # print(f'idx=[{idx + 1}], alarm_item_str=[\n{alarm_item_str}]')
+            # logger.debug(f'idx=[{idx + 1}], alarm_item_str=[\n{alarm_item_str}]')
             split_str = alarm_item_str.split('\n')
             for jdx, alarm_row in enumerate(split_str):
-                # print(f'\n*** jdx=[{jdx+1}], alarm_row=[{alarm_row}] ***\n')
+                # logger.debug(f'\n*** jdx=[{jdx+1}], alarm_row=[{alarm_row}] ***\n')
                 if 'RANEMS' in alarm_row:
                     split_row = alarm_row.split(' ', maxsplit=1)
                     alarm_source = split_row[0]
@@ -562,11 +564,11 @@ class AlarmMgr:
 
                     alarm_title_list.append(alarm_row)
 
-                    # print(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
+                    # logger.debug(f'--- [RANEMS] : alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ---')
 
                 elif '* ' in alarm_row or '# ' in alarm_row \
                         or (alarm_row.lstrip().startswith('A') and alarm_row.lstrip()[1:4].isdigit() == True):
-                    # print(f'--- [* Or # Or A~~~]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [* Or # Or A~~~]=[{alarm_row}] ---')
                     if alarm_row.startswith(' ') == True:
                         alarm_row = alarm_row.lstrip()
 
@@ -585,49 +587,49 @@ class AlarmMgr:
                         elif len(split_single_item) > 1:
                             alarm_name += split_single_item
                             alarm_name += ' '
-                        # print(f'--- [* Or #] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
+                        # logger.debug(f'--- [* Or #] : alarm_code=[{alarm_code}], alarm_name=[{alarm_name}],alarm_state=[{alarm_state}] ---')
                 elif 'LOCATION' in alarm_row:
-                    # print(f'--- [LOCATION]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [LOCATION]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     location = split_row[1].lstrip().rstrip()
-                    # print(f'--- [LOCATION] : location=[{location}] ---')
+                    # logger.debug(f'--- [LOCATION] : location=[{location}] ---')
                 elif 'SEVERITY' in alarm_row:
-                    # print(f'--- [SEVERITY]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [SEVERITY]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     severity = split_row[1].lstrip().rstrip()
-                    # print(f'--- [SEVERITY] : severity=[{severity}] ---')
+                    # logger.debug(f'--- [SEVERITY] : severity=[{severity}] ---')
                 elif 'PROBABLE CAUSE' in alarm_row:
-                    # print(f'--- [PROBABLECAUSE]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [PROBABLECAUSE]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     probable_cause = split_row[1].lstrip().rstrip()
-                    # print(f'--- [PROBABLE CAUSE] : probable_cause=[{probable_cause}] ---')
+                    # logger.debug(f'--- [PROBABLE CAUSE] : probable_cause=[{probable_cause}] ---')
                 elif 'ALARM ID' in alarm_row:
-                    # print(f'--- [PROBABLECAUSE]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [PROBABLECAUSE]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     alarm_id = split_row[1].lstrip().rstrip()
-                    # print(f'--- [ALARM ID] : alarm_id=[{alarm_id}] ---')
+                    # logger.debug(f'--- [ALARM ID] : alarm_id=[{alarm_id}] ---')
                 elif 'NOTIFICATION ID' in alarm_row:
-                    # print(f'--- [NOTIFICATION ID]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [NOTIFICATION ID]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     notification_id = split_row[1].lstrip().rstrip()
-                    # print(f'--- [NOTIFICATION ID] : notification_id=[{notification_id}] ---')
+                    # logger.debug(f'--- [NOTIFICATION ID] : notification_id=[{notification_id}] ---')
                 elif 'EVENT TYPE' in alarm_row:
-                    # print(f'--- [EVENT TYPE]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [EVENT TYPE]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     event_type = split_row[1].lstrip().rstrip()
-                    # print(f'--- [EVENT TYPE] : event_type=[{event_type}] ---')
+                    # logger.debug(f'--- [EVENT TYPE] : event_type=[{event_type}] ---')
                 elif 'ADDITIONAL TEXT' in alarm_row:
-                    # print(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     additional_text = split_row[1].lstrip().rstrip()
-                    # print(f'--- [ADDITIONALTEXT] : additional_text=[{additional_text}] ---')
+                    # logger.debug(f'--- [ADDITIONALTEXT] : additional_text=[{additional_text}] ---')
                 elif 'CLEAR USER' in alarm_row:
-                    # print(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [ADDITIONALTEXT]=[{alarm_row}] ---')
                     split_row = alarm_row.split('=', maxsplit=1)
                     clear_user = split_row[1].lstrip().rstrip()
-                    # print(f'--- [ADDITIONAL TEXT] : clear_user=[{clear_user}] ---')
+                    # logger.debug(f'--- [ADDITIONAL TEXT] : clear_user=[{clear_user}] ---')
                 elif 'COMPLETED' in alarm_row:
-                    # print(f'--- [COMPLETED]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [COMPLETED]=[{alarm_row}] ---')
 
                     # Set Equipment ID and Equipment Type for LTE
                     split_row = location.split('/')
@@ -642,7 +644,7 @@ class AlarmMgr:
                         temp_str = temp_value[1].lstrip().rstrip()
                         lnbts_row = temp_str.split(' ')
                         equip_id = lnbts_row[0]
-                        # print(f'[LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
+                        # logger.debug(f'[LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
 
                     else:
                         print(f'Error. Invalid [{self._rat_type}] BTS Name. location=[{location}], bts_name=[{bts_name}]')
@@ -681,22 +683,22 @@ class AlarmMgr:
                                       'alarm_category':alarm_category}
 
                     db_alarm_data_list.append(alarm_dict_lte)
-                    # print(f'==============================================================')
-                    # print(f'alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ')
-                    # print(f'alarm_code=[{alarm_code}], alarm_name=[{alarm_name}] ')
-                    # print(f'alarm_state=[{alarm_state}], ne_name=[{ne_name}] ')
-                    # print(f'location=[{location}], event_type=[{event_type}] ')
-                    # print(f'probable_cause=[{probable_cause}], specific_problem=[{specific_problem}] ')
-                    # print(f'severity=[{severity}], additional_text=[{additional_text}] ')
-                    # print(f'alarm_id=[{alarm_id}], notification_id=[{notification_id}] ')
-                    # print(f'clear_user=[{clear_user}] ')
-                    # print(f'==============================================================')
+                    # logger.debug(f'==============================================================')
+                    # logger.debug(f'alarm_source=[{alarm_source}], alarm_time=[{alarm_time}] ')
+                    # logger.debug(f'alarm_code=[{alarm_code}], alarm_name=[{alarm_name}] ')
+                    # logger.debug(f'alarm_state=[{alarm_state}], ne_name=[{ne_name}] ')
+                    # logger.debug(f'location=[{location}], event_type=[{event_type}] ')
+                    # logger.debug(f'probable_cause=[{probable_cause}], specific_problem=[{specific_problem}] ')
+                    # logger.debug(f'severity=[{severity}], additional_text=[{additional_text}] ')
+                    # logger.debug(f'alarm_id=[{alarm_id}], notification_id=[{notification_id}] ')
+                    # logger.debug(f'clear_user=[{clear_user}] ')
+                    # logger.debug(f'==============================================================')
 
                     # Iniitialize variables
                     additional_text = ''
                     clear_user = ''
                 else:
-                    # print(f'--- [else]=[{alarm_row}] ---')
+                    # logger.debug(f'--- [else]=[{alarm_row}] ---')
                     pass
 
         # Sort alarm time list. latest alarm time is first item.
@@ -707,7 +709,7 @@ class AlarmMgr:
             latest_alarm_info=''
 
         # for idx, item in enumerate(alarm_title_list):
-        #     print(f'idx=[{idx + 1}] item=[{item}]')
+        #     logger.debug(f'idx=[{idx + 1}] item=[{item}]')
 
         print(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
 
@@ -717,7 +719,7 @@ class AlarmMgr:
 
     def get_remote_alarm(self):
         self._pid =  os.getpid()
-        print(f'get_remote_alarm() Start! pid=[{self._pid}]')
+        logger.info(f'get_remote_alarm() Start! pid=[{self._pid}]')
 
         # SSH connect
         self._cli.connect(self._conn_ip, port=self._conn_port,
@@ -726,7 +728,8 @@ class AlarmMgr:
         # process the remote file
         with self._cli.open_sftp() as sftp_client:
             with sftp_client.open(self._file_path, 'r') as remote_file:
-                print(f'[{self._rat_type}] remote file open success! filename=[{self._file_path}]')
+                logger.info(f'[{self._rat_type}] remote file open success! ' \
+                            f'filename=[{self._file_path}]')
 
                 # Calling SFTPFile.prefetch should increase the read speed
                 remote_file.prefetch()
