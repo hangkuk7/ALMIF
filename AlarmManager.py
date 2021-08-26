@@ -655,7 +655,7 @@ class AlarmMgr:
                     if 'LNCEL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
                     elif 'LNCELL ID' in alarm_name:
-                        print(f'Equipment Type. [LNCELL ID] alarm_name=[{alarm_name}]')
+                        logger.debug(f'Equipment Type. [LNCELL ID] alarm_name=[{alarm_name}]')
                         equip_type = EQUIPMENT_RU_TYPE
                     else:
                         equip_type = EQUIPMENT_DU_TYPE
@@ -712,7 +712,7 @@ class AlarmMgr:
         # for idx, item in enumerate(alarm_title_list):
         #     logger.debug(f'idx=[{idx + 1}] item=[{item}]')
 
-        print(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
+        logger.info(f'\n rat_type=[{self._rat_type}], latest_alarm_info=[{latest_alarm_info}]')
 
         self.__proc_alarm_db(db_alarm_data_list, latest_alarm_info)
 
@@ -735,7 +735,7 @@ class AlarmMgr:
                 # Calling SFTPFile.prefetch should increase the read speed
                 remote_file.prefetch()
                 binary_data = remote_file.read()
-                # print(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
+                # logger.debug(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
 
                 text_data = self.__bytes_to_string(binary_data)
                 if text_data == None:
@@ -743,7 +743,7 @@ class AlarmMgr:
                     self._cli.close()
                     return False
 
-                # print(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
+                # logger.debug(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
 
                 ##### search location of last alarm #####
                 search_loc = None
