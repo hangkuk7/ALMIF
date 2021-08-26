@@ -411,26 +411,25 @@ class AlarmMgr:
                     # logger.debug(f'--- [COMPLETED]=[{alarm_row}] ---')
 
                     # Set Equipment ID and Equipment Type for 5G
-                    split_row = location.split('/')
-                    bts_name = split_row[1]
-
-                    # parsing the BTS ID
-                    if bts_name.startswith('MRBTS-') == True:
-                        split_row = bts_name.split('-')
-                        equip_id = split_row[1]
-                    else:
-                        logger.warning(f'[PID-{self._pid}] Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
-                                       f'bts_name=[{bts_name}]')
-                        equip_id = ''
-
-                    # determine the equipment type
-                    if 'NRCELL-' in location:
+                    if 'MRBTS-' in location and 'NRCELL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
-                    elif 'NRCELL-' not in location and len(equip_id) < 1:
-                        logger.debug(f'[PID-{self._pid}] EQUIPMENT_ETC_TYPE')
-                        equip_type = EQUIPMENT_ETC_TYPE
-                    else:
+                        split_row = location.split('/')
+                        for item in split_row:
+                            if 'NRCELL-' in item:
+                                split_item = item.split('-')
+                                equip_id = split_item[1]
+
+                    elif 'MRBTS-' in location and 'NRCELL-' not in location:
                         equip_type = EQUIPMENT_DU_TYPE
+                        split_row = location.split('/')
+                        for item in split_row:
+                            if 'MRBTS-' in item:
+                                split_item = item.split('-')
+                                equip_id = split_item[1]
+                    else:
+                        logger.warning(f'[PID-{self._pid}] [{self._rat_type}] Invalid Location. location=[{location}]')
+                        equip_type = EQUIPMENT_ETC_TYPE
+                        equip_id = ''
 
                     # set alarm_category for 5G
                     alarm_category = self.__get_alarm_category(probable_cause)
