@@ -648,7 +648,7 @@ class AlarmMgr:
                             if 'MRBTS-' in item:
                                 split_item = item.split('-')
                                 equip_id = split_item[1]
-                    elif 'LNBTS-' not in location and 'LNBTS ID' in alarm_name:
+                    elif 'MRBTS-' not in location and 'LNBTS ID' in alarm_name:
                         if 'LNCELL ID' in alarm_name:
                             equip_type = EQUIPMENT_RU_TYPE
                             temp_value = alarm_name.split('LNCELL ID')
