@@ -33,10 +33,11 @@ def initConfig():
 
 # multiprocessing function
 def proc_alarm_job(alarm_mgr):
-    logger.info(f'*** proc_alarm_job() start! pid=[{os.getpid()}]****')
+    logger.info(f'[PID-{os.getpid()}] *** proc_alarm_job() start! ****')
     alarm_mgr.print_access_info()
     if alarm_mgr.get_remote_alarm() != True:
-        logger.critical(f'Error. get_remote_alarm fail. pid=[{os.getpid()}]')
+        logger.critical(f'[PID-{os.getpid()}] Error. get_remote_alarm fail. pid=[{os.getpid()}]')
+        return False
 
     return True
 
