@@ -36,7 +36,7 @@ def proc_alarm_job(alarm_mgr):
     logger.info(f'*** proc_alarm_job() start! pid=[{os.getpid()}]****')
     alarm_mgr.print_access_info()
     if alarm_mgr.get_remote_alarm() != True:
-        print(f'Error. get_remote_alarm fail. pid=[{os.getpid()}]')
+        logger.critical(f'Error. get_remote_alarm fail. pid=[{os.getpid()}]')
 
     return True
 
