@@ -631,35 +631,70 @@ class AlarmMgr:
                     # logger.debug(f'--- [ADDITIONAL TEXT] : clear_user=[{clear_user}] ---')
                 elif 'COMPLETED' in alarm_row:
                     # logger.debug(f'--- [COMPLETED]=[{alarm_row}] ---')
+                    #
+                    # # Set Equipment ID and Equipment Type for LTE
+                    # split_row = location.split('/')
+                    # bts_name = split_row[2]
+                    #
+                    # # parsing the BTS ID
+                    # if bts_name.startswith('LNBTS-') == True:
+                    #     temp_value = bts_name.split('-')
+                    #     equip_id = temp_value[1]
+                    # elif 'LNBTS ID' in alarm_name:
+                    #     temp_value = alarm_name.split('LNBTS ID')
+                    #     temp_str = temp_value[1].lstrip().rstrip()
+                    #     lnbts_row = temp_str.split(' ')
+                    #     equip_id = lnbts_row[0]
+                    #     # logger.debug(f'[LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
+                    #
+                    # else:
+                    #     logger.warning(f'[PID-{self._pid}] Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
+                    #                    f'bts_name=[{bts_name}]')
+                    #     equip_id = ''
+                    #
+                    # # determine the equipment type
+                    # if 'LNCEL-' in location:
+                    #     equip_type = EQUIPMENT_RU_TYPE
+                    # elif 'LNCELL ID' in alarm_name:
+                    #     logger.debug(f'[PID-{self._pid}] Equipment Type. [LNCELL ID] alarm_name=[{alarm_name}]')
+                    #     equip_type = EQUIPMENT_RU_TYPE
+                    # else:
+                    #     equip_type = EQUIPMENT_DU_TYPE
 
                     # Set Equipment ID and Equipment Type for LTE
-                    split_row = location.split('/')
-                    bts_name = split_row[2]
-
-                    # parsing the BTS ID
-                    if bts_name.startswith('LNBTS-') == True:
-                        temp_value = bts_name.split('-')
-                        equip_id = temp_value[1]
-                    elif 'LNBTS ID' in alarm_name:
-                        temp_value = alarm_name.split('LNBTS ID')
-                        temp_str = temp_value[1].lstrip().rstrip()
-                        lnbts_row = temp_str.split(' ')
-                        equip_id = lnbts_row[0]
-                        # logger.debug(f'[LNBTS ID] temp_value=[{temp_value}], temp_str=[{temp_str}], equip_id=[{equip_id}]')
-
-                    else:
-                        logger.warning(f'[PID-{self._pid}] Invalid [{self._rat_type}] BTS Name. location=[{location}], ' \
-                                       f'bts_name=[{bts_name}]')
-                        equip_id = ''
-
-                    # determine the equipment type
-                    if 'LNCEL-' in location:
+                    if 'LNBTS-' in location and 'LNCEL-' in location:
                         equip_type = EQUIPMENT_RU_TYPE
-                    elif 'LNCELL ID' in alarm_name:
-                        logger.debug(f'[PID-{self._pid}] Equipment Type. [LNCELL ID] alarm_name=[{alarm_name}]')
-                        equip_type = EQUIPMENT_RU_TYPE
-                    else:
+                        split_row = location.split('/')
+                        for item in split_row:
+                            if 'LNCEL-' in item:
+                                split_item = item.split('-')
+                                equip_id = split_item[1]
+
+                    elif 'LNBTS-' in location and 'LNCEL-' not in location:
                         equip_type = EQUIPMENT_DU_TYPE
+                        split_row = location.split('/')
+                        for item in split_row:
+                            if 'LNBTS-' in item:
+                                split_item = item.split('-')
+                                equip_id = split_item[1]
+                    elif 'LNBTS-' not in location and 'LNBTS ID' in alarm_name:
+                        if 'LNCELL ID' in alarm_name:
+                            equip_type = EQUIPMENT_RU_TYPE
+                            temp_value = alarm_name.split('LNCELL ID')
+                            temp_str = temp_value[1].lstrip().rstrip()
+                            lnbts_row = temp_str.split(' ')
+                            equip_id = lnbts_row[0]
+                        else:
+                            equip_type = EQUIPMENT_DU_TYPE
+                            temp_value = alarm_name.split('LNBTS ID')
+                            temp_str = temp_value[1].lstrip().rstrip()
+                            lnbts_row = temp_str.split(' ')
+                            equip_id = lnbts_row[0]
+
+                    else:
+                        logger.warning(f'[PID-{self._pid}] [{self._rat_type}] Invalid Location. location=[{location}]')
+                        equip_type = EQUIPMENT_ETC_TYPE
+                        equip_id = ''
 
                     # set alarm_category for LTE
                     alarm_category = self.__get_alarm_category(probable_cause)
