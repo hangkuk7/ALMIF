@@ -738,7 +738,7 @@ class AlarmMgr:
 
                 text_data = self.__bytes_to_string(binary_data)
                 if text_data == None:
-                    print(f'[{self._rat_type}] Error. __bytes_to_string() fail')
+                    logger.critical(f'[{self._rat_type}] Error. __bytes_to_string() fail')
                     self._cli.close()
                     return False
 
@@ -748,37 +748,40 @@ class AlarmMgr:
                 search_loc = None
                 alarm_file = None
                 if len(self._last_alarm_info) < 1:
-                    print(f'[{self._rat_type}] last_alarm_info is empty')
+                    logger.warning(f'[{self._rat_type}] last_alarm_info is empty')
                     alarm_file = text_data[:]
                 else:
-                    print(f'[{self._rat_type}] last_alarm_info is NOT empty. last_alarm_info=[{self._last_alarm_info}]')
+                    logger.info(f'[{self._rat_type}] last_alarm_info is NOT empty. ' \
+                                f'last_alarm_info=[{self._last_alarm_info}]')
                     search_loc = text_data.find(self._last_alarm_info)
                     if search_loc > 0:
-                        print(f'[{self._rat_type}] last alarm info search success! search_loc=[{search_loc}]]')
+                        logger.info(f'[{self._rat_type}] last alarm info search success! ' \
+                                    f'search_loc=[{search_loc}]]')
                         #### slicing alarm information #####
                         alarm_file = text_data[(search_loc):]
                     else:
-                        print(f'[{self._rat_type}] Error. last alarm info search fail! search_loc=[{search_loc}]]')
+                        logger.warning(f'[{self._rat_type}] Error. last alarm info search fail! ' \
+                                       f'search_loc=[{search_loc}]]')
                         alarm_file = text_data[:]
 
-                print(f'[{self._rat_type}] alarm_file len=[{len(alarm_file)}]')
+                logger.info(f'[{self._rat_type}] alarm_file len=[{len(alarm_file)}]')
                 if self._rat_type == RAT_TYPE_5G:
-                    print(f'*** RAT_TYPE_5G ***')
+                    logger.debug(f'*** RAT_TYPE_5G ***')
                     ret = self.__parse_5G_alarm(alarm_file)
                     if ret != True:
-                        print(f'Error. __parse_5G_alarm() fail')
+                        logger.critical(f'Error. __parse_5G_alarm() fail')
                         self._cli.close()
                         return False
 
                 elif self._rat_type == RAT_TYPE_LTE:
-                    print(f'*** RAT_TYPE_LTE ***')
+                    logger.debug(f'*** RAT_TYPE_LTE ***')
                     ret = self.__parse_LTE_alarm(alarm_file)
                     if ret != True:
-                        print(f'Error. __parse_LTE_alarm() fail')
+                        logger.critical(f'Error. __parse_LTE_alarm() fail')
                         self._cli.close()
                         return False
                 else:
-                    print(f'*** Unknown RAT_TYPE ***, rat_type=[{self._rat_type}]')
+                    logger.critical(f'*** Unknown RAT_TYPE ***, rat_type=[{self._rat_type}]')
                     self._cli.close()
                     return False
 
@@ -786,7 +789,7 @@ class AlarmMgr:
         return True
 
     def print_access_info(self):
-        print(f'name=[{self._name}], conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}], ' \
-              f'user_id=[{self._user_id}], user_pass=[{self._user_pass}], ' \
-              f'vendor_type=[{self._vendor_type}], rat_type=[{self._rat_type}], ' \
-              f'file_path=[{self._file_path}], last_alarm_info=[{self._last_alarm_info}]')
+        logger.info(f'name=[{self._name}], conn_ip=[{self._conn_ip}], conn_port=[{self._conn_port}], ' \
+                    f'user_id=[{self._user_id}], user_pass=[{self._user_pass}], ' \
+                    f'vendor_type=[{self._vendor_type}], rat_type=[{self._rat_type}], ' \
+                    f'file_path=[{self._file_path}], last_alarm_info=[{self._last_alarm_info}]')
