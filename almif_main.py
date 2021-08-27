@@ -77,6 +77,7 @@ if __name__ == '__main__':
         sys.exit()
 
     register_all_signal()
+    atexit.register(at_exit_func)
 
     logger.info(f'-------------------- [{MY_PROC_NAME}] Start! --------------------')
     if initConfig() != True:
