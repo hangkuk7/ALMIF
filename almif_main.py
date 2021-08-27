@@ -64,8 +64,7 @@ if __name__ == '__main__':
     schMgr = ScheduleManager(LOCAL_CONFIG['time_interval'])
     Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
 
-    while(True)
-
+    while True:
         if init_flag == True:
             # Initial Processing.
             sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
