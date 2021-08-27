@@ -59,6 +59,10 @@ if __name__ == '__main__':
         logger.critical(f'Error. initConfig() fail')
         sys.exit()
 
+    schMgr = ScheduleManager(30)
+
+    sys.exit()
+
     # select tb_e2eo_fc_alarm_access_info
     Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
     sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
