@@ -5,6 +5,8 @@ import os
 import sys
 from almif_variables import *
 
+LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
+
 class LogManager:
 
     __instance = None
@@ -32,8 +34,27 @@ class LogManager:
         self._log_suffix = '%Y-%m-%d'
 
         self.logger = logging.getLogger(self._log_name)
-        # To do later. set log level.
-        self.logger.setLevel(logging.DEBUG)
+
+        conf_log_level = LOCAL_CONFIG['msg_log_level']
+        print(f'[__init__] conf_log_level = [{conf_log_level}]')
+        self._log_level = logging.DEBUG
+        if conf_log_level < 1:
+            self._log_level = logging.DEBUG
+        elif conf_log_level == CONFIG_LOG_LEVEL_CRITICAL:
+            self._log_level = logging.CRITICAL
+        elif conf_log_level == CONFIG_LOG_LEVEL_ERROR:
+            self._log_level = logging.ERROR
+        elif conf_log_level == CONFIG_LOG_LEVEL_WARNING:
+            self._log_level = logging.WARNING
+        elif conf_log_level == CONFIG_LOG_LEVEL_INFO:
+            self._log_level = logging.INFO
+        elif conf_log_level == CONFIG_LOG_LEVEL_DEBUG:
+            self._log_level = logging.DEBUG
+        else:
+            self._log_level = logging.DEBUG
+
+        print(f'[__init__] self._log_level = [{self._log_level}]')
+        self.logger.setLevel(self._log_level)
 
         # Create Log Directory
         if not os.path.exists(self._log_dir):
