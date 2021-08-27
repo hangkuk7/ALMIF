@@ -4,6 +4,7 @@ import logging.handlers
 import os
 import sys
 from almif_variables import *
+from ConfigManager import ConfManager
 
 LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
 
