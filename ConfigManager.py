@@ -104,6 +104,12 @@ class ConfManager:
 
             # [TIME_CONFIG] section
             self.time_interval = int(self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL", 1))
+            if self.time_interval < 1:
+                self.time_interval = 30
+            elif self.time_interval > 600:
+                self.time_interval = 600
+            else:
+                pass
 
         except Exception as errmsg:
             logger.critical('Error. Exception in read LocalConfig config : {}'.format(errmsg))
