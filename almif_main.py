@@ -27,7 +27,8 @@ def at_exit_func():
 
 def sighandler(signum, frame):
     logger.info('sighandler : Signal. %i' % signum)
-    raise Exception('Signal. %i' % signum)
+    # raise Exception('Signal. %i' % signum)
+    sys.exit()
 
 def register_all_signal():
     for x in dir(signal):
