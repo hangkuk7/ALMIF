@@ -34,6 +34,9 @@ class ScheduleManager:
         self._next_time = self._current_time + timedelta(seconds=self._interval)
         self.print_schedule_time()
 
+    def get_interval(self):
+        return self._interval
+
     def print_schedule_time(self):
         self._str_current_time = self._current_time.strftime('%Y-%m-%d %H:%M:%S')
         self._str_next_time = self._next_time.strftime('%Y-%m-%d %H:%M:%S')
