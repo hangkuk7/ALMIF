@@ -34,26 +34,26 @@ class ConfManager:
         # [1] FILE READ SYSCONFIG
         try:
             self.home_str = os.environ["HOME"]
-            print("HOME : " + str(self.home_str))
+            print("[ConfManager] HOME : " + str(self.home_str))
         except KeyError:
-            print("Error. Exception. Please set the environment variable HOME")
+            print("[ConfManager] Error. Exception. Please set the environment variable HOME")
 
         # MY_SYS_NAME
         try:
             self.sys_name_str = os.environ["MY_SYS_NAME"]
-            print("MY_SYS_NAME : " + str(self.sys_name_str))
+            print("[ConfManager] MY_SYS_NAME : " + str(self.sys_name_str))
 
         except KeyError:
             self.sys_name_str = ""
-            print("'Error. Exception. Please set the environment variable MY_SYS_NAME")
+            print("'[ConfManager] Error. Exception. Please set the environment variable MY_SYS_NAME")
 
         # HOSTNAME
         try:
             self.host_name = os.environ['HOSTNAME']
-            print("HOSTNAME : " + str(self.host_name))
+            print("[ConfManager] HOSTNAME : " + str(self.host_name))
         except KeyError:
             self.host_name = 'E2E-O'
-            print("'Error. Exception. Please set the environment variable HOSTNAME")
+            print("'[ConfManager] Error. Exception. Please set the environment variable HOSTNAME")
 
         self.sysConfig = configparser.ConfigParser()
         self.sysConfig.read(self.home_str + '/data/sysconfig', encoding='euc-kr')
@@ -77,7 +77,7 @@ class ConfManager:
             self.db_host = str(self.getSysConfigData(ConfManager.SYS_CONFIG_GENERAL, "DB_IPADDR", 1))
 
         except Exception as errmsg:
-            print('Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
+            print('[ConfManager] Error. Exception in read SYSCONFIG config : {}'.format(errmsg))
         #############################################################################
 
         #############################################################################
@@ -111,7 +111,7 @@ class ConfManager:
                 pass
 
         except Exception as errmsg:
-            print('Error. Exception in read LocalConfig config : {}'.format(errmsg))
+            print('[ConfManager] Error. Exception in read LocalConfig config : {}'.format(errmsg))
 
         #############################################################################
 
