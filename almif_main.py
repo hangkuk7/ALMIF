@@ -88,6 +88,7 @@ if __name__ == '__main__':
 
             init_flag = False
             schMgr.reset_schedule()
+
         elif init_flag == False and schMgr.check_job_start() == True:
             # select tb_e2eo_fc_alarm_access_info
             sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
