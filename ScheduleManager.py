@@ -18,6 +18,8 @@ class ScheduleManager:
         self._str_current_time = self._next_time.strftime('%Y-%m-%d %H:%M:%S')
         self._str_next_time = self._next_time.strftime('%Y-%m-%d %H:%M:%S')
 
+        logger.info(f'[ScheduleManager init] self._interval[{self._interval}]')
+
     def check_job_start(self):
         self._current_time = datetime.now()
         if self._current_time >= self._next_time:
