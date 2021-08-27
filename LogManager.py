@@ -8,6 +8,10 @@ from ConfigManager import ConfManager
 
 LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
 
+# For Database
+DB_INFO = ConfManager.getInstance().getDbConfig()
+LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
+
 class LogManager:
 
     __instance = None
