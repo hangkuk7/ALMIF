@@ -8,6 +8,7 @@ from ConfigManager import ConfManager
 from DatabaseManager import DbManager
 from LogManager import LogManager
 from AlarmManager import AlarmMgr
+from ScheduleManager import ScheduleManager
 from almif_variables import *
 
 # For SSH
