@@ -3,6 +3,7 @@ import sys
 from datetime import datetime
 from datetime import timedelta
 from multiprocessing import Process, Queue
+from time import sleep
 
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
@@ -59,28 +60,60 @@ if __name__ == '__main__':
         logger.critical(f'Error. initConfig() fail')
         sys.exit()
 
+    init_flag = True
     schMgr = ScheduleManager(LOCAL_CONFIG['time_interval'])
-
-    sys.exit()
-
-    # select tb_e2eo_fc_alarm_access_info
     Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
-    sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
-    logger.debug(f'sql_string=[{sql_string}]')
-    db_results = Dbmanager.select(sql_string)
-    logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
-    alarm_mgr_list = list()
-    proc_list = list()
-    for result in db_results:
-        alarm_mgr = AlarmMgr(result)
-        if alarm_mgr != None:
-            alarm_mgr_list.append(alarm_mgr)
+    while(True)
 
-            proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
-            proc_list.append(proc)
-            proc.start()
+        if init_flag == True:
+            # Initial Processing.
+            sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
+            logger.debug(f'sql_string=[{sql_string}]')
+            db_results = Dbmanager.select(sql_string)
+            logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
-    for proc in proc_list:
-        proc.join()
+            alarm_mgr_list = list()
+            proc_list = list()
+            for result in db_results:
+                alarm_mgr = AlarmMgr(result)
+                if alarm_mgr != None:
+                    alarm_mgr_list.append(alarm_mgr)
+
+                    proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
+                    proc_list.append(proc)
+                    proc.start()
+
+            for proc in proc_list:
+                proc.join()
+
+            init_flag = False
+            schMgr.reset_schedule()
+        elif init_flag == False and schMgr.check_job_start() == True:
+            # select tb_e2eo_fc_alarm_access_info
+            sql_string = "select * from tb_e2eo_fc_alarm_access_info;"
+            logger.debug(f'sql_string=[{sql_string}]')
+            db_results = Dbmanager.select(sql_string)
+            logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
+
+            alarm_mgr_list = list()
+            proc_list = list()
+            for result in db_results:
+                alarm_mgr = AlarmMgr(result)
+                if alarm_mgr != None:
+                    alarm_mgr_list.append(alarm_mgr)
+
+                    proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
+                    proc_list.append(proc)
+                    proc.start()
+
+            for proc in proc_list:
+                proc.join()
+
+            init_flag = False
+            schMgr.reset_schedule()
+        elif init_flag == False and schMgr.check_job_start() == False:
+            sleep(1)
+        else:
+            sleep(1)
 
