@@ -4,6 +4,7 @@ from datetime import datetime
 from datetime import timedelta
 from multiprocessing import Process, Queue
 from time import sleep
+import signal
 
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
@@ -19,6 +20,22 @@ import getpass
 import time
 
 logger = LogManager.getInstance().get_logger()
+
+def sighandler(signum, frame):
+    logger.info('sighandler : Signal. %i' % signum)
+    raise Exception('Signal. %i' % signum)
+
+def register_all_signal():
+    for x in dir(signal):
+        if not x.startswith("SIG"):
+            continue
+
+        try:
+            signum = getattr(signal, x)
+            signal.signal(signum, sighandler)
+        except:
+            logger.critical('Skipping the signal : %s' % x)
+            continue
 
 def initConfig():
     logger.info(f'-------------------- initConfig() --------------------')
