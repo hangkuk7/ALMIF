@@ -5,6 +5,7 @@ from datetime import timedelta
 from multiprocessing import Process, Queue
 from time import sleep
 import signal
+import atexit
 
 from ConfigManager import ConfManager
 from DatabaseManager import DbManager
@@ -20,6 +21,9 @@ import getpass
 import time
 
 logger = LogManager.getInstance().get_logger()
+
+def at_exit_func():
+    logger.critical(f'[PID-{os.getpid()}] Exit!')
 
 def sighandler(signum, frame):
     logger.info('sighandler : Signal. %i' % signum)
