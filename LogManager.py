@@ -56,13 +56,13 @@ class LogManager:
         else:
             self._log_level = logging.DEBUG
 
-        print(f'[__init__] self._log_level = [{self._log_level}]')
+        print(f'[LogManager init] self._log_level = [{self._log_level}]')
         self.logger.setLevel(self._log_level)
 
         # Create Log Directory
         if not os.path.exists(self._log_dir):
             os.makedirs(self._log_dir)
-            print(f'Make Log Directory. log_dir=[{self._log_dir}]')
+            print(f'[LogManager init] Make Log Directory. log_dir=[{self._log_dir}]')
 
         self.set_fileHandler()
 
