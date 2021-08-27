@@ -27,19 +27,19 @@ class LogManager:
         self._log_name = MY_LOG_FILE_NAME
         try:
             home_str = os.environ["HOME"]
-            print("[__init__] HOME : " + str(home_str))
+            print("[LogManager init] HOME : " + str(home_str))
         except KeyError:
-            print("[__init__] Error. Please set the environment variable HOME")
+            print("[LogManager init] Error. Please set the environment variable HOME")
             return None
 
         self._log_dir = '%s/log/%s' % (home_str, MY_PROC_NAME)
-        print(f'[__init__] self._log_dir = [{self._log_dir}]')
+        print(f'[LogManager init] self._log_dir = [{self._log_dir}]')
         self._log_suffix = '%Y-%m-%d'
 
         self.logger = logging.getLogger(self._log_name)
 
         conf_log_level = LOCAL_CONFIG['msg_log_level']
-        print(f'[__init__] conf_log_level = [{conf_log_level}]')
+        print(f'[LogManager init] conf_log_level = [{conf_log_level}]')
         self._log_level = logging.DEBUG
         if conf_log_level < 1:
             self._log_level = logging.DEBUG
