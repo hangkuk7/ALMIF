@@ -189,7 +189,7 @@ class ConfManager:
         localConfigInfo['msg_log_level'] = self.msg_log_level
 
         # [TIME_CONFIG] section
-        localConfigInfo['time_interval'] = self.time_interval
+        # localConfigInfo['time_interval'] = self.time_interval
 
         return localConfigInfo
 
