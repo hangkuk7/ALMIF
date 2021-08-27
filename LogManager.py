@@ -6,8 +6,6 @@ import sys
 from almif_variables import *
 from ConfigManager import ConfManager
 
-LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
-
 # For Database
 DB_INFO = ConfManager.getInstance().getDbConfig()
 LOCAL_CONFIG = ConfManager.getInstance().getLocalConfig()
