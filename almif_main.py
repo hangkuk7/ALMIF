@@ -26,7 +26,7 @@ def at_exit_func():
     logger.critical(f'[PID-{os.getpid()}] Exit!')
 
 def sighandler(signum, frame):
-    logger.info('sighandler : Signal. %i' % signum)
+    logger.critical('sighandler : Signal. %i' % signum)
     # raise Exception('Signal. %i' % signum)
     sys.exit()
 
