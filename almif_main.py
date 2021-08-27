@@ -59,7 +59,7 @@ if __name__ == '__main__':
         logger.critical(f'Error. initConfig() fail')
         sys.exit()
 
-    schMgr = ScheduleManager(30)
+    schMgr = ScheduleManager(LOCAL_CONFIG['time_interval'])
 
     sys.exit()
 
