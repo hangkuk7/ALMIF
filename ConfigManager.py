@@ -97,11 +97,13 @@ class ConfManager:
         # Load LocalConfig
         try:
             # [GENERAL] section
-            self.err_log_level = str(self.getLocalConfigData("GENERAL", "ERR_LOG_LEVEL", 1))
-            self.msg_log_level = str(self.getLocalConfigData("GENERAL", "MSG_LOG_LEVEL", 1))
+            self.msg_log_level = int(self.getLocalConfigData("GENERAL", "MSG_LOG_LEVEL", 1))
+            if self.msg_log_level < 1 or self.msg_log_level >= 5:
+                logger.warnning(f'Invalid mag_log_level=[{self.msg_log_level}]')
+                self.msg_log_level = 5
 
             # [TIME_CONFIG] section
-            self.time_interval = str(self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL", 1))
+            self.time_interval = int(self.getLocalConfigData("TIME_CONFIG", "TIME_INTERVAL", 1))
 
         except Exception as errmsg:
             logger.critical('Error. Exception in read LocalConfig config : {}'.format(errmsg))
@@ -176,7 +178,6 @@ class ConfManager:
 
         localConfigInfo = {}
         # [GENERAL] section
-        localConfigInfo['err_log_level'] = self.err_log_level
         localConfigInfo['msg_log_level'] = self.msg_log_level
 
         # [TIME_CONFIG] section
