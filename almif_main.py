@@ -34,6 +34,10 @@ def register_all_signal():
     for x in dir(signal):
         if not x.startswith("SIG"):
             continue
+        # Ignored Signal List
+        if x in "SIGCHLD":
+            logger.info('Ignored the signal : %s' % x)
+            continue
 
         try:
             signum = getattr(signal, x)
