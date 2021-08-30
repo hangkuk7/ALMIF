@@ -38,8 +38,8 @@ def register_all_signal():
         try:
             signum = getattr(signal, x)
             if x in "SIGCHLD":
-                logger.info(f'Ignore Signal=[{x}]')
                 signal.signal(signum, signal.SIG_IGN)
+                logger.info(f'Ignore Signal=[{x}]')
             else:
                 signal.signal(signum, sighandler)
         except:
