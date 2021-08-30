@@ -34,14 +34,14 @@ def register_all_signal():
     for x in dir(signal):
         if not x.startswith("SIG"):
             continue
-        # Ignored Signal List
-        if x in "SIGCHLD":
-            logger.info('Ignored the signal : %s' % x)
-            continue
 
         try:
             signum = getattr(signal, x)
-            signal.signal(signum, sighandler)
+            if x in "SIGCHLD":
+                logger.info(f'Ignore Signal=[{x}]')
+                signal.signal(signum, signal.SIG_IGN)
+            else:
+                signal.signal(signum, sighandler)
         except:
             logger.critical('Skipping the signal : %s' % x)
             continue
