@@ -30,21 +30,29 @@ def sighandler(signum, frame):
     # raise Exception('Signal. %i' % signum)
     sys.exit()
 
-def register_all_signal():
-    for x in dir(signal):
-        if not x.startswith("SIG"):
-            continue
+#def register_all_signal():
+#    for x in dir(signal):
+#        if not x.startswith("SIG"):
+#            continue
 
-        try:
-            signum = getattr(signal, x)
-            if x in "SIGCHLD":
-                signal.signal(signum, signal.SIG_IGN)
-                logger.info(f'Ignore Signal=[{x}]')
-            else:
-                signal.signal(signum, sighandler)
-        except:
-            logger.critical('Skipping the signal : %s' % x)
-            continue
+#        try:
+#            signum = getattr(signal, x)
+#            if x in "SIGCHLD":
+#                signal.signal(signum, signal.SIG_IGN)
+#                logger.info(f'Ignore Signal=[{x}]')
+#            else:
+#                signal.signal(signum, sighandler)
+#        except:
+#            logger.critical('Skipping the signal : %s' % x)
+#            continue
+
+def register_signal():
+    # Ignore the Signal
+    signal.signal(signal.SIGCHLD, signal.SIG_IGN)
+
+    # Catch the Signal
+    signal.signal(signal.SIGINT, sighandler)
+    signal.signal(signal.SIGQUIT, sighandler)
 
 def initConfig():
     logger.info(f'-------------------- initConfig() --------------------')
@@ -81,7 +89,8 @@ if __name__ == '__main__':
         logger.critical(f'Error. Invalid ProcName. ProcName=[{sys.argv[1]}]')
         sys.exit()
 
-    register_all_signal()
+    # register_all_signal()
+    register_signal()
     atexit.register(at_exit_func)
 
     logger.info(f'-------------------- [{MY_PROC_NAME}] Start! --------------------')
