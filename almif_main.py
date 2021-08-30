@@ -137,8 +137,6 @@ if __name__ == '__main__':
 
             init_flag = False
             schMgr.reset_schedule()
-        elif init_flag == False and schMgr.check_job_start() == False:
-            sleep(1)
         else:
             sleep(1)
 
