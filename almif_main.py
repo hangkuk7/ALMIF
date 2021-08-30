@@ -53,6 +53,7 @@ def register_signal():
     # Catch the Signal
     signal.signal(signal.SIGINT, sighandler)
     signal.signal(signal.SIGQUIT, sighandler)
+    signal.signal(signal.SIGTERM, sighandler)
 
 def initConfig():
     logger.info(f'-------------------- initConfig() --------------------')
