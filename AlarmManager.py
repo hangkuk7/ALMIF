@@ -731,63 +731,68 @@ class AlarmMgr:
         # SSH connect
         self._cli.connect(self._conn_ip, port=self._conn_port,
                           username=self._user_id, password=self._user_pass)
+        try:
+            # process the remote file
+            with self._cli.open_sftp() as sftp_client:
+                with sftp_client.open(self._file_path, 'r') as remote_file:
+                    # Calling SFTPFile.prefetch should increase the read speed
+                    remote_file.prefetch()
+                    binary_data = remote_file.read()
+                    # logger.debug(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
 
-        # process the remote file
-        with self._cli.open_sftp() as sftp_client:
-            with sftp_client.open(self._file_path, 'r') as remote_file:
-                # Calling SFTPFile.prefetch should increase the read speed
-                remote_file.prefetch()
-                binary_data = remote_file.read()
-                # logger.debug(f'binary_data type=[{type(binary_data)}], binary_data len=[{len(binary_data)}]')
+                    text_data = self.__bytes_to_string(binary_data)
+                    if text_data == None:
+                        logger.critical(f'[PID-{self._pid}] [{self._rat_type}] Error. __bytes_to_string() fail')
+                        self._cli.close()
+                        return False
 
-                text_data = self.__bytes_to_string(binary_data)
-                if text_data == None:
-                    logger.critical(f'[PID-{self._pid}] [{self._rat_type}] Error. __bytes_to_string() fail')
-                    self._cli.close()
-                    return False
+                    # logger.debug(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
 
-                # logger.debug(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
-
-                ##### search location of last alarm #####
-                search_loc = None
-                alarm_file = None
-                if len(self._last_alarm_info) < 1:
-                    logger.warning(f'[PID-{self._pid}] [{self._rat_type}] last_alarm_info is empty')
-                    alarm_file = text_data[:]
-                else:
-                    logger.info(f'[PID-{self._pid}] [{self._rat_type}] last_alarm_info is NOT empty. ' \
-                                f'last_alarm_info=[{self._last_alarm_info}]')
-                    search_loc = text_data.find(self._last_alarm_info)
-                    if search_loc > 0:
-                        logger.info(f'[PID-{self._pid}] [{self._rat_type}] last alarm info search success! ' \
-                                    f'search_loc=[{search_loc}]]')
-                        #### slicing alarm information #####
-                        alarm_file = text_data[(search_loc):]
-                    else:
-                        logger.warning(f'[PID-{self._pid}] [{self._rat_type}] Error. last alarm info search fail! ' \
-                                       f'search_loc=[{search_loc}]]')
+                    ##### search location of last alarm #####
+                    search_loc = None
+                    alarm_file = None
+                    if len(self._last_alarm_info) < 1:
+                        logger.warning(f'[PID-{self._pid}] [{self._rat_type}] last_alarm_info is empty')
                         alarm_file = text_data[:]
+                    else:
+                        logger.info(f'[PID-{self._pid}] [{self._rat_type}] last_alarm_info is NOT empty. ' \
+                                    f'last_alarm_info=[{self._last_alarm_info}]')
+                        search_loc = text_data.find(self._last_alarm_info)
+                        if search_loc > 0:
+                            logger.info(f'[PID-{self._pid}] [{self._rat_type}] last alarm info search success! ' \
+                                        f'search_loc=[{search_loc}]]')
+                            #### slicing alarm information #####
+                            alarm_file = text_data[(search_loc):]
+                        else:
+                            logger.warning(f'[PID-{self._pid}] [{self._rat_type}] Error. last alarm info search fail! ' \
+                                           f'search_loc=[{search_loc}]]')
+                            alarm_file = text_data[:]
 
-                logger.info(f'[PID-{self._pid}] [{self._rat_type}] alarm_file len=[{len(alarm_file)}]')
-                if self._rat_type == RAT_TYPE_5G:
-                    logger.debug(f'[PID-{self._pid}] *** RAT_TYPE_5G ***')
-                    ret = self.__parse_5G_alarm(alarm_file)
-                    if ret != True:
-                        logger.critical(f'[PID-{self._pid}] Error. __parse_5G_alarm() fail')
+                    logger.info(f'[PID-{self._pid}] [{self._rat_type}] alarm_file len=[{len(alarm_file)}]')
+                    if self._rat_type == RAT_TYPE_5G:
+                        logger.debug(f'[PID-{self._pid}] *** RAT_TYPE_5G ***')
+                        ret = self.__parse_5G_alarm(alarm_file)
+                        if ret != True:
+                            logger.critical(f'[PID-{self._pid}] Error. __parse_5G_alarm() fail')
+                            self._cli.close()
+                            return False
+
+                    elif self._rat_type == RAT_TYPE_LTE:
+                        logger.debug(f'[PID-{self._pid}] *** RAT_TYPE_LTE ***')
+                        ret = self.__parse_LTE_alarm(alarm_file)
+                        if ret != True:
+                            logger.critical(f'[PID-{self._pid}] Error. __parse_LTE_alarm() fail')
+                            self._cli.close()
+                            return False
+                    else:
+                        logger.critical(f'[PID-{self._pid}] Unknown RAT_TYPE, rat_type=[{self._rat_type}]')
                         self._cli.close()
                         return False
-
-                elif self._rat_type == RAT_TYPE_LTE:
-                    logger.debug(f'[PID-{self._pid}] *** RAT_TYPE_LTE ***')
-                    ret = self.__parse_LTE_alarm(alarm_file)
-                    if ret != True:
-                        logger.critical(f'[PID-{self._pid}] Error. __parse_LTE_alarm() fail')
-                        self._cli.close()
-                        return False
-                else:
-                    logger.critical(f'[PID-{self._pid}] Unknown RAT_TYPE, rat_type=[{self._rat_type}]')
-                    self._cli.close()
-                    return False
+        except Exception as e:
+            error_msg = str(e)
+            logger.crital(f'[PID-{self._pid}] [{self._rat_type}] Exception. err_msg=[{error_msg}] ' \
+                          f'remote file open fail.file=[{self._file_path}]')
+            return False
 
         self._cli.close()
         return True
