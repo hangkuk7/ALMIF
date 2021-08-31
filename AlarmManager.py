@@ -734,7 +734,7 @@ class AlarmMgr:
                               username=self._user_id, password=self._user_pass)
         except Exception as e:
             error_msg = str(e)
-            logger.critial(f'Exception. err_msg=[{error_msg}], [PID-{self._pid}] [{self._rat_type}] ' \
+            logger.critical(f'Exception. err_msg=[{error_msg}], [PID-{self._pid}] [{self._rat_type}] ' \
                           f'self._cli.connect() fail')
             return False
 
@@ -797,7 +797,7 @@ class AlarmMgr:
                         return False
         except Exception as e:
             error_msg = str(e)
-            logger.critial(f'[PID-{self._pid}] [{self._rat_type}] Exception. err_msg=[{error_msg}] ' \
+            logger.critical(f'[PID-{self._pid}] [{self._rat_type}] Exception. err_msg=[{error_msg}] ' \
                           f'remote file open fail.file=[{self._file_path}]')
             return False
 
