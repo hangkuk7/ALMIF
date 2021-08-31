@@ -737,14 +737,13 @@ class AlarmMgr:
 
             try:
                 with sftp_client.open(self._file_path, 'r') as remote_file:
+                    logger.info(f'[PID-{self._pid}] [{self._rat_type}] remote file open success! ' \
+                                f'filename=[{self._file_path}]')
             except Exception as e:
                 error_msg = str(e)
                 logger.crital(f'Exception. err_msg=[{error_msg}], [PID-{self._pid}] [{self._rat_type}] ' \
                               f'remote file open fail.file=[{self._file_path}]')
                 return False
-
-                logger.info(f'[PID-{self._pid}] [{self._rat_type}] remote file open success! ' \
-                            f'filename=[{self._file_path}]')
 
                 # Calling SFTPFile.prefetch should increase the read speed
                 remote_file.prefetch()
