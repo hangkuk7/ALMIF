@@ -728,9 +728,16 @@ class AlarmMgr:
         self._pid =  os.getpid()
         logger.info(f'[PID-{self._pid}] [{self._rat_type}] get_remote_alarm() Start!')
 
-        # SSH connect
-        self._cli.connect(self._conn_ip, port=self._conn_port,
-                          username=self._user_id, password=self._user_pass)
+        try:
+            # SSH connect
+            self._cli.connect(self._conn_ip, port=self._conn_port,
+                              username=self._user_id, password=self._user_pass)
+        except Exception as e:
+            error_msg = str(e)
+            logger.crital(f'Exception. err_msg=[{error_msg}], [PID-{self._pid}] [{self._rat_type}] ' \
+                          f'self._cli.connect() fail')
+            return False
+
         try:
             # process the remote file
             with self._cli.open_sftp() as sftp_client:
