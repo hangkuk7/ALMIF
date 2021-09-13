@@ -83,7 +83,7 @@ class AlarmMgr:
             logger.critical(f'Error: Input must be a bytes or int type')
             return None
 
-    def __get_alarm_category(self, probable_cause):
+    def __get_alarm_category(self, probable_cause, alarm_code):
         category_name = ALARM_CATEGORY_DEFAULT
 
         if len(self._db_alarm_category_info) < 1:
@@ -93,7 +93,8 @@ class AlarmMgr:
 
         for idx, item in enumerate(self._db_alarm_category_info):
             # logger.debug(f'idx=[{idx}], item=[{item}]')
-            if probable_cause.upper() in item[1].upper():
+            if probable_cause.upper() in item[1].upper() \
+                and alarm_code.upper() in item[2].upper():
                 category_name = item[0].upper()
                 # logger.debug(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
                 return category_name
@@ -433,7 +434,7 @@ class AlarmMgr:
                         equip_id = ''
 
                     # set alarm_category for 5G
-                    alarm_category = self.__get_alarm_category(probable_cause)
+                    alarm_category = self.__get_alarm_category(probable_cause, alarm_code)
 
                     # Set 5G Alarm dictionary
                     alarm_dict_5g = {'alarm_source':alarm_source,
@@ -668,7 +669,7 @@ class AlarmMgr:
                         equip_id = ''
 
                     # set alarm_category for LTE
-                    alarm_category = self.__get_alarm_category(probable_cause)
+                    alarm_category = self.__get_alarm_category(probable_cause, alarm_code)
 
                     # Set LTE Alarm dictionary
                     alarm_dict_lte = {'alarm_source': alarm_source,
