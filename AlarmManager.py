@@ -71,7 +71,8 @@ class AlarmMgr:
 
         self._db_alarm_category_info = Dbmanager.select(sql_string)
         logger.debug(f'[__init__] sql_string=[\n{sql_string}\n]')
-        logger.debug(f'self._db_alarm_category_info=[{self._db_alarm_category_info}]')
+        logger.debug(f'self._db_alarm_category_info len =[{len(self._db_alarm_category_info)}]')
+        # logger.debug(f'self._db_alarm_category_info=[{self._db_alarm_category_info}]')
 
     def __bytes_to_string(self, byte_or_int_value, encoding='utf-8'):
         if isinstance(byte_or_int_value, bytes):
