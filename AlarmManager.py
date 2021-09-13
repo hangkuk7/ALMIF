@@ -65,7 +65,7 @@ class AlarmMgr:
         # Loading Alarm Category for 5G
         Dbmanager = DbManager(DB_INFO['host'], DB_INFO['user'], DB_INFO['passwd'], DB_INFO['db'])
 
-        sql_string = "SELECT category_name, alarm_text " \
+        sql_string = "SELECT category_name, alarm_text, alarm_code " \
                      "FROM tb_e2eo_fc_alarm_category " \
                      "WHERE rat_type='" + self._rat_type + "'; "
 
