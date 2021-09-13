@@ -93,8 +93,7 @@ class AlarmMgr:
 
         for idx, item in enumerate(self._db_alarm_category_info):
             # logger.debug(f'idx=[{idx}], item=[{item}]')
-            if probable_cause.upper() in item[1].upper() \
-                and alarm_code.upper() in item[2].upper():
+            if item[1].upper() in probable_cause.upper() and item[2].upper() in alarm_code.upper():
                 category_name = item[0].upper()
                 # logger.debug(f'[__get_alarm_category] Matching Success. category_name=[{category_name}]')
                 return category_name
