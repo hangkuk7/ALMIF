@@ -784,8 +784,9 @@ class AlarmMgr:
                         ret = self.__parse_5G_alarm(alarm_file)
                         if ret != True:
                             logger.critical(f'[PID-{self._pid}] Error. __parse_5G_alarm() fail')
-                            self._cli.close()
                             remote_file.close()
+                            sftp_client.close()
+                            self._cli.close()
                             return False
 
                     elif self._rat_type == RAT_TYPE_LTE:
@@ -793,24 +794,28 @@ class AlarmMgr:
                         ret = self.__parse_LTE_alarm(alarm_file)
                         if ret != True:
                             logger.critical(f'[PID-{self._pid}] Error. __parse_LTE_alarm() fail')
-                            self._cli.close()
                             remote_file.close()
+                            sftp_client.close()
+                            self._cli.close()
                             return False
                     else:
                         logger.critical(f'[PID-{self._pid}] Unknown RAT_TYPE, rat_type=[{self._rat_type}]')
-                        self._cli.close()
                         remote_file.close()
+                        sftp_client.close()
+                        self._cli.close()
                         return False
         except Exception as e:
             error_msg = str(e)
             logger.critical(f'[PID-{self._pid}] [{self._rat_type}] Exception. err_msg=[{error_msg}] ' \
                           f'remote file open fail.file=[{self._file_path}]')
-            self._cli.close()
             remote_file.close()
+            sftp_client.close()
+            self._cli.close()
             return False
 
-        self._cli.close()
         remote_file.close()
+        sftp_client.close()
+        self._cli.close()
         return True
 
     def print_access_info(self):
