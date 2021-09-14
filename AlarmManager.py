@@ -736,7 +736,7 @@ class AlarmMgr:
         except Exception as e:
             error_msg = str(e)
             logger.critical(f'Exception. err_msg=[{error_msg}], [PID-{self._pid}] [{self._rat_type}] ' \
-                          f'self._cli.connect() fail')
+                            f'self._cli.connect() fail')
             return False
 
         try:
