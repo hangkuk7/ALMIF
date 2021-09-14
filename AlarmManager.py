@@ -751,8 +751,9 @@ class AlarmMgr:
                     text_data = self.__bytes_to_string(binary_data)
                     if text_data == None:
                         logger.critical(f'[PID-{self._pid}] [{self._rat_type}] Error. __bytes_to_string() fail')
-                        self._cli.close()
                         remote_file.close()
+                        sftp_client.close()
+                        self._cli.close()
                         return False
 
                     # logger.debug(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
