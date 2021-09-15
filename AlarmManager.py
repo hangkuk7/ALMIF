@@ -730,10 +730,6 @@ class AlarmMgr:
         ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
 
         try:
-            # Create SSH Client
-            ssh_client = paramiko.SSHClient()
-            ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
-
             # SSH connect
             ssh_client.connect(self._conn_ip, port=self._conn_port,
                                username=self._user_id, password=self._user_pass)
