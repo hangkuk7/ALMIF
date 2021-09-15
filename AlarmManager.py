@@ -726,9 +726,13 @@ class AlarmMgr:
         logger.info(f'[PID-{self._pid}] [{self._rat_type}] get_remote_alarm() Start!')
 
         try:
+            # Create SSH Client
+            ssh_client = paramiko.SSHClient()
+            ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+
             # SSH connect
-            self._cli.connect(self._conn_ip, port=self._conn_port,
-                              username=self._user_id, password=self._user_pass)
+            ssh_client.connect(self._conn_ip, port=self._conn_port,
+                               username=self._user_id, password=self._user_pass)
         except Exception as e:
             error_msg = str(e)
             logger.critical(f'Exception. err_msg=[{error_msg}], [PID-{self._pid}] [{self._rat_type}] ' \
@@ -737,7 +741,7 @@ class AlarmMgr:
 
         try:
             # process the remote file
-            with self._cli.open_sftp() as sftp_client:
+            with ssh_client.open_sftp() as sftp_client:
                 with sftp_client.open(self._file_path, 'r') as remote_file:
                     # Calling SFTPFile.prefetch should increase the read speed
                     remote_file.prefetch()
@@ -749,7 +753,7 @@ class AlarmMgr:
                         logger.critical(f'[PID-{self._pid}] [{self._rat_type}] Error. __bytes_to_string() fail')
                         remote_file.close()
                         sftp_client.close()
-                        self._cli.close()
+                        ssh_client.close()
                         return False
 
                     # logger.debug(f'text_data type=[{type(text_data)}], text_data len=[{len(text_data)}]')
@@ -782,7 +786,7 @@ class AlarmMgr:
                             logger.critical(f'[PID-{self._pid}] Error. __parse_5G_alarm() fail')
                             remote_file.close()
                             sftp_client.close()
-                            self._cli.close()
+                            ssh_client.close()
                             return False
 
                     elif self._rat_type == RAT_TYPE_LTE:
@@ -792,13 +796,13 @@ class AlarmMgr:
                             logger.critical(f'[PID-{self._pid}] Error. __parse_LTE_alarm() fail')
                             remote_file.close()
                             sftp_client.close()
-                            self._cli.close()
+                            ssh_client.close()
                             return False
                     else:
                         logger.critical(f'[PID-{self._pid}] Unknown RAT_TYPE, rat_type=[{self._rat_type}]')
                         remote_file.close()
                         sftp_client.close()
-                        self._cli.close()
+                        ssh_client.close()
                         return False
         except Exception as e:
             error_msg = str(e)
@@ -806,12 +810,12 @@ class AlarmMgr:
                           f'remote file open fail.file=[{self._file_path}]')
             remote_file.close()
             sftp_client.close()
-            self._cli.close()
+            ssh_client.close()
             return False
 
         remote_file.close()
         sftp_client.close()
-        self._cli.close()
+        ssh_client.close()
         return True
 
     def print_access_info(self):
