@@ -725,7 +725,10 @@ class AlarmMgr:
         self._pid =  os.getpid()
         logger.info(f'[PID-{self._pid}] [{self._rat_type}] get_remote_alarm() Start!')
 
-        ssh_client = None
+        # Create SSH Client
+        ssh_client = paramiko.SSHClient()
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+
         try:
             # Create SSH Client
             ssh_client = paramiko.SSHClient()
