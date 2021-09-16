@@ -70,6 +70,9 @@ class AlarmMgr:
         logger.debug(f'self._db_alarm_category_info len =[{len(self._db_alarm_category_info)}]')
         # logger.debug(f'self._db_alarm_category_info=[{self._db_alarm_category_info}]')
 
+    def __del__(self):
+        logger.debug(f'[__del__] start!\n]')
+
     def __bytes_to_string(self, byte_or_int_value, encoding='utf-8'):
         if isinstance(byte_or_int_value, bytes):
             return byte_or_int_value.decode(encoding)
