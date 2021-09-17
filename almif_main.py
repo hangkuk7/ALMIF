@@ -2,7 +2,8 @@ import os
 import sys
 from datetime import datetime
 from datetime import timedelta
-from multiprocessing import Process, Queue
+# from multiprocessing import Process, Queue
+from threading import Thread
 from time import sleep
 import signal
 import atexit
@@ -111,16 +112,16 @@ if __name__ == '__main__':
             db_results = Dbmanager.select(sql_string)
             logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
-            proc_list = list()
+            thread_list = list()
             for result in db_results:
                 alarm_mgr = AlarmMgr(result)
                 if alarm_mgr != None:
-                    proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
-                    proc_list.append(proc)
-                    proc.start()
+                    thread = Thread(target=proc_alarm_job, args=(alarm_mgr,))
+                    thread_list.append(thread)
+                    thread.start()
 
-            for proc in proc_list:
-                proc.join()
+            for single_thr in thread_list:
+                single_thr.join()
 
             init_flag = False
             schMgr.reset_schedule()
@@ -132,16 +133,16 @@ if __name__ == '__main__':
             db_results = Dbmanager.select(sql_string)
             logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
-            proc_list = list()
+            thread_list = list()
             for result in db_results:
                 alarm_mgr = AlarmMgr(result)
                 if alarm_mgr != None:
-                    proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
-                    proc_list.append(proc)
-                    proc.start()
+                    thread = Thread(target=proc_alarm_job, args=(alarm_mgr,))
+                    thread_list.append(thread)
+                    thread.start()
 
-            for proc in proc_list:
-                proc.join()
+            for single_thr in thread_list:
+                single_thr.join()
 
             init_flag = False
             schMgr.reset_schedule()
