@@ -111,7 +111,6 @@ if __name__ == '__main__':
             db_results = Dbmanager.select(sql_string)
             logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
-            alarm_mgr_list = list()
             proc_list = list()
             for result in db_results:
                 alarm_mgr = AlarmMgr(result)

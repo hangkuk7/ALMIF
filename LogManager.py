@@ -97,5 +97,7 @@ class LogManager:
         # type: () -> object
         return self.logger
 
-
+    # def logger_close(self):
+    #     self.logger.close()
+    #     self.logger_close()
 
