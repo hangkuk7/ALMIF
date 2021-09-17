@@ -115,8 +115,6 @@ if __name__ == '__main__':
             for result in db_results:
                 alarm_mgr = AlarmMgr(result)
                 if alarm_mgr != None:
-                    alarm_mgr_list.append(alarm_mgr)
-
                     proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
                     proc_list.append(proc)
                     proc.start()
@@ -134,13 +132,10 @@ if __name__ == '__main__':
             db_results = Dbmanager.select(sql_string)
             logger.debug(f'db_results len=[{len(db_results)}], db_results = [{db_results}]')
 
-            alarm_mgr_list = list()
             proc_list = list()
             for result in db_results:
                 alarm_mgr = AlarmMgr(result)
                 if alarm_mgr != None:
-                    alarm_mgr_list.append(alarm_mgr)
-
                     proc = Process(target=proc_alarm_job, args=(alarm_mgr,))
                     proc_list.append(proc)
                     proc.start()
